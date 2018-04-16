@@ -10,16 +10,18 @@ let autoplay = false;
 let osc;
 let width = 100;
 let pianoY = ((screen.height - 300) / 4);
+let pentaY = (screen.height/4)/5
+let ini = (screen.width - 500 - width * 7)/2
 
 function setup()
 {
   createCanvas(screen.width - 500,screen.height - 300);
   // A triangle oscillator
   osc = new p5.SinOsc();
-  background(100,100,100);
-
-
-
+  n1 = new Nota(2, 0);
+  n2 = new Nota(2, 1);
+  n3 = new Nota(2, 2);
+  n4 = new Nota(2, 3);
   // Start silent
   osc.start();
   osc.amp(0);
@@ -27,14 +29,28 @@ function setup()
 
 function draw()
 {
-  //Upper
-
+  background(100,100,100);
+  //Pentagrama
+  stroke(color(0, 0, 0));
+  strokeWeight(2);
+  for (let j = 0; j < 5; j++){
+    line(100, 200 + 50*j, screen.width-600, 200 + 50*j);
+  }
+  fill(0);
+  rect(150, 150, 40, 300);
   //Teclas
   fill(255);
-  for (let i = 0; i < 7; i++){
-    rect(i * width, pianoY*3, width, pianoY);
+  for (let i = 0; i <= 7; i++){
+    rect(ini + i * width, pianoY*3, width, pianoY);
   }
-
+  n1.update();
+  n1.display();
+  n2.update();
+  n2.display();
+  n3.update();
+  n3.display();
+  n4.update();
+  n4.display();
 
 }
 
@@ -59,7 +75,7 @@ function mousePressed() {
   // Map mouse to the key index
   if (mouseY > pianoY * 3){
     for (let i = 0; i < notes.length; i++){
-      if (mouseX > i * width && mouseX < (i+1) * width){
+      if (mouseX > (i * width)+ini && mouseX < (i+1) * width + ini){
         playNote(notes[i]);
         console.log(i);
       }
