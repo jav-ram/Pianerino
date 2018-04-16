@@ -1,10 +1,18 @@
 // Set up
-var express  = require('express');
-var app      = express();                               // create our app w/ express
-var morgan = require('morgan');             // log requests to the console (express4)
-var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
-var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
-var cors = require('cors');
+let express  = require('express');
+let app      = express();                               // create our app w/ express
+let morgan = require('morgan');             // log requests to the console (express4)
+let bodyParser = require('body-parser');    // pull information from HTML POST (express4)
+let methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+let cors = require('cors');
+let pg = require('pg');
+
+
+//              "postgres://YourUserName:YourPassword@localhost:5432/YourDatabase";
+let conString = "postgres://postgres:j66352769@localhost:5432/piano";
+
+client = new pg.Client(conString);
+client.connect();
 
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -20,17 +28,169 @@ app.use(function(req, res, next) {
    next();
 });
 
+/*
+**AQUI VA TODA LA LOGICA DE LA API
+*/
 
-app.post('/a', function(req, res) {
-  let Respuesta = req.body
-  res.json(Respuesta);
-})
-app.get('/a', function(req, res) {
-  let Respuesta = {"r":"El id del usuario es: "}
-  res.send(Respuesta)
-})
+//crear usuario
+app.post('/usuario', function(req, res, next){
+  let respuesta = {};
+  let input = req.query;
+  let keys = Object.keys(input);
+  let query = "INSERT INTO usuario VALUES( ";
+  for (let i = 0; i < keys.length; i++){
+    query += "'" + input[keys[i]] + "', ";
+  }
+  //quitar la ultima coma
+  query = query.slice(0, -1);
+  query = query.slice(0, -1);
+  query += ");"
+  console.log(query);
 
+  client.query(query, (err, resp) =>{
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      //get el usuario que creamos
+      let query = "SELECT * FROM usuario WHERE usuario = '" + input[keys[0]] +"';"
+      client.query(query, (err, resp) =>{
+        if (err){
+          console.log(err);
+        } else {
+          respuesta = resp.rows[0];
+          res.json(respuesta);
+        }
+      });
+    }
+  });
 
+});
+
+//get usuario
+app.get('/usuario', function(req, res, next){
+  let respuesta = {};
+  let usuario = req.query.usuario;
+  let query = "SELECT * FROM usuario"
+
+  //Si no hay usuario en el request regresa todos
+  if (usuario != undefined){
+    query += " WHERE usuario = '" + usuario + "';"
+  } else {
+    query += ";"
+  }
+  client.query(query, (err, resp) => {
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      if (usuario != undefined){
+        respuesta = resp.rows[0];
+      } else {
+        respuesta = resp.rows;
+      }
+      res.json(respuesta);
+    }
+  });
+});
+
+//borrar usuario
+app.delete('/usuario', function(req, res, next){
+  let respuesta = {};
+  let usuario = req.query.usuario;
+  if (usuario == undefined){
+    respuesta.error = "usuario undefined";
+    res.json(respuesta);
+  }
+  let query = "DELETE FROM usuario WHERE usuario = '" + usuario + "';";
+  client.query(query, (err, resp) => {
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      respuesta.operacion = "usuario: " + usuario + " eliminado";
+      respuesta.status = resp;
+      res.json(respuesta);
+    }
+  });
+});
+
+//editar usuario
+app.post('/usuario/update', function(req, res, next){
+  let respuesta = {};
+  let input = req.query;
+  let usuario = input.usuario;
+  let query = "UPDATE usuario SET ";
+  let keys = Object.keys(input);
+
+  if (usuario == undefined){
+    respuesta.error = "identificador del usuario que se desea hacer update es undefined"
+    res.json(respuesta);
+  }
+
+  for (let i = 0; i < keys.length; i++){
+    query += keys[i] + " = '" + input[keys[i]] + "', ";
+  }
+  //quitar la ultima coma
+  query = query.slice(0, -1);
+  query = query.slice(0, -1);
+  query += " WHERE usuario = '" + usuario + "';"
+
+  client.query(query, (err, resp) => {
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      let query = "SELECT * FROM usuario WHERE usuario = '" + usuario + "';";
+      client.query(query, (err, resp) => {
+        if (err){
+          console.log(err);
+          respuesta.error = err;
+          res.json(respuesta);
+        } else {
+          res.json(resp.rows[0]);
+        }
+      });
+
+    }
+  });
+
+});
+
+app.post('/usuario/verificar', function (req, res, next){
+  let respuesta = {};
+  let usuario = req.query.usuario;
+  let psw = req.query.password;
+  if (usuario == undefined || psw == undefined){
+    respuesta.error = "Contraseña o usuario estan undefined"
+    res.json(respuesta);
+  }
+
+  let query = "SELECT contraseña FROM usuario WHERE usuario = '" + usuario + "';"
+  client.query(query, (err, resp) => {
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      if (resp.rows[0].contraseña == undefined){
+        respuesta.error = "usuario o contraseña incorrecta";
+      }
+      if (psw == resp.rows[0].contraseña){
+        respuesta.verificado = true;
+        res.json(respuesta);
+      } else {
+        respuesta.verificado = false;
+        res.json(respuesta);
+      }
+    }
+  });
+
+});
 
 
 // listen (start app with node server.js) ======================================
