@@ -2,23 +2,26 @@
 *  TIPO DE USUARIOS
 */
 
-INSERT INTO TipoUsuario (tipoId, tipo)
-VALUES (0, 'Usuario');
+INSERT INTO TipoUsuario (tipo)
+VALUES ('Usuario');
 
-INSERT INTO TipoUsuario (tipoId, tipo)
-VALUES (1, 'Profesor');
+INSERT INTO TipoUsuario (tipo)
+VALUES ('Profesor');
 
-INSERT INTO TipoUsuario (tipoId, tipo)
-VALUES (2, 'Administrador');
+INSERT INTO TipoUsuario (tipo)
+VALUES ('Administrador');
 
 /*
 *  USUARIOS
 */
 INSERT INTO Usuario
-VALUES ('Javoz', 0, 'Javier', 'Ramos', 'javier@lamera.com', '123abc', 0);
+VALUES ('Javoz', 1, 'Javier', 'Ramos', 'javier@lamera.com', '123abc', 0);
 
 INSERT INTO Usuario
-VALUES ('Juana', 0, 'Juana', 'Gonzales', 'juanaGonz@lamera.com', '123abc', 150);
+VALUES ('Juana', 1, 'Juana', 'Gonzales', 'juanaGonz@lamera.com', '123abc', 150);
+
+INSERT INTO Usuario
+VALUES ('MarcoZ', 3, 'Marco', 'Zandoval', 'marcoZ@lamera.com', '123abc', 150);
 
 /*
 *  Lecciones

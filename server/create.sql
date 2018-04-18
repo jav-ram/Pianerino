@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS Usuario;
 DROP TABLE IF EXISTS TipoUsuario;
 
 CREATE TABLE TipoUsuario(
-  tipoId        int,
+  tipoId        SERIAL,
   tipo          varchar(15),
   PRIMARY KEY (tipoId)
 );
