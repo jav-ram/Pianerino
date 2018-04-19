@@ -164,10 +164,11 @@ app.post('/usuario/update', function(req, res, next){
 app.post('/usuario/verificar', function (req, res, next){
   let respuesta = {};
   let usuario = req.query.usuario;
-  let psw = req.query.password;
+  let psw = req.query.contraseña;
   if (usuario == undefined || psw == undefined){
     respuesta.error = "Contraseña o usuario estan undefined"
     res.json(respuesta);
+    return;
   }
 
   let query = "SELECT contraseña FROM usuario WHERE usuario = '" + usuario + "';"
@@ -179,6 +180,7 @@ app.post('/usuario/verificar', function (req, res, next){
     } else {
       if (resp.rows[0].contraseña == undefined){
         respuesta.error = "usuario o contraseña incorrecta";
+        res.json(respuesta);
       }
       if (psw == resp.rows[0].contraseña){
         respuesta.verificado = true;
@@ -192,6 +194,65 @@ app.post('/usuario/verificar', function (req, res, next){
 
 });
 
+/*
+** TIPO DE USUARIO
+*/
+
+//añadir un tipo de usuario
+app.post('/administrador/tipoUsuario', function(req, res, next){
+  let respuesta = {};
+  let administrador = req.query.administrador;
+  if (administrador == undefined){
+    respuesta.error = "El administrador esta undefined";
+    res.json(respuesta);
+  }
+  let query = "SELECT t.tipo FROM usuario as u, tipousuario as t WHERE t.tipoid = u.tipoUsuario AND u.usuario = '" + administrador + "';";
+  console.log(query);
+  client.query(query, (err, resp) => {
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      if (resp.rows[0] == undefined){
+        respuesta.error = "usuario no existe";
+        res.json(respuesta);
+      } else {
+        let tipo = resp.rows[0].tipo;
+        console.log(tipo);
+        if (tipo != "Administrador"){
+          respuesta.error = "Usuario no es administrador";
+          res.json(respuesta);
+        } else {
+          let tipo = req.query.tipo;
+          if (tipo == undefined){
+            respuesta.error = "tipo del nuevo usuario es undefined";
+            res.json(respuesta);
+          } else {
+            let query = "INSERT INTO tipousuario (tipo) VALUES ('"+ tipo +"');"
+            client.query(query, (err, respu) => {
+              if (err){
+                console.log(err);
+                respuesta.error = err;
+                res.json(respuesta);
+              } else {
+                respuesta.error = false;
+                console.log(resp.rows);
+                res.json(respuesta);
+              }
+            });
+          }
+
+
+
+        }
+      }
+    }
+  });
+});
+
+
+//
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);
