@@ -20,15 +20,15 @@ function setup()
   createCanvas(sw - 0.2*sw ,screen.height - 300);
   // A triangle oscillator
   osc = new p5.SinOsc();
-  // notas.push(new Nota(2, 0, 1));
-  // notas.push(new Nota(5, 2, 1));
-  // notas.push(new Nota(2, 0, 1));
-  // notas.push(new Nota(3, 0, 1));
 
   leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
   // Start silent
   osc.start();
   osc.amp(0);
+}
+
+function draw()
+{
   background(100,100,100);
   //Pentagrama
   stroke(color(0, 0, 0));
@@ -43,10 +43,6 @@ function setup()
   for (let i = 0; i <= 7; i++){
     rect(ini + i * width, pianoY*3, width, pianoY);
   }
-}
-
-function draw()
-{
   for (var i = 0; i < notas.length; i++) {
     notas[i].display();
     notas[i].update();
