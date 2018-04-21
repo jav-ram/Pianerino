@@ -252,7 +252,30 @@ app.post('/administrador/tipoUsuario', function(req, res, next){
 });
 
 
-//
+//eliminar tipo de usuario
+app.delete('/administrador/tipoUsuario', function(req, res, next){
+  let respuesta = {};
+  let tipo = req.query.tipo;
+  if (tipo == undefined){
+    respuesta.error = "tipo de usuario ingresado como undefined"
+    res.json(respuesta);
+  }
+  let query = "DELETE FROM tipousuario WHERE tipo = '" + tipo + "';";
+
+  client.query(query, (err, resp) => {
+    if (err){
+      console.log(err);
+      respuesta.error = err;
+      res.json(respuesta);
+    } else {
+      respuesta.error = false;
+      res.json(respuesta);
+    }
+  });
+});
+
+
+
 
 // listen (start app with node server.js) ======================================
 app.listen(8080);
