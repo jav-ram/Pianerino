@@ -14,8 +14,7 @@ export class HomePage {
   }
 
   sendId(){
-    let userId = document.getElementById("UsuarioId");
-    this.userService.getUser(parseInt(userId.value));
+    
   }
 
 }

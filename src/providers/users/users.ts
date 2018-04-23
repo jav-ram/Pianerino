@@ -22,14 +22,34 @@ export class UsersProvider {
 
   //Aqui hay que hacer la llamada
 
-  getUser(id: number){
+  //Obtener usuario
+  getUser(usuario: string){
     let headers = new Headers();
-    let index = {"id":id};
+    let index = {'usuario': usuario};
+    console.log(index);
     headers.append('Content-Type', 'application/json');
-    this.http.post('http://localhost:8080/a', index, {headers: headers})
+    this.http.get('http://localhost:8080/usuario/', {params: index})
       .subscribe(res => {
-        console.log(JSON.parse(res._body).id);
+
       })
   }
+
+  //Verificar usuario LOG IN
+  verificarUsuario(usuario: string, contrasena: string){
+    let headers = new Headers();
+    let params = {
+      usuario: usuario,
+      psw: contrasena
+    };
+    this.http.post('http://localhost:8080/usuario/', {params: params})
+      .subscribe(res => {
+      },
+      error => {
+        console.log("Problema")
+      }
+    );
+  }
+
+
 
 }
