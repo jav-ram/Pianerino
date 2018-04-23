@@ -35,7 +35,7 @@ app.use(function(req, res, next) {
 //crear usuario
 app.post('/usuario', function(req, res, next){
   let respuesta = {};
-  let input = req.query;
+  let input = req.body;
   let keys = Object.keys(input);
   let query = "INSERT INTO usuario VALUES( ";
   for (let i = 0; i < keys.length; i++){
@@ -71,7 +71,7 @@ app.post('/usuario', function(req, res, next){
 //get usuario
 app.get('/usuario', function(req, res, next){
   let respuesta = {};
-  let usuario = req.query.usuario;
+  let usuario = req.body.usuario;
   let query = "SELECT * FROM usuario"
 
   //Si no hay usuario en el request regresa todos
@@ -99,7 +99,7 @@ app.get('/usuario', function(req, res, next){
 //borrar usuario
 app.delete('/usuario', function(req, res, next){
   let respuesta = {};
-  let usuario = req.query.usuario;
+  let usuario = req.body.usuario;
   if (usuario == undefined){
     respuesta.error = "usuario undefined";
     res.json(respuesta);
@@ -121,7 +121,7 @@ app.delete('/usuario', function(req, res, next){
 //editar usuario
 app.post('/usuario/update', function(req, res, next){
   let respuesta = {};
-  let input = req.query;
+  let input = req.body;
   let usuario = input.usuario;
   let query = "UPDATE usuario SET ";
   let keys = Object.keys(input);
@@ -163,8 +163,9 @@ app.post('/usuario/update', function(req, res, next){
 
 app.post('/usuario/verificar', function (req, res, next){
   let respuesta = {};
-  let usuario = req.query.usuario;
-  let psw = req.query.contraseña;
+  let usuario = req.body.usuario;
+  let psw = req.body.contrasena;
+  console.log(req);
   if (usuario == undefined || psw == undefined){
     respuesta.error = "Contraseña o usuario estan undefined"
     res.json(respuesta);
@@ -178,15 +179,20 @@ app.post('/usuario/verificar', function (req, res, next){
       respuesta.error = err;
       res.json(respuesta);
     } else {
-      if (resp.rows[0].contraseña == undefined){
-        respuesta.error = "usuario o contraseña incorrecta";
-        res.json(respuesta);
-      }
-      if (psw == resp.rows[0].contraseña){
-        respuesta.verificado = true;
-        res.json(respuesta);
-      } else {
-        respuesta.verificado = false;
+      if(resp.rows[0] != undefined){
+        if (resp.rows[0].contraseña == undefined){
+          respuesta.error = "usuario o contraseña incorrecta";
+          res.json(respuesta);
+        }
+        if (psw == resp.rows[0].contraseña){
+          respuesta.verificado = true;
+          res.json(respuesta);
+        } else {
+          respuesta.verificado = false;
+          res.json(respuesta);
+        }
+      }else {
+        respuesta.error = "Algo salio mal"
         res.json(respuesta);
       }
     }
@@ -201,7 +207,7 @@ app.post('/usuario/verificar', function (req, res, next){
 //añadir un tipo de usuario
 app.post('/administrador/tipoUsuario', function(req, res, next){
   let respuesta = {};
-  let administrador = req.query.administrador;
+  let administrador = req.body.administrador;
   if (administrador == undefined){
     respuesta.error = "El administrador esta undefined";
     res.json(respuesta);
@@ -224,7 +230,7 @@ app.post('/administrador/tipoUsuario', function(req, res, next){
           respuesta.error = "Usuario no es administrador";
           res.json(respuesta);
         } else {
-          let tipo = req.query.tipo;
+          let tipo = req.body.tipo;
           if (tipo == undefined){
             respuesta.error = "tipo del nuevo usuario es undefined";
             res.json(respuesta);
@@ -255,7 +261,7 @@ app.post('/administrador/tipoUsuario', function(req, res, next){
 //eliminar tipo de usuario
 app.delete('/administrador/tipoUsuario', function(req, res, next){
   let respuesta = {};
-  let tipo = req.query.tipo;
+  let tipo = req.body.tipo;
   if (tipo == undefined){
     respuesta.error = "tipo de usuario ingresado como undefined"
     res.json(respuesta);

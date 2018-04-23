@@ -15,4 +15,18 @@
 
 <ion-content padding>
 
+  <form (submit)="IniciarSesion()">
+    <ion-item>
+      <ion-label stacked>Usuario</ion-label>
+      <ion-input [(ngModel)]="loginData.usuario" name="usuario" type="text" placeholder="Usuario" ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Usuario</ion-label>
+      <ion-input [(ngModel)]="loginData.contrasena" name="contrasena" type="password" placeholder="Contraseña" ></ion-input>
+    </ion-item>
+    <button ion-button block type="submit">
+      Login
+    </button>
+  </form>
+
 </ion-content>
