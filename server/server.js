@@ -9,7 +9,8 @@ let pg = require('pg');
 
 
 //              "postgres://YourUserName:YourPassword@localhost:5432/YourDatabase";
-let conString = "postgres://postgres:j66352769@localhost:5432/piano";
+//let conString = "postgres://postgres:j66352769@localhost:5432/piano";
+let conString = "postgres://rodrigo:1234567@localhost:5432/piano";
 
 client = new pg.Client(conString);
 client.connect();

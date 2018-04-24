@@ -1,23 +1,17 @@
 // The midi notes of a scale
 //               C        D        E        F        G        A        B        C
 let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
-let now = 1;
-let puntos = 0;
-// For automatically playing the song
-let index = 0;
-let sw = screen.width;
-let trigger = 0;
-let autoplay = false;
+let now = 1, puntos = 0, index = 0, trigger = 0, autoplay = false;
+let sw = window.innerWidth;
+let sh = window.innerHeight;
 let osc;
-let width = 100;
-let pianoY = ((screen.height - 300) / 4);
-let pentaY = (screen.height/4)/5
-let ini = (sw - 500 - width * 7)/2
+let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
+let start, end, nactual;
 let notas = [];
 
 function setup()
 {
-  createCanvas(sw - 0.2*sw ,screen.height - 300);
+  createCanvas(sw , sh);
   // A triangle oscillator
   osc = new p5.SinOsc();
 
@@ -29,15 +23,16 @@ function setup()
 
 function draw()
 {
-  background(100,100,100);
+  background(256,256,256);
   //Pentagrama
   stroke(color(0, 0, 0));
+  //Pentagrama
   strokeWeight(2);
   for (let j = 0; j < 5; j++){
-    line(100, 200 + 50*j, sw-600, 200 + 50*j);
+    line(sw*0.05, sh*0.3 + sh*0.05*j, sw*0.95, sh*0.3 + sh*0.05*j);
   }
   fill(0);
-  rect(150, 150, 40, 300);
+  rect(sw*0.1 , sh*0.25 , sw*0.02, sh*0.3);
   //Teclas
   fill(255);
   for (let i = 0; i <= 7; i++){
@@ -49,12 +44,12 @@ function draw()
   }
 
   try{
-    if (notas[0].pego((150 - notas[0].d * 20), 1)) {
+    if (notas[0].pego((sw*0.1 - notas[0].d * 20), 1)) {
       notas.splice(0,1);
       now -= 1;
       console.log(now);
     }
-    if (notas[0].pego(150, 1)) {
+    if (notas[0].pego(sw*0.1, 1)) {
       now +=1;
       console.log(now);
     }
@@ -67,9 +62,9 @@ function draw()
 function renderizarNotas(array){
   for (let i = 0; i < array.length; i++) {
     if (i==0) {
-      array[i].x = sw-1500;
+      array[i].x = sw*0.2;
     }else {
-      array[i].x = array[i-1].x + array[i-1].d * 20;
+      array[i].x = array[i-1].x + array[i-1].d * 20 + 15;
     }
   }
 }
@@ -97,7 +92,7 @@ function mousePressed() {
     for (let i = 0; i < notes.length; i++){
       if (mouseX > (i * width)+ini && mouseX < (i+1) * width + ini){
         playNote(notes[i]);
-        if (i == notas[now-1].n && notas[now-1].pego(150,40)) {
+        if (i == notas[now-1].n && notas[now-1].pego(sw*0.1 ,60)) {
           console.log("niceee");
           puntos += 100;
         }else {
