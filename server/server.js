@@ -5,14 +5,26 @@ let morgan = require('morgan');             // log requests to the console (expr
 let bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 let methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 let cors = require('cors');
-let pg = require('pg');
 
+//base de datos
+let pg = require('pg');
+let MongoClient = require('mongodb').MongoClient
+let mongoDB;
 
 //              "postgres://YourUserName:YourPassword@localhost:5432/YourDatabase";
 let conString = "postgres://postgres:j66352769@localhost:5432/piano";
+let conMongo  = "mongodb://localhost:27017/piano"
 
 client = new pg.Client(conString);
 client.connect();
+
+MongoClient.connect(conMongo, function(err, db) {
+  if (err){
+    console.log("error en la base de datos de Mongo");
+  } else {
+    mongoDB = db;
+  }
+});
 
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded

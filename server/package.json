@@ -21,6 +21,7 @@
     "superlogin": "^0.6.1"
   },
   "dependencies": {
+    "mongodb": "^3.0.7",
     "pg": "^7.4.1"
   }
 }
