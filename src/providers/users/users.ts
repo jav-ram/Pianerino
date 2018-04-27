@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+import AuthProvider = firebase.auth.AuthProvider;
 import 'rxjs/add/operator/map';
 
 /*
@@ -14,42 +16,22 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UsersProvider {
 
-  data: any;
+  private user: firebase.User;
 
-  constructor(public http: Http) {
-    this.data = null;
+	constructor(public afAuth: AngularFireAuth) {
+		afAuth.authState.subscribe(user => {
+			this.user = user;
+		});
+	}
+
+	signInWithEmail(credentials) {
+		console.log('Sign in with email');
+		return this.afAuth.auth.signInWithEmailAndPassword(credentials.email,
+			 credentials.password);
+	}
+
+  getUser(usuario){
+    
   }
-
-  //Aqui hay que hacer la llamada
-
-  //Obtener usuario
-  getUser(usuario: string){
-    let headers = new Headers();
-    let index = {'usuario': usuario};
-    console.log(index);
-    headers.append('Content-Type', 'application/json');
-    this.http.get('http://localhost:8080/usuario/', {params: index})
-      .subscribe(res => {
-
-      })
-  }
-
-  //Verificar usuario LOG IN
-  verificarUsuario(usuario: string, contrasena: string){
-    let headers = new Headers();
-    let params = {
-      usuario: usuario,
-      psw: contrasena
-    };
-    this.http.post('http://localhost:8080/usuario/', {params: params})
-      .subscribe(res => {
-      },
-      error => {
-        console.log("Problema")
-      }
-    );
-  }
-
-
 
 }
