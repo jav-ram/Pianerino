@@ -9,7 +9,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
+import { RegisterPage } from '../pages/register/register';
 import { UsersProvider } from '../providers/users/users';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +36,9 @@ import { UsersProvider } from '../providers/users/users';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UsersProvider
+    UsersProvider,
+    AuthServiceProvider
+
   ]
 })
 export class AppModule {}
