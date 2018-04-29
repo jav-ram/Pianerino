@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Home
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -13,4 +13,20 @@
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
+
+  <ion-list>
+    <div *ngFor="let item of users | async">
+    </div>
+    <ion-card *ngFor="let leccion of users | async">
+      <ion-card-header>
+        {{leccion.nombre}}
+      </ion-card-header>
+      <img src='https://is5-ssl.mzstatic.com/image/thumb/Purple128/v4/c2/d4/73/c2d47366-94a8-3e68-db9f-d13f4d1341a9/AppIcon-1x_U007emarketing-85-220-0-9.png/1200x630bb.jpg'>
+      <ion-card-content>
+        <p>
+          {{leccion.descripcion}}
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>

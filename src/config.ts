@@ -6,4 +6,4 @@ export const firebaseConfig = {
     projectId: "pianerino",
     storageBucket: "pianerino.appspot.com",
     messagingSenderId: "7147492081"
-};
+  };
