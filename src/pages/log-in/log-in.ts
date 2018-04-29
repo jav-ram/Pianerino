@@ -26,7 +26,10 @@ export class LogInPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public loadingCtrl: LoadingController, private toastCtrl: ToastController,
   public userService: UsersProvider, private http: Http,
-  private alertCtrl: AlertController) {
+  private alertCtrl: AlertController) { }
+
+  public createAccount() {
+    this.navCtrl.push('RegisterPage');
   }
 
   IniciarSesion(){
