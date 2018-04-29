@@ -30,8 +30,21 @@ export class UsersProvider {
 			 credentials.password);
 	}
 
+  public register(credentials) {
+    if (credentials.email === null || credentials.password === null) {
+      return Observable.throw("Porfavor ingrese sus datos");
+    } else {
+      return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    }
+  }
+
   getUser(usuario){
-    
+
   }
 
 }

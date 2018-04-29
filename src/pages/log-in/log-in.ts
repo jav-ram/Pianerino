@@ -24,22 +24,25 @@ export class LogInPage {
 
   }
 
+  createAccount() {
+    this.navCtrl.push('RegisterPage');
+  }
+
   IniciarSesion(){
 
-		let credentials = {
-			email: this.loginData.correo,
-			password: this.loginData.contrasena
-		};
+    let credentials = {
+      email: this.loginData.correo,
+      password: this.loginData.contrasena
+    };
     console.log(credentials);
-		this.auth.signInWithEmail(credentials)
-			.then(
-				() => this.navCtrl.setRoot(HomePage),
-				error => console.log("error")
-			);
+    this.auth.signInWithEmail(credentials)
+      .then(
+        () => this.navCtrl.setRoot(HomePage),
+        error => console.log("error")
+      );
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LogInPage');
   }
-
 }
