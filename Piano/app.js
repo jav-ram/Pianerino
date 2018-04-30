@@ -1,21 +1,22 @@
 // The midi notes of a scale
 //               C        D        E        F        G        A        B        C
 let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
-let now = 1, puntos = 0, index = 0, trigger = 0, autoplay = false;
+let now = 0, puntos = 0, index = 0, trigger = 0, autoplay = false;
 let sw = window.innerWidth;
 let sh = window.innerHeight;
 let osc;
 let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
-let start, end, nactual;
+let start, end, nactual, restart, separador = sw*0.01, largoTotal=0, rSlider;
 let notas = [];
 
 function setup()
 {
   createCanvas(sw , sh);
+  restart = loadImage("Assets/refresh2.png");
   // A triangle oscillator
   osc = new p5.SinOsc();
 
-  leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
+  leer("lecciones/prueba.txt", function(){console.log("Yei");});
   // Start silent
   osc.start();
   osc.amp(0);
@@ -23,6 +24,7 @@ function setup()
 
 function draw()
 {
+  //var r = rSlider.value();
   background(256,256,256);
   //Pentagrama
   stroke(color(0, 0, 0));
@@ -39,32 +41,38 @@ function draw()
     rect(ini + i * width, pianoY*3, width, pianoY);
   }
   for (var i = 0; i < notas.length; i++) {
-    notas[i].display();
+    if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
+      notas[i].display();
+    }
     notas[i].update();
   }
 
   try{
-    if (notas[0].pego((sw*0.1 - notas[0].d * 20), 1)) {
-      notas.splice(0,1);
-      now -= 1;
+    if (notas[0].pego((sw*0.1 - notas[0].d * sw*0.02), 1)) {
+      // notas.splice(0,1);
+      // now -= 1;
       console.log(now);
     }
-    if (notas[0].pego(sw*0.1, 1)) {
+    if (notas[now].pego(sw*0.1, 1)) {
       now +=1;
       console.log(now);
     }
   }catch(error){
     //console.error(error);
   }
-  text("Puntos: " + puntos ,500 , 150)
+  fill(0);
+  textSize(32);
+  //text(str,x,y,x2,y2)
+  text("Puntos: " + puntos , sw * 0.45 , sh * 0.2);
+  image(restart ,sw*0.9 ,sh*0.03, sw*0.05, sw*0.05);
 }
 
 function renderizarNotas(array){
   for (let i = 0; i < array.length; i++) {
     if (i==0) {
-      array[i].x = sw*0.2;
+      array[i].x = sw*0.3;
     }else {
-      array[i].x = array[i-1].x + array[i-1].d * 20 + 15;
+      array[i].x = array[i-1].x + array[i-1].d * sw * 0.02 + separador;
     }
   }
 }
@@ -92,7 +100,7 @@ function mousePressed() {
     for (let i = 0; i < notes.length; i++){
       if (mouseX > (i * width)+ini && mouseX < (i+1) * width + ini){
         playNote(notes[i]);
-        if (i == notas[now-1].n && notas[now-1].pego(sw*0.1 ,60)) {
+        if (i == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
           console.log("niceee");
           puntos += 100;
         }else {
@@ -101,7 +109,15 @@ function mousePressed() {
         }
       }
     }
+  }else if (mouseX > sw*0.90 && mouseY < sh*0.1) {
+    restarterino();
   }
+  try {
+    console.log(rSlider.value());
+  } catch (e) {
+    console.log("no value yet Xd");
+  }
+
 }
 
 // Fade it out when we release
@@ -128,8 +144,19 @@ function agregar(txt){
   lineas = txt.split("/");
   for (var i = 0; i < lineas.length - 1; i++) {
     linea = lineas[i].split(",");
-    notas.push(new Nota(parseInt(linea[0]),parseInt(linea[1]),parseInt(linea[2])))
-    //console.log(notas[0].n);
+    notas.push(new Nota(parseInt(linea[0]),parseInt(linea[1]),parseInt(linea[2])));
+    largoTotal = largoTotal + parseInt(linea[0])*sw*0.03 + separador;
   }
+  largoTotal -= separador;
+  console.log("largo Total " + largoTotal);
+  rSlider = createSlider(0, largoTotal, 0);
+  rSlider.position(sw*0.2, sh * 0.6);
+  rSlider.style('width', '60%');
   renderizarNotas(notas);
+}
+
+function restarterino(){
+  notas.length = 0;
+  puntos = 0;
+  leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
 }

@@ -4,15 +4,17 @@ let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523
 let now = 1, puntos = 0, index = 0, trigger = 0, autoplay = false;
 let sw = window.innerWidth;
 let sh = window.innerHeight;
-let osc;
+let osc, del, upload;
 let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
 let start, end, nactual;
 let notas = [];
-let offset = sw*0.2
+let offset = sw*0.2, separador = sw*0.01;
 let enTeclado = false;
 
 function setup()
 {
+  del = loadImage("Assets/delete2.png");
+  upload = loadImage("Assets/upload2.png");
   createCanvas(sw ,sh);
   // A triangle oscillator
   osc = new p5.SinOsc();
@@ -44,11 +46,16 @@ function draw()
 
   renderizarNotas(notas);
   for (var i = 0; i < notas.length; i++) {
-    notas[i].display();
+    if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
+      notas[i].display();
+    }
   }
 
   textSize(32);
   text("Borrar",sw*0.9, sh*0.1)
+  image(del,0, sh*0.03, sw*0.05, sw*0.05);
+  image(upload, sw*0.05, sh*0.03, sw*0.05, sw*0.05);
+  // image(img,x,y,width,height)
 }
 
 // When we click
@@ -68,6 +75,11 @@ function mousePressed() {
   if (mouseX > sw*0.9 && mouseY < sh*0.1) {
     borrarNota();
     console.log("borrado prro");
+  }else if (mouseX < sw*0.05 && mouseY < sh*0.1) {
+    borrarTodoToditoTodo();
+  }else if (mouseX > sw*0.05 && mouseX < sw*0.1 && mouseY < sh*0.1) {
+    console.log("Aqui se subiria la wea, si supiera como ...");
+    parsearLeccion();
   }
 }
 
@@ -91,7 +103,7 @@ function mouseReleased() {
 function renderizarNotas(array){
   try {
     if (array[array.length - 1].x > sw*0.9) {
-      offset -= array[array.length - 1].d * 20;
+      offset -= array[array.length - 1].d * sw * 0.02;
     }
   } catch (e) {
     console.log("aun vacio");
@@ -100,7 +112,7 @@ function renderizarNotas(array){
     if (i==0) {
       array[i].x = offset;
     }else {
-      array[i].x = array[i-1].x + array[i-1].d * 20 + 15;
+      array[i].x = array[i-1].x + array[i-1].d * sw * 0.02 + separador;
     }
   }
 }
@@ -123,7 +135,7 @@ function playNote(note, duration) {
 
 function borrarNota(){
   if (notas[0].x < sw*0.1) {
-    offset += notas[notas.length-1].d*20;
+    offset += notas[notas.length-1].d*sw*0.02;
   }
   notas.splice(notas.length - 1 ,1)
 }
@@ -134,4 +146,9 @@ function parsearLeccion(){
     texto = texto + notas[i].d.toString()+ "," + notas[i].n.toString() + "," + notas[i].t.toString() + "/";
   }
   return texto;
+}
+
+function borrarTodoToditoTodo(){
+  notas.length = 0;
+  offset = sw*0.2;
 }
