@@ -16,7 +16,6 @@ import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
 import { RegisterPage } from '../pages/register/register';
 import { UsersProvider } from '../providers/users/users';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 
 @NgModule({
@@ -46,8 +45,6 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UsersProvider,
-    AuthServiceProvider
-
   ]
 })
 export class AppModule {}

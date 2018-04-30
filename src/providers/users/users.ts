@@ -44,7 +44,13 @@ export class UsersProvider {
   }
 
   getUser(usuario){
-
+    /*
+    this.afs.collection('Lecciones').ref.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+      });
+    });*/
   }
 
 }
