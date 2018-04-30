@@ -1,3 +1,8 @@
+<!--
+  Generated template for the LogInPage page.
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
   <ion-navbar color="dark">
     <ion-title>LogIn</ion-title>
@@ -10,11 +15,11 @@
 
   <form (submit)="IniciarSesion()">
     <ion-item>
-      <ion-label stacked>Usuario</ion-label>
-      <ion-input [(ngModel)]="loginData.usuario" name="usuario" type="text" placeholder="Usuario" ></ion-input>
+      <ion-label stacked>Correo</ion-label>
+      <ion-input [(ngModel)]="loginData.correo" name="correo" type="text" placeholder="Correo" ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label stacked>Usuario</ion-label>
+      <ion-label stacked>Contraseña</ion-label>
       <ion-input [(ngModel)]="loginData.contrasena" name="contrasena" type="password" placeholder="Contraseña" ></ion-input>
     </ion-item>
     <button ion-button block type="submit">
