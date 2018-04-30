@@ -65,6 +65,24 @@ function draw()
   //text(str,x,y,x2,y2)
   text("Puntos: " + puntos , sw * 0.45 , sh * 0.2);
   image(restart ,sw*0.9 ,sh*0.03, sw*0.05, sw*0.05);
+
+  try {
+    let s = rSlider.value();
+    rSlider.value(largoTotal - notas[notas.length-1].x + notas[notas.length-1].d*sw*0.02)
+  } catch (e) {
+
+  }
+
+  try {
+    if (notas[notas.length - 1].x < sw*0.1) {
+      textSize(64);
+      //text(str,x,y,x2,y2)
+      text("TERMINO LA LECCION! \n OBTUVISTE " + puntos +" PUNTOS", sw * 0.3 , sh * 0.5);
+      noLoop();
+    }
+  } catch (e) {
+
+  }
 }
 
 function renderizarNotas(array){
@@ -149,14 +167,23 @@ function agregar(txt){
   }
   largoTotal -= separador;
   console.log("largo Total " + largoTotal);
-  rSlider = createSlider(0, largoTotal, 0);
-  rSlider.position(sw*0.2, sh * 0.6);
-  rSlider.style('width', '60%');
+  try {
+    rSlider.remove();
+  } catch (e) {
+    console.log("Aun no hay un slider");
+  } finally {
+    rSlider = createSlider(0, largoTotal, 0);
+    rSlider.position(sw*0.2, sh * 0.6);
+    rSlider.style('width', '60%');
+  }
   renderizarNotas(notas);
 }
 
 function restarterino(){
+  now = 0;
+  largoTotal = 0;
   notas.length = 0;
   puntos = 0;
+  loop();
   leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
 }
