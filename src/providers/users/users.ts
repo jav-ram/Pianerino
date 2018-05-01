@@ -3,6 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
 import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs/Rx';
 
 /*
   Generated class for the UsersProvider provider.
@@ -32,7 +33,7 @@ export class UsersProvider {
 
   public register(credentials) {
     if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Porfavor ingrese sus datos");
+      return;
     } else {
       return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password).catch(function(error) {
         // Handle Errors here.

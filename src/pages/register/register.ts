@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { UsersProvider } from '../../providers/users/users';
-import { Usuario } from '../../interfaces/usuario'
+import { Usuario } from '../../interfaces/usuario';
+import {Observable} from 'rxjs/Rx';
 
 @IonicPage()
 @Component({
