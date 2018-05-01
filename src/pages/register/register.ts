@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { UsersProvider } from '../../providers/users/users';
-import { Usuario } from '../../interfaces/usuario';
-import {Observable} from 'rxjs/Rx';
-
+import { Usuario } from '../../interfaces/usuario'
+import { Observable } from 'rxjs/observable'
 @IonicPage()
 @Component({
   selector: 'page-register',
