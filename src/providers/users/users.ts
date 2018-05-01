@@ -32,7 +32,7 @@ export class UsersProvider {
 
   public register(credentials) {
     if (credentials.email === null || credentials.password === null) {
-      return Observable.throw("Porfavor ingrese sus datos");
+      return;
     } else {
       return this.afAuth.auth.createUserWithEmailAndPassword(credentials.email, credentials.password).catch(function(error) {
         // Handle Errors here.
