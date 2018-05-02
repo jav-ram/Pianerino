@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
+import { AlertController } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../../interfaces/usuario'
@@ -16,7 +17,7 @@ export class HomePage {
   users: Observable<Usuario[]>;
   item: Usuario[];
 
-  constructor(public navCtrl: NavController, private afs: AngularFirestore) {
+  constructor(public navCtrl: NavController, private afs: AngularFirestore, public popOut: AlertController) {
 
   }
 
@@ -32,7 +33,17 @@ export class HomePage {
     })
   }
 
-  sendId(){
+  irLeccion(){
+    
+  }
+
+  Info(titulo: string, description: string){
+    let alert = this.popOut.create({
+      title: titulo,
+      subTitle: description,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }

@@ -63,6 +63,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var AnadirLeccionPage = /** @class */ (function () {
+    // public maestro: any;
     function AnadirLeccionPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -72,11 +73,12 @@ var AnadirLeccionPage = /** @class */ (function () {
     };
     AnadirLeccionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <div id="defaultCanvas0" style="width: 100%; height: 100%;" width="2100" height="1230"></div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
+            selector: 'page-anadir-leccion',template:/*ion-inline-start:"C:\Users\Javier\Desktop\Pianerino\src\pages\anadir-leccion\anadir-leccion.html"*/'<!--\n\n  Generated template for the AnadirLeccionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>AnadirLeccion</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n    <div id="defaultCanvas0" style="width: 100%; height: 100%;" width="2100" height="1230"></div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Javier\Desktop\Pianerino\src\pages\anadir-leccion\anadir-leccion.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object])
     ], AnadirLeccionPage);
     return AnadirLeccionPage;
+    var _a, _b;
 }());
 
 //# sourceMappingURL=anadir-leccion.js.map

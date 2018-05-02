@@ -11,7 +11,7 @@
       <ion-row>
         <ion-col></ion-col>
         <ion-col>
-          <button ion-button small icon-only class="icono">
+          <button ion-button small icon-only class="icono" [ngStyle]="{'background-color': leccion.color}" (press)="Info(leccion.nombre, leccion.descripcion)" (click)="irLeccion()">
             <img src={{leccion.imagen}} width="90%"/>
           </button>
         </ion-col>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import p5 from 'p5';
 
 declare var dcodeIO: any;
 /**
