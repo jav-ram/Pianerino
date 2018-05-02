@@ -15,6 +15,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
 import { RegisterPage } from '../pages/register/register';
+import { LeccionPage } from '../pages/leccion/leccion'
 import { UsersProvider } from '../providers/users/users';
 
 
@@ -22,7 +23,8 @@ import { UsersProvider } from '../providers/users/users';
   declarations: [
     MyApp,
     HomePage,
-    LogInPage
+    LogInPage,
+    LeccionPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { UsersProvider } from '../providers/users/users';
   entryComponents: [
     MyApp,
     HomePage,
-    LogInPage
+    LogInPage,
+    LeccionPage
   ],
   providers: [
     StatusBar,

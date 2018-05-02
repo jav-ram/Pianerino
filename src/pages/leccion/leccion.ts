@@ -15,10 +15,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LeccionPage {
 
+  html: string;
+  hola: string;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.html = navParams.get('html')
+    this.hola = '<h1>asdasdasdasd</h1>'
   }
 
   ionViewDidLoad() {
+    console.log(this.html)
     console.log('ionViewDidLoad LeccionPage');
   }
 

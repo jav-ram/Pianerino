@@ -3,21 +3,24 @@ import { NavController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { AlertController } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Usuario } from '../../interfaces/usuario'
 import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: '/home.html'
 })
 export class HomePage {
 
   userCollection: AngularFirestoreCollection<Usuario>;
   users: Observable<Usuario[]>;
   item: Usuario[];
+  leccion_url: string = '/leccion.html';
 
-  constructor(public navCtrl: NavController, private afs: AngularFirestore, public popOut: AlertController) {
+  constructor(public navCtrl: NavController, private afs: AngularFirestore,
+    public popOut: AlertController, private http: Http) {
 
   }
 
@@ -33,8 +36,8 @@ export class HomePage {
     })
   }
 
-  irLeccion(){
-    
+  irLeccion(id: any){
+
   }
 
   Info(titulo: string, description: string){

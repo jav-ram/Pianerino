@@ -11,9 +11,11 @@
       <ion-row>
         <ion-col></ion-col>
         <ion-col>
-          <button ion-button small icon-only class="icono" [ngStyle]="{'background-color': leccion.color}" (press)="Info(leccion.nombre, leccion.descripcion)" (click)="irLeccion()">
-            <img src={{leccion.imagen}} width="90%"/>
-          </button>
+          <a [href]="leccion_url + '?nombre=' + leccion.nombre">
+            <button ion-button small icon-only class="icono" [ngStyle]="{'background-color': leccion.color}" (press)="Info(leccion.nombre, leccion.descripcion)" (click)="irLeccion(leccion.nombre)" type="submit">
+              <img src={{leccion.imagen}} width="90%"/>
+            </button>
+          </a>
         </ion-col>
         <ion-col></ion-col>
       </ion-row>
