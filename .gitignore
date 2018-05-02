@@ -16,7 +16,6 @@ coverage/
 collection/
 dist/
 node_modules/
-server/node_modules/
 tmp/
 temp/
 core/theme-builder/
