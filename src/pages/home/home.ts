@@ -18,6 +18,7 @@ export class HomePage {
   users: Observable<Usuario[]>;
   item: Usuario[];
   leccion_url: string = '/leccion.html';
+  maestro_url: string = '/maestro.html';
 
   constructor(public navCtrl: NavController, private afs: AngularFirestore,
     public popOut: AlertController, private http: Http) {

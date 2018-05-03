@@ -22,6 +22,25 @@
     <script src="cordova.js"></script>
     <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
     <style> body {padding: 0; margin: 0;} </style>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase-messaging.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBEC03gubW1gl-v2i26xJr1vxsmCnQl_RI",
+    authDomain: "pianerino.firebaseapp.com",
+    databaseURL: "https://pianerino.firebaseio.com",
+    projectId: "pianerino",
+    storageBucket: "pianerino.appspot.com",
+    messagingSenderId: "7147492081"
+  };
+  firebase.initializeApp(config);
+</script>
     <script src="assets/js/p5.min.js"></script>
     <script src="assets/js/p5.dom.js"></script>
     <script src="assets/js/print.js"></script>
