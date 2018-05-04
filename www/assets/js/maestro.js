@@ -1,7 +1,7 @@
 // The midi notes of a scale
 //               C        D        E        F        G        A        B        C
 let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
-let now = 1, index = 0, trigger = 0, autoplay = false;
+let now = 1, puntos = 0, index = 0, trigger = 0, autoplay = false;
 let sw = window.innerWidth;
 let sh = window.innerHeight;
 let osc, del, upload;
@@ -13,8 +13,8 @@ let enTeclado = false;
 
 function setup()
 {
-  del = loadImage("assets/imgs/delete2.png");
-  upload = loadImage("assets/imgs/upload2.png");
+  del = loadImage("Assets/delete2.png");
+  upload = loadImage("Assets/upload2.png");
   var canvas = createCanvas(sw ,sh);
 
   // A triangle oscillator

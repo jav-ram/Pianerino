@@ -14,11 +14,19 @@
   </div>
     <ion-item no-lines *ngFor="let leccion of users | async">
       <div text-center>
-          <a [href]="leccion_url + '?nombre=' + leccion.nombre">
-            <button ion-button large icon-only class="icono" [ngStyle]="{'background-color': leccion.color}" (press)="Info(leccion.nombre, leccion.descripcion)" (click)="irLeccion(leccion.nombre)" type="submit">
-              <img src={{leccion.imagen}} width="50%"/>
-            </button>
-          </a>
+        <ion-row>
+          <ion-col col-3>
+          </ion-col>
+          <ion-col>
+            <a [href]="leccion_url + '?nombre=' + leccion.nombre">
+              <button ion-button large icon-only class="icono" [ngStyle]="{'background-color': leccion.color}" (press)="Info(leccion.nombre, leccion.descripcion)" (click)="irLeccion(leccion.nombre)" type="submit">
+                <img src={{leccion.imagen}} width="90%"/>
+              </button>
+            </a>
+          </ion-col>
+          <ion-col col-3>
+          </ion-col>
+        </ion-row>
       </div>
       <ion-row>
         <ion-col></ion-col>
