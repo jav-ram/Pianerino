@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AnadirLeccionPage } from './anadir-leccion';
+import { AnadirLeccionPage } from './anadir-leccion'
 
 @NgModule({
   declarations: [
@@ -10,4 +10,8 @@ import { AnadirLeccionPage } from './anadir-leccion';
     IonicPageModule.forChild(AnadirLeccionPage),
   ],
 })
-export class AnadirLeccionPageModule {}
+export class AnadirLeccionPageModule {
+  ionViewWillEnter(){
+
+  }
+}

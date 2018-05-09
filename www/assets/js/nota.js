@@ -1,10 +1,8 @@
 let colores;
 let pos;
-console.log("hey");
 function Nota(d, n, t){
   let sh = window.innerHeight;
   let sw = window.innerWidth;
-  console.log(sh);
   this.d = d;
   this.n = n;
   this.t = t;

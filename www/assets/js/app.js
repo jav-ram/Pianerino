@@ -95,6 +95,7 @@ function draw()
       rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
       textSize(sw*0.028);
       fill(color(13, 13, 38));
+      strokeWeight(1);
       if (getSearchParameters().nombre.replace("%20", " ") == "Primera vez") {
         text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + puntos +" PUNTOS", sw*0.2,sh*0.3);
       }else {
@@ -112,12 +113,14 @@ function draw()
       rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
       textSize(sw*0.02);
       fill(color(13, 13, 38));
+      strokeWeight(1);
       text(" Bienvenido a tu primera leccion. Para jugar, toca las teclas\n justo cuando la nota llegue a la linea negra.\n Cada nota correcta te da 100 puntos, cada incorrecta resta\n 50 a tu puntaje.\n Arriba a la derecha encontraras un boton de 'reset', este te\n permite empezar la leccion desde 0. Suerte!\n\n\n             [Presiona cualquier tecla para continuar]",sw*0.2,sh*0.3);
     }else {
       fill(color(204, 217, 255));
       rect(sw*0.3,sh*0.4,sw*0.4,sh*0.2);
       textSize(sw*0.02);
       fill(color(13, 13, 38));
+      strokeWeight(1);
       text("    [Presiona una tecla para continuar]",sw*0.3,sh*0.5)
     }
   }
