@@ -1,22 +1,36 @@
 // The midi notes of a scale
 //               C        D        E        F        G        A        B        C
 let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
-let now = 0, puntos = 0, index = 0, trigger = 0, autoplay = false;
+let now = 0, puntos = 0, index = 0, trigger = 0, autoplay = false, empezo = false;
 let sw = window.innerWidth;
 let sh = window.innerHeight;
 let osc;
 let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
-let start, end, nactual, restart, separador = sw*0.01, largoTotal=0, rSlider;
+let start, end, nactual, restart, separador = sw*0.01, largoTotal=0, rSlider, pan;
 let notas = [];
+var db = firebase.firestore();
+var Lecciones = db.collection("Lecciones");
+var allItems = [];
 
 function setup()
 {
+  print(getSearchParameters().nombre.replace("%20", " "))
+  db.collection("Lecciones").where("nombre", "==", getSearchParameters().nombre.replace("%20", " "))
+  .onSnapshot(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // binded to the UI
+            allItems.push(doc.data().leccion.contenido);
+            agregar(doc.data().leccion.contenido);
+        });
+      });
   createCanvas(sw , sh);
-  restart = loadImage("Assets/refresh2.png");
+  restart = loadImage("assets/imgs/refresh2.png");
   // A triangle oscillator
   osc = new p5.SinOsc();
-
-  leer("assets/js/lecciones/prueba.txt", function(){console.log("Yei");});
+  pan = createSlider(0, 2, 1);
+  pan.position(sw*0.45, sh * 0.1);
+  pan.style('width', '10%');
+  //leer("assets/js/lecciones/prueba.txt", function(){console.log("Yei");});
   // Start silent
   osc.start();
   osc.amp(0);
@@ -24,6 +38,10 @@ function setup()
 
 function draw()
 {
+  // fill(0);
+  // textSize(16);
+  // text("L        R",sw*0.45,sh*0.5);
+
   //var r = rSlider.value();
   background(256,256,256);
   //Pentagrama
@@ -33,6 +51,8 @@ function draw()
   for (let j = 0; j < 5; j++){
     line(sw*0.05, sh*0.3 + sh*0.05*j, sw*0.95, sh*0.3 + sh*0.05*j);
   }
+
+
   fill(0);
   rect(sw*0.1 , sh*0.25 , sw*0.02, sh*0.3);
   //Teclas
@@ -40,22 +60,18 @@ function draw()
   for (let i = 0; i <= 7; i++){
     rect(ini + i * width, pianoY*3, width, pianoY);
   }
-  for (var i = 0; i < notas.length; i++) {
-    if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
-      notas[i].display();
+  if (empezo) {
+    for (var i = 0; i < notas.length; i++) {
+      if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
+        notas[i].display();
+      }
+      notas[i].update();
     }
-    notas[i].update();
   }
 
   try{
-    if (notas[0].pego((sw*0.1 - notas[0].d * sw*0.02), 1)) {
-      // notas.splice(0,1);
-      // now -= 1;
-      console.log(now);
-    }
     if (notas[now].pego(sw*0.1, 1)) {
       now +=1;
-      console.log(now);
     }
   }catch(error){
     //console.error(error);
@@ -75,13 +91,35 @@ function draw()
 
   try {
     if (notas[notas.length - 1].x < sw*0.1) {
-      textSize(64);
-      //text(str,x,y,x2,y2)
-      text("TERMINO LA LECCION! \n OBTUVISTE " + puntos +" PUNTOS", sw * 0.3 , sh * 0.5);
+      fill(color(204, 217, 255));
+      rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
+      textSize(sw*0.028);
+      fill(color(13, 13, 38));
+      if (getSearchParameters().nombre.replace("%20", " ") == "Primera vez") {
+        text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + puntos +" PUNTOS", sw*0.2,sh*0.3);
+      }else {
+        text(" TERMINO LA LECCION! \n OBTUVISTE " + puntos +" PUNTOS", sw*0.2,sh*0.3);
+      }
       noLoop();
     }
   } catch (e) {
 
+  }
+
+  if (!empezo){
+    if (getSearchParameters().nombre.replace("%20", " ") == "Primera vez") {
+      fill(color(204, 217, 255));
+      rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
+      textSize(sw*0.02);
+      fill(color(13, 13, 38));
+      text(" Bienvenido a tu primera leccion. Para jugar, toca las teclas\n justo cuando la nota llegue a la linea negra.\n Cada nota correcta te da 100 puntos, cada incorrecta resta\n 50 a tu puntaje.\n Arriba a la derecha encontraras un boton de 'reset', este te\n permite empezar la leccion desde 0. Suerte!\n\n\n             [Presiona cualquier tecla para continuar]",sw*0.2,sh*0.3);
+    }else {
+      fill(color(204, 217, 255));
+      rect(sw*0.3,sh*0.4,sw*0.4,sh*0.2);
+      textSize(sw*0.02);
+      fill(color(13, 13, 38));
+      text("    [Presiona una tecla para continuar]",sw*0.3,sh*0.5)
+    }
   }
 }
 
@@ -99,6 +137,7 @@ function renderizarNotas(array){
 function playNote(note, duration) {
   //osc.amp(0.5)
   osc.freq(note);
+  osc.pan(pan.value()-1, 0);
   // Fade it in
   osc.fade(1, 0.4);
 
@@ -113,8 +152,13 @@ function playNote(note, duration) {
 
 // When we click
 function mousePressed() {
+
   // Map mouse to the key index
   if (mouseY > pianoY * 3){
+    if (!empezo) {
+      empezo = true;
+      puntos+=50;
+    }
     for (let i = 0; i < notes.length; i++){
       if (mouseX > (i * width)+ini && mouseX < (i+1) * width + ini){
         playNote(notes[i]);
@@ -129,6 +173,8 @@ function mousePressed() {
     }
   }else if (mouseX > sw*0.90 && mouseY < sh*0.1) {
     restarterino();
+  }else if (mouseX < 0.05*sw && mouseY < sh*0.1) {
+    window.open("localhost:8100");
   }
   try {
     console.log(rSlider.value());
@@ -185,5 +231,34 @@ function restarterino(){
   notas.length = 0;
   puntos = 0;
   loop();
-  leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
+  //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
+  agregar(allItems[0]);
+}
+
+function getSearchParameters () {
+  var prmstr = window.location.search.substr(1);
+  return prmstr !== null && prmstr !== "" ? transformToAssocArray(prmstr) : {};
+}
+
+// convert parameters from url-style string to associative array
+function transformToAssocArray (prmstr) {
+  var params = {},
+      prmarr = prmstr.split("&");
+
+  for (var i = 0; i < prmarr.length; i++) {
+    var tmparr = prmarr[i].split("=");
+    params[tmparr[0]] = tmparr[1];
+  }
+  return params;
+}
+
+function windowResized() {
+   resizeCanvas(windowWidth, windowHeight);
+   sw =windowWidth;
+   sh = windowHeight;
+   width = sw*0.06;
+   pianoY = (sh*0.23);
+   pentaY = (sh/4)/5;
+   ini = (sw - width * 8)/2;
+   separador = sw*0.01;
 }

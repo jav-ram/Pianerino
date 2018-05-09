@@ -1,20 +1,21 @@
 // The midi notes of a scale
 //               C        D        E        F        G        A        B        C
 let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
-let now = 1, puntos = 0, index = 0, trigger = 0, autoplay = false;
+let now = 1, index = 0, trigger = 0, autoplay = false;
 let sw = window.innerWidth;
 let sh = window.innerHeight;
 let osc, del, upload;
 let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
 let start, end, nactual;
+var db = firebase.firestore();
 let notas = [];
 let offset = sw*0.2, separador = sw*0.01;
 let enTeclado = false;
 
 function setup()
 {
-  del = loadImage("Assets/delete2.png");
-  upload = loadImage("Assets/upload2.png");
+  del = loadImage("assets/imgs/delete2.png");
+  upload = loadImage("assets/imgs/upload2.png");
   var canvas = createCanvas(sw ,sh);
 
   // A triangle oscillator
@@ -80,6 +81,21 @@ function mousePressed() {
     borrarTodoToditoTodo();
   }else if (mouseX > sw*0.05 && mouseX < sw*0.1 && mouseY < sh*0.1) {
     console.log("Aqui se subiria la wea, si supiera como ...");
+    // Add a new document in collection "cities"
+    db.collection("Lecciones").doc("Nueva").set({
+    color: "#00b0ff",
+    descripcion: "NUEVA LECCION!",
+    dificultad: "1",
+    imagen: "https://firebasestorage.googleapis.com/v0/b/pianerino.appspot.com/o/Iconos%2FLecciones%2F3_teclas.png?alt=media&token=74dfa35e-98d0-4c0f-b4b5-e3b115d6d97b",
+    leccion: {contenido:parsearLeccion()},
+    nombre:"nueva leccion"
+    })
+    .then(function() {
+    console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+    console.error("Error writing document: ", error);
+    });
     parsearLeccion();
   }
 }
@@ -152,4 +168,15 @@ function parsearLeccion(){
 function borrarTodoToditoTodo(){
   notas.length = 0;
   offset = sw*0.2;
+}
+
+function windowResized() {
+   resizeCanvas(windowWidth, windowHeight);
+   sw =windowWidth;
+   sh = windowHeight;
+   width = sw*0.06;
+   pianoY = (sh*0.23);
+   pentaY = (sh/4)/5;
+   ini = (sw - width * 8)/2;
+   separador = sw*0.01;
 }
