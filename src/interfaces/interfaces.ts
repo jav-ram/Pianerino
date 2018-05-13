@@ -5,6 +5,13 @@ export interface Usuario {
  nombre: string;
  puntos: number;
  tipoUsuario: number;
+}
 
-
+export interface Leccion {
+  color: string;
+  descripcion: string;
+  dificultad: number;
+  imagen: string;
+  leccion: any;
+  nombre: string;
 }

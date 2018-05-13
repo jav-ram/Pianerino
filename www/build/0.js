@@ -285,12 +285,11 @@ var AnadirLeccionPage = /** @class */ (function () {
     };
     AnadirLeccionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n    <div id="defaultCanvas0" style="width: 100%; height: 100%;" width="2100" height="1230"></div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
+            selector: 'page-anadir-leccion',template:/*ion-inline-start:"C:\Users\Javier\Desktop\Pianerino\src\pages\anadir-leccion\anadir-leccion.html"*/'<!--\n\n  Generated template for the AnadirLeccionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>AnadirLeccion</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n<script src="assets/js/p5.min.js"></script>\n\n<script src="assets/js/p5.dom.js"></script>\n\n<script src="assets/js/print.js"></script>\n\n<script src="assets/js/p5.sound.min.js"></script>\n\n\n\n<ion-content padding>\n\n    <div id="defaultCanvas0" style="width: 100%; height: 100%;" width="2100" height="1230"></div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Javier\Desktop\Pianerino\src\pages\anadir-leccion\anadir-leccion.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
     ], AnadirLeccionPage);
     return AnadirLeccionPage;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=anadir-leccion.js.map

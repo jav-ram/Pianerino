@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
-import { NavController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { HomePage } from '../home/home';
 /**
@@ -20,7 +19,8 @@ export class LogInPage {
 
   loginData:any = {correo:'', contrasena:''};
 
-  constructor(public navCtrl: NavController,private auth: UsersProvider) {
+  constructor(public navCtrl: NavController, private auth: UsersProvider,
+    private Loading: LoadingController, private alert: AlertController) {
 
   }
 
@@ -29,6 +29,9 @@ export class LogInPage {
   }
 
   IniciarSesion(){
+    let loading = this.Loading.create({content : "Iniciando sesion, por favor espere..."});
+    loading.present();
+
 
     let credentials = {
       email: this.loginData.correo,
@@ -37,9 +40,21 @@ export class LogInPage {
     console.log(credentials);
     this.auth.signInWithEmail(credentials)
       .then(
-        () => this.navCtrl.setRoot(HomePage),
-        error => console.log("error")
-      );
+        () => {
+          this.navCtrl.setRoot(HomePage)
+        },
+        (error) => {
+          let alert = this.alert.create({
+            title: 'Error',
+            subTitle: 'Correo o Contraseña incorrectas, vuelva a intentarlo',
+            buttons: ['OK']
+          });
+          alert.present();
+          console.log("error")
+        }
+      ).then(()=>{
+        loading.dismiss();
+      });
   }
 
   ionViewDidLoad() {
