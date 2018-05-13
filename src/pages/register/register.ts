@@ -56,17 +56,6 @@ export class RegisterPage {
             .then(() => {
               loading.dismiss();
               this.nav.pop();
-              this.showPopup("Cuenta creada!", "Su cuenta a sido creada con exito.");
-              let alert = this.alertCtrl.create({
-                title: "Cuenta creada!",
-                subTitle: "Su cuenta a sido creada con exito.",
-                buttons: [
-                  {
-                    text: 'OK'
-                  }
-                ]
-              });
-              alert.present();
             });
         } else {
           this.showPopup("Error", "Hubo problema creando la cuenta.");
