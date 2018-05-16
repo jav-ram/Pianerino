@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HomePage } from '../home/home';
+import { AnadirProvider } from '../../providers/anadir/anadir'
 import * as p5 from '../../assets/js/p5.min'
 import * as p5Sound from '../../assets/js/p5.sound.min'
 
 declare var dcodeIO: any;
+var config, db;
 /**
  * Generated class for the AnadirLeccionPage page.
  *
@@ -11,20 +14,24 @@ declare var dcodeIO: any;
  * Ionic pages and navigation.
  */
 
+
 @IonicPage()
 @Component({
   selector: 'page-anadir-leccion',
   templateUrl: 'anadir-leccion.html',
 })
 export class AnadirLeccionPage {
-  // public maestro: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ap:AnadirProvider) {
+  }
+  return() {
+    this.navCtrl.setRoot(HomePage)
+    //this.navCtrl.push('Homepage');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AnadirLeccionPage');
-    var config = {
+    config = {
       apiKey: "AIzaSyBEC03gubW1gl-v2i26xJr1vxsmCnQl_RI",
       authDomain: "pianerino.firebaseapp.com",
       databaseURL: "https://pianerino.firebaseio.com",
@@ -40,12 +47,12 @@ export class AnadirLeccionPage {
     let sketch = p => {
     let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
     let now = 1, index = 0, trigger = 0, autoplay = false;
-    let sh = window.innerHeight;
+    let sh = window.innerHeight*0.9;
     let sw = window.innerWidth;
     let del, upload ;//osc
     let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
     let start, end, nactual;
-    var db = firebase.firestore();
+    db = firebase.firestore();
     let notas = [];
     let offset = sw*0.2, separador = sw*0.01;
     let enTeclado = false;
@@ -78,7 +85,7 @@ export class AnadirLeccionPage {
 
       }
     }
-    console.log("REEEEEEE");
+    this.ap.ree("Halp");
     p.setup = () =>
     {
       del = p.loadImage("assets/imgs/delete2.png");
@@ -239,9 +246,9 @@ export class AnadirLeccionPage {
     }
 
     p.windowResized = () => {
-       p.resizeCanvas(windowWidth, windowHeight);
-       sw =windowWidth;
-       sh = windowHeight;
+       p.resizeCanvas(window.innerWidth, window.innerHeight);
+       sw =window.innerWidth;
+       sh = window.innerHeight*0.9;
        width = sw*0.06;
        pianoY = (sh*0.23);
        pentaY = (sh/4)/5;
@@ -250,5 +257,6 @@ export class AnadirLeccionPage {
     }}
     let myp5 = new p5(sketch);
   }
+
 
 }

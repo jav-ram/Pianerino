@@ -25680,6 +25680,7 @@ ion-navbar.toolbar {
 
 #defaultCanvas1 {
   position: fixed;
+  top: 12%;
 }
 
 .icono {

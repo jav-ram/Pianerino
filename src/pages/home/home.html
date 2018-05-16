@@ -8,9 +8,7 @@
 
 <ion-content padding color="light">
   <div text-right>
-    <a [href]="maestro_url">
-      <button ion-button round color="secondary" style="color:#fff;">Añadir</button>
-    </a>
+    <button ion-button round color="secondary" (click)="irAnadir()">Añadir Leccion</button>
   </div>
     <ion-item no-lines *ngFor="let leccion of users | async">
       <div text-center>

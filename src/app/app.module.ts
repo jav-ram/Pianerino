@@ -17,6 +17,7 @@ import { LogInPage } from '../pages/log-in/log-in';
 import { RegisterPage } from '../pages/register/register';
 import { LeccionPage } from '../pages/leccion/leccion'
 import { UsersProvider } from '../providers/users/users';
+import { AnadirProvider } from '../providers/anadir/anadir';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { UsersProvider } from '../providers/users/users';
     AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UsersProvider,
+    AnadirProvider,
   ]
 })
 export class AppModule {}

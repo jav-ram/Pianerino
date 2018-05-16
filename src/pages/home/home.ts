@@ -5,6 +5,7 @@ import { AlertController } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { AnadirLeccionPage } from '../anadir-leccion/anadir-leccion';
 import { Leccion, Usuario } from '../../interfaces/interfaces'
 import 'rxjs/add/operator/map';
 
@@ -25,6 +26,10 @@ export class HomePage {
   constructor(public navCtrl: NavController, private afs: AngularFirestore,
     public popOut: AlertController, private http: Http, public user: UsersProvider) {
 
+  }
+
+  irAnadir(){
+    this.navCtrl.push('AnadirLeccionPage');
   }
 
   ionViewDidEnter(){
