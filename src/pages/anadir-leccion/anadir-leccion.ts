@@ -40,8 +40,8 @@ export class AnadirLeccionPage {
     let sketch = p => {
     let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
     let now = 1, index = 0, trigger = 0, autoplay = false;
-    let sw = window.innerWidth;
     let sh = window.innerHeight;
+    let sw = window.innerWidth;
     let del, upload ;//osc
     let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
     let start, end, nactual;
@@ -238,7 +238,7 @@ export class AnadirLeccionPage {
       offset = sw*0.2;
     }
 
-    function windowResized() {
+    p.windowResized = () => {
        p.resizeCanvas(windowWidth, windowHeight);
        sw =windowWidth;
        sh = windowHeight;

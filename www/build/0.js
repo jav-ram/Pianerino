@@ -89,8 +89,8 @@ var AnadirLeccionPage = /** @class */ (function () {
         var sketch = function (p) {
             var notes = [261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
             var now = 1, index = 0, trigger = 0, autoplay = false;
-            var sw = window.innerWidth;
             var sh = window.innerHeight;
+            var sw = window.innerWidth;
             var del, upload; //osc
             var width = sw * 0.06, pianoY = (sh * 0.23), pentaY = (sh / 4) / 5, ini = (sw - width * 8) / 2;
             var start, end, nactual;
