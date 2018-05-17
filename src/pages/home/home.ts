@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AnadirLeccionPage } from '../anadir-leccion/anadir-leccion';
+import { LeccionPage } from '../leccion/leccion'
 import { Leccion, Usuario } from '../../interfaces/interfaces'
 import 'rxjs/add/operator/map';
 
@@ -47,8 +48,11 @@ export class HomePage {
     console.log(this.user.getUser());
   }
 
-  irLeccion(id: any){
-
+  irLeccion(cd: string, id: string){
+    this.navCtrl.push(LeccionPage, {
+      nombre: id,
+      contenido: cd
+    });
   }
 
   Info(titulo: string, description: string){

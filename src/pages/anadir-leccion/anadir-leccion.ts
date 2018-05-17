@@ -6,7 +6,6 @@ import * as p5 from '../../assets/js/p5.min'
 import * as p5Sound from '../../assets/js/p5.sound.min'
 
 declare var dcodeIO: any;
-// declare var this.ap.notas: any;
 var config, db, sw, sh, offset;
 /**
  * Generated class for the AnadirLeccionPage page.
@@ -21,6 +20,7 @@ var config, db, sw, sh, offset;
   selector: 'page-anadir-leccion',
   templateUrl: 'anadir-leccion.html',
 })
+
 export class AnadirLeccionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ap:AnadirProvider) {
@@ -104,7 +104,6 @@ export class AnadirLeccionPage {
       // A triangle //oscillator
       ////osc = new p5Sound.Sin//osc();
 
-      //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
       // Start silent
       //osc.start();
       //osc.amp(0);

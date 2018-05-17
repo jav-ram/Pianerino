@@ -25678,7 +25678,7 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
-#defaultCanvas1 {
+page-anadir-leccion #defaultCanvas1 {
   position: fixed;
   top: 12%;
 }
@@ -25690,4 +25690,9 @@ ion-navbar.toolbar {
 
 p {
   text-align: center;
+}
+
+page-leccion #defaultCanvas1 {
+  position: fixed;
+  top: 12%;
 }
