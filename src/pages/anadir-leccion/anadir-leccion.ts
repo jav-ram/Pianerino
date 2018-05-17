@@ -6,7 +6,8 @@ import * as p5 from '../../assets/js/p5.min'
 import * as p5Sound from '../../assets/js/p5.sound.min'
 
 declare var dcodeIO: any;
-var config, db;
+// declare var this.ap.notas: any;
+var config, db, sw, sh, offset;
 /**
  * Generated class for the AnadirLeccionPage page.
  *
@@ -24,37 +25,48 @@ export class AnadirLeccionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ap:AnadirProvider) {
   }
-  return() {
-    this.navCtrl.setRoot(HomePage)
-    //this.navCtrl.push('Homepage');
+
+  subir() {
+    var texto = "";
+    for (var i = 0; i < this.ap.notas.length; i++) {
+      texto = texto + this.ap.notas[i].d.toString()+ "," + this.ap.notas[i].n.toString() + "," + this.ap.notas[i].t.toString() + "/";
+    }
+    this.ap.anadirLeccion(texto, "Esta leccion fue hecha por ti!")
+  }
+
+  borrarNota(){
+    if (this.ap.notas[0].x < sw*0.1) {
+      offset += this.ap.notas[this.ap.notas.length-1].d*sw*0.02;
+    }
+    this.ap.notas.splice(this.ap.notas.length - 1 ,1)
+  }
+
+  borrarTodoToditoTodo(){
+    this.ap.notas.length = 0;
+    offset = sw*0.2;
+    console.log("sad")
+  }
+
+
+  ionViewWillLeave() {
+    console.log("Looks like I'm about to leave :(");
+    document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
+    document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AnadirLeccionPage');
-    config = {
-      apiKey: "AIzaSyBEC03gubW1gl-v2i26xJr1vxsmCnQl_RI",
-      authDomain: "pianerino.firebaseapp.com",
-      databaseURL: "https://pianerino.firebaseio.com",
-      projectId: "pianerino",
-      storageBucket: "pianerino.appspot.com",
-      messagingSenderId: "7147492081"
-    };
-    firebase.initializeApp(config);
-
-
     // The midi notes of a scale
     //               C        D        E        F        G        A        B        C
     let sketch = p => {
     let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
     let now = 1, index = 0, trigger = 0, autoplay = false;
-    let sh = window.innerHeight*0.9;
-    let sw = window.innerWidth;
+    sh = window.innerHeight*0.9;
+    sw = window.innerWidth;
     let del, upload ;//osc
-    let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
+    let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2, separador = sw*0.01;
     let start, end, nactual;
-    db = firebase.firestore();
-    let notas = [];
-    let offset = sw*0.2, separador = sw*0.01;
+    this.ap.notas = [];
+    offset = sw*0.2;
     let enTeclado = false;
     function Nota(d, n, t){
       let colores;
@@ -85,13 +97,10 @@ export class AnadirLeccionPage {
 
       }
     }
-    this.ap.ree("Halp");
+
     p.setup = () =>
     {
-      del = p.loadImage("assets/imgs/delete2.png");
-      upload = p.loadImage("assets/imgs/upload2.png");
-      var canvas = p.createCanvas(sw ,sh);
-
+      var canvas = p.createCanvas(sw ,sh).parent('defaultCanvas0');
       // A triangle //oscillator
       ////osc = new p5Sound.Sin//osc();
 
@@ -120,17 +129,13 @@ export class AnadirLeccionPage {
         p.rect(ini + i * width, pianoY*3, width, pianoY);
       }
 
-      renderizarNotas(notas);
-      for (var i = 0; i < notas.length; i++) {
-        if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
-          notas[i].display();
+      renderizarnotas(this.ap.notas);
+      for (var i = 0; i < this.ap.notas.length; i++) {
+        if (this.ap.notas[i].x < sw*0.9 && this.ap.notas[i].x > sw*0.1 ) {
+          this.ap.notas[i].display();
         }
       }
 
-      p.textSize(32);
-      p.text("Borrar",sw*0.9, sh*0.1)
-      p.image(del,0, sh*0.03, sw*0.05, sw*0.05);
-      p.image(upload, sw*0.05, sh*0.03, sw*0.05, sw*0.05);
       // image(img,x,y,width,height)
     }
 
@@ -147,31 +152,6 @@ export class AnadirLeccionPage {
           }
         }
       }
-      //Si presiona el boton de borrar
-      if (p.mouseX > sw*0.9 && p.mouseY < sh*0.1) {
-        borrarNota();
-        console.log("borrado prro");
-      }else if (p.mouseX < sw*0.05 && p.mouseY < sh*0.1) {
-        borrarTodoToditoTodo();
-      }else if (p.mouseX > sw*0.05 && p.mouseX < sw*0.1 && p.mouseY < sh*0.1) {
-        console.log("Aqui se subiria la wea, si supiera como ...");
-        // Add a new document in collection "cities"
-        db.collection("Lecciones").doc("Nueva").set({
-        color: "#00b0ff",
-        descripcion: "NUEVA LECCION!",
-        dificultad: "1",
-        imagen: "https://firebasestorage.googleapis.com/v0/b/pianerino.appspot.com/o/Iconos%2FLecciones%2F3_teclas.png?alt=media&token=74dfa35e-98d0-4c0f-b4b5-e3b115d6d97b",
-        leccion: {contenido:parsearLeccion()},
-        nombre:"nueva leccion"
-        })
-        .then(function() {
-        console.log("Document successfully written!");
-        })
-        .catch(function(error) {
-        console.error("Error writing document: ", error);
-        });
-        parsearLeccion();
-      }
     }
 
     // Fade it out when we release
@@ -183,8 +163,8 @@ export class AnadirLeccionPage {
         if (delta<1) {
           delta = 1;
         }
-        notas.push(new Nota(delta, nactual, 1));
-        console.log(notas[notas.length - 1].n);
+        this.ap.notas.push(new Nota(delta, nactual, 1));
+        console.log(this.ap.notas[this.ap.notas.length - 1].n);
         enTeclado = false;
       }
 
@@ -192,7 +172,7 @@ export class AnadirLeccionPage {
     }
 
 
-    function renderizarNotas(array){
+    function renderizarnotas(array){
       try {
         if (array[array.length - 1].x > sw*0.9) {
           offset -= array[array.length - 1].d * sw * 0.02;
@@ -223,26 +203,6 @@ export class AnadirLeccionPage {
           //osc.fade(0, 0.2);
         }, duration-50);
       }
-    }
-
-    function borrarNota(){
-      if (notas[0].x < sw*0.1) {
-        offset += notas[notas.length-1].d*sw*0.02;
-      }
-      notas.splice(notas.length - 1 ,1)
-    }
-
-    function parsearLeccion(){
-      var texto = "";
-      for (var i = 0; i < notas.length; i++) {
-        texto = texto + notas[i].d.toString()+ "," + notas[i].n.toString() + "," + notas[i].t.toString() + "/";
-      }
-      return texto;
-    }
-
-    function borrarTodoToditoTodo(){
-      notas.length = 0;
-      offset = sw*0.2;
     }
 
     p.windowResized = () => {

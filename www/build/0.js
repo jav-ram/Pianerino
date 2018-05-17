@@ -47,10 +47,9 @@ var AnadirLeccionPageModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AnadirLeccionPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_anadir_anadir__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_js_p5_min__ = __webpack_require__(554);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_js_p5_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__assets_js_p5_min__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min__ = __webpack_require__(554);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -64,8 +63,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-var config, db;
+// declare var this.ap.notas: any;
+var config, db, sw, sh, offset;
 /**
  * Generated class for the AnadirLeccionPage page.
  *
@@ -78,35 +77,43 @@ var AnadirLeccionPage = /** @class */ (function () {
         this.navParams = navParams;
         this.ap = ap;
     }
-    AnadirLeccionPage.prototype.return = function () {
-        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
-        //this.navCtrl.push('Homepage');
+    AnadirLeccionPage.prototype.subir = function () {
+        var texto = "";
+        for (var i = 0; i < this.ap.notas.length; i++) {
+            texto = texto + this.ap.notas[i].d.toString() + "," + this.ap.notas[i].n.toString() + "," + this.ap.notas[i].t.toString() + "/";
+        }
+        this.ap.anadirLeccion(texto, "Esta leccion fue hecha por ti!");
+    };
+    AnadirLeccionPage.prototype.borrarNota = function () {
+        if (this.ap.notas[0].x < sw * 0.1) {
+            offset += this.ap.notas[this.ap.notas.length - 1].d * sw * 0.02;
+        }
+        this.ap.notas.splice(this.ap.notas.length - 1, 1);
+    };
+    AnadirLeccionPage.prototype.borrarTodoToditoTodo = function () {
+        this.ap.notas.length = 0;
+        offset = sw * 0.2;
+        console.log("sad");
+    };
+    AnadirLeccionPage.prototype.ionViewWillLeave = function () {
+        console.log("Looks like I'm about to leave :(");
+        document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
+        document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
     };
     AnadirLeccionPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        console.log('ionViewDidLoad AnadirLeccionPage');
-        config = {
-            apiKey: "AIzaSyBEC03gubW1gl-v2i26xJr1vxsmCnQl_RI",
-            authDomain: "pianerino.firebaseapp.com",
-            databaseURL: "https://pianerino.firebaseio.com",
-            projectId: "pianerino",
-            storageBucket: "pianerino.appspot.com",
-            messagingSenderId: "7147492081"
-        };
-        firebase.initializeApp(config);
         // The midi notes of a scale
         //               C        D        E        F        G        A        B        C
         var sketch = function (p) {
             var notes = [261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
             var now = 1, index = 0, trigger = 0, autoplay = false;
-            var sh = window.innerHeight * 0.9;
-            var sw = window.innerWidth;
+            sh = window.innerHeight * 0.9;
+            sw = window.innerWidth;
             var del, upload; //osc
-            var width = sw * 0.06, pianoY = (sh * 0.23), pentaY = (sh / 4) / 5, ini = (sw - width * 8) / 2;
+            var width = sw * 0.06, pianoY = (sh * 0.23), pentaY = (sh / 4) / 5, ini = (sw - width * 8) / 2, separador = sw * 0.01;
             var start, end, nactual;
-            db = firebase.firestore();
-            var notas = [];
-            var offset = sw * 0.2, separador = sw * 0.01;
+            _this.ap.notas = [];
+            offset = sw * 0.2;
             var enTeclado = false;
             function Nota(d, n, t) {
                 var colores;
@@ -134,11 +141,8 @@ var AnadirLeccionPage = /** @class */ (function () {
                     this.x = this.x - t;
                 };
             }
-            _this.ap.ree("Halp");
             p.setup = function () {
-                del = p.loadImage("assets/imgs/delete2.png");
-                upload = p.loadImage("assets/imgs/upload2.png");
-                var canvas = p.createCanvas(sw, sh);
+                var canvas = p.createCanvas(sw, sh).parent('defaultCanvas0');
                 // A triangle //oscillator
                 ////osc = new p5Sound.Sin//osc();
                 //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
@@ -163,16 +167,12 @@ var AnadirLeccionPage = /** @class */ (function () {
                 for (var i_1 = 0; i_1 <= 7; i_1++) {
                     p.rect(ini + i_1 * width, pianoY * 3, width, pianoY);
                 }
-                renderizarNotas(notas);
-                for (var i = 0; i < notas.length; i++) {
-                    if (notas[i].x < sw * 0.9 && notas[i].x > sw * 0.1) {
-                        notas[i].display();
+                renderizarnotas(_this.ap.notas);
+                for (var i = 0; i < _this.ap.notas.length; i++) {
+                    if (_this.ap.notas[i].x < sw * 0.9 && _this.ap.notas[i].x > sw * 0.1) {
+                        _this.ap.notas[i].display();
                     }
                 }
-                p.textSize(32);
-                p.text("Borrar", sw * 0.9, sh * 0.1);
-                p.image(del, 0, sh * 0.03, sw * 0.05, sw * 0.05);
-                p.image(upload, sw * 0.05, sh * 0.03, sw * 0.05, sw * 0.05);
                 // image(img,x,y,width,height)
             };
             // When we click
@@ -188,33 +188,6 @@ var AnadirLeccionPage = /** @class */ (function () {
                         }
                     }
                 }
-                //Si presiona el boton de borrar
-                if (p.mouseX > sw * 0.9 && p.mouseY < sh * 0.1) {
-                    borrarNota();
-                    console.log("borrado prro");
-                }
-                else if (p.mouseX < sw * 0.05 && p.mouseY < sh * 0.1) {
-                    borrarTodoToditoTodo();
-                }
-                else if (p.mouseX > sw * 0.05 && p.mouseX < sw * 0.1 && p.mouseY < sh * 0.1) {
-                    console.log("Aqui se subiria la wea, si supiera como ...");
-                    // Add a new document in collection "cities"
-                    db.collection("Lecciones").doc("Nueva").set({
-                        color: "#00b0ff",
-                        descripcion: "NUEVA LECCION!",
-                        dificultad: "1",
-                        imagen: "https://firebasestorage.googleapis.com/v0/b/pianerino.appspot.com/o/Iconos%2FLecciones%2F3_teclas.png?alt=media&token=74dfa35e-98d0-4c0f-b4b5-e3b115d6d97b",
-                        leccion: { contenido: parsearLeccion() },
-                        nombre: "nueva leccion"
-                    })
-                        .then(function () {
-                        console.log("Document successfully written!");
-                    })
-                        .catch(function (error) {
-                        console.error("Error writing document: ", error);
-                    });
-                    parsearLeccion();
-                }
             };
             // Fade it out when we release
             p.mouseReleased = function () {
@@ -225,13 +198,13 @@ var AnadirLeccionPage = /** @class */ (function () {
                     if (delta < 1) {
                         delta = 1;
                     }
-                    notas.push(new Nota(delta, nactual, 1));
-                    console.log(notas[notas.length - 1].n);
+                    _this.ap.notas.push(new Nota(delta, nactual, 1));
+                    console.log(_this.ap.notas[_this.ap.notas.length - 1].n);
                     enTeclado = false;
                 }
                 //osc.fade(0, 0.4);
             };
-            function renderizarNotas(array) {
+            function renderizarnotas(array) {
                 try {
                     if (array[array.length - 1].x > sw * 0.9) {
                         offset -= array[array.length - 1].d * sw * 0.02;
@@ -263,23 +236,6 @@ var AnadirLeccionPage = /** @class */ (function () {
                     }, duration - 50);
                 }
             }
-            function borrarNota() {
-                if (notas[0].x < sw * 0.1) {
-                    offset += notas[notas.length - 1].d * sw * 0.02;
-                }
-                notas.splice(notas.length - 1, 1);
-            }
-            function parsearLeccion() {
-                var texto = "";
-                for (var i = 0; i < notas.length; i++) {
-                    texto = texto + notas[i].d.toString() + "," + notas[i].n.toString() + "," + notas[i].t.toString() + "/";
-                }
-                return texto;
-            }
-            function borrarTodoToditoTodo() {
-                notas.length = 0;
-                offset = sw * 0.2;
-            }
             p.windowResized = function () {
                 p.resizeCanvas(window.innerWidth, window.innerHeight);
                 sw = window.innerWidth;
@@ -291,13 +247,13 @@ var AnadirLeccionPage = /** @class */ (function () {
                 separador = sw * 0.01;
             };
         };
-        var myp5 = new __WEBPACK_IMPORTED_MODULE_4__assets_js_p5_min__(sketch);
+        var myp5 = new __WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min__(sketch);
     };
     AnadirLeccionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n    <button ion-button round color="secondary" (click)="return()">Regresar</button>\n    <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800"></div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
+            selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n    <button ion-button round color="secondary" (click)="subir()">Subir</button>\n    <button ion-button round color="secondary" (click)="borrarNota()">Borrar</button>\n    <button ion-button round color="secondary" (click)="borrarTodoToditoTodo()">Eliminar TODO</button>\n    <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800"></div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_anadir_anadir__["a" /* AnadirProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_anadir_anadir__["a" /* AnadirProvider */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__["a" /* AnadirProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__["a" /* AnadirProvider */]) === "function" && _c || Object])
     ], AnadirLeccionPage);
     return AnadirLeccionPage;
     var _a, _b, _c;

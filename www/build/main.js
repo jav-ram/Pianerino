@@ -152,10 +152,10 @@ var HomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="dark">\n    <ion-title>\n      Home\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding color="light">\n  <div text-right>\n    <button ion-button round color="secondary" (click)="irAnadir()">Añadir Leccion</button>\n  </div>\n    <ion-item no-lines *ngFor="let leccion of users | async">\n      <div text-center>\n        <ion-row>\n          <ion-col col-3>\n          </ion-col>\n          <ion-col>\n            <a [href]="leccion_url + \'?nombre=\' + leccion.nombre">\n              <button ion-button large icon-only class="icono" [ngStyle]="{\'background-color\': leccion.color}" (press)="Info(leccion.nombre, leccion.descripcion)" (click)="irLeccion(leccion.nombre)" type="submit">\n                <img src={{leccion.imagen}} width="90%"/>\n              </button>\n            </a>\n          </ion-col>\n          <ion-col col-3>\n          </ion-col>\n        </ion-row>\n      </div>\n      <ion-row>\n        <ion-col></ion-col>\n        <ion-col><p class=\'titulo\'>{{leccion.nombre}}</p></ion-col>\n        <ion-col></ion-col>\n      </ion-row>\n    </ion-item>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_firestore__["a" /* AngularFirestore */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_firestore__["a" /* AngularFirestore */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Http */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_angularfire2_firestore__["a" /* AngularFirestore */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Http */], __WEBPACK_IMPORTED_MODULE_2__providers_users_users__["a" /* UsersProvider */]])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=home.js.map
@@ -303,6 +303,10 @@ module.exports = webpackAsyncContext;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AnadirProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(56);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -314,6 +318,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 /*
   Generated class for the AnadirProvider provider.
 
@@ -321,18 +328,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   and Angular DI.
 */
 var AnadirProvider = /** @class */ (function () {
-    function AnadirProvider(http) {
+    function AnadirProvider(http, afs, Loading, alert) {
         this.http = http;
+        this.afs = afs;
+        this.Loading = Loading;
+        this.alert = alert;
         console.log('Hello AnadirProvider Provider');
     }
-    AnadirProvider.prototype.ree = function (s) {
-        console.log(s);
+    AnadirProvider.prototype.anadirLeccion = function (leccionC, no) {
+        var _this = this;
+        var loading = this.Loading.create({ content: "Guardando, por favor espere..." });
+        loading.present();
+        this.leccionCollection = this.afs.collection('Lecciones');
+        this.leccionCollection.add({
+            color: "#00b0ff",
+            descripcion: "Leccion añadida por: ",
+            dificultad: "5",
+            imagen: "https://firebasestorage.googleapis.com/v0/b/pianerino.appspot.com/o/Iconos%2FLecciones%2F3_teclas.png?alt=media&token=74dfa35e-98d0-4c0f-b4b5-e3b115d6d97b",
+            leccion: { contenido: leccionC },
+            nombre: no
+        })
+            .then(function (result) {
+            console.log("Document addded with id >>> ", result.id);
+            loading.dismiss();
+        })
+            .catch(function (error) {
+            console.error("Error adding document: ", error);
+            var alert = _this.alert.create({
+                title: 'Error',
+                subTitle: 'Ops, algo salio mal, intenta de nuevo',
+                buttons: ['OK']
+            });
+            alert.present();
+        });
     };
     AnadirProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["f" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["f" /* LoadingController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object])
     ], AnadirProvider);
     return AnadirProvider;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=anadir.js.map
