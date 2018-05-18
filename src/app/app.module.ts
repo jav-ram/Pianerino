@@ -15,7 +15,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LogInPage } from '../pages/log-in/log-in';
 import { RegisterPage } from '../pages/register/register';
-import { LeccionPage } from '../pages/leccion/leccion'
+import { AnadirLeccionPage } from '../pages/anadir-leccion/anadir-leccion';
+import { LeccionPage } from '../pages/leccion/leccion';
 import { UsersProvider } from '../providers/users/users';
 import { AnadirProvider } from '../providers/anadir/anadir';
 
@@ -26,7 +27,8 @@ import { LeccionPageModule } from '../pages/leccion/leccion.module';
   declarations: [
     MyApp,
     HomePage,
-    LogInPage
+    LogInPage,
+    AnadirLeccionPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,8 @@ import { LeccionPageModule } from '../pages/leccion/leccion.module';
     MyApp,
     HomePage,
     LogInPage,
-    LeccionPage
+    LeccionPage,
+    AnadirLeccionPage
   ],
   providers: [
     StatusBar,

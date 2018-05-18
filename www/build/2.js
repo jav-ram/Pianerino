@@ -1,14 +1,14 @@
 webpackJsonp([2],{
 
-/***/ 551:
+/***/ 552:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LogInPageModule", function() { return LogInPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AnadirLeccionPageModule", function() { return AnadirLeccionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__log_in__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__anadir_leccion__ = __webpack_require__(351);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var LogInPageModule = /** @class */ (function () {
-    function LogInPageModule() {
+var AnadirLeccionPageModule = /** @class */ (function () {
+    function AnadirLeccionPageModule() {
     }
-    LogInPageModule = __decorate([
+    AnadirLeccionPageModule.prototype.ionViewWillEnter = function () {
+    };
+    AnadirLeccionPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__log_in__["a" /* LogInPage */],
+                __WEBPACK_IMPORTED_MODULE_2__anadir_leccion__["a" /* AnadirLeccionPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__log_in__["a" /* LogInPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__anadir_leccion__["a" /* AnadirLeccionPage */]),
             ],
         })
-    ], LogInPageModule);
-    return LogInPageModule;
+    ], AnadirLeccionPageModule);
+    return AnadirLeccionPageModule;
 }());
 
-//# sourceMappingURL=log-in.module.js.map
+//# sourceMappingURL=anadir-leccion.module.js.map
 
 /***/ })
 

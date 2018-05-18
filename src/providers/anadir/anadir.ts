@@ -33,11 +33,11 @@ export class AnadirProvider {
 
     this.leccionCollection = this.afs.collection('Lecciones');
     this.leccionCollection.add({
+    leccion: {contenido: leccionC},
     color: "#00b0ff",
     descripcion: "Leccion añadida por: ",
-    dificultad: "5",
+    dificultad: 5,
     imagen: "https://firebasestorage.googleapis.com/v0/b/pianerino.appspot.com/o/Iconos%2FLecciones%2F3_teclas.png?alt=media&token=74dfa35e-98d0-4c0f-b4b5-e3b115d6d97b",
-    leccion: {contenido: leccionC},
     nombre: no
     })
     .then( (result) => {

@@ -29,10 +29,6 @@ export class LeccionPage {
     this.nombreLeccion = navParams.get('nombre');
   }
 
-  back(){
-    this.navParams.pop();
-  }
-
   ionViewDidLeave() {
     console.log("Looks like I'm about to leave :(");
     //document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
@@ -227,7 +223,7 @@ export class LeccionPage {
           }
           for (let i = 0; i < notes.length; i++){
             if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
-              playNote(notes[i]);
+              //playNote(notes[i]);
               if (i == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
                 console.log("niceee");
                 puntos += 100;

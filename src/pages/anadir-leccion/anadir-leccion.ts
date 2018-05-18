@@ -84,7 +84,7 @@ export class AnadirLeccionPage {
       }
 
       this.pego = function(donde, r) {
-        var dis = dist(this.x, pos[n], donde, pos[n]);
+        var dis = p.dist(this.x, pos[n], donde, pos[n]);
         if (dis< r) {
           return true;
         }else {
@@ -145,7 +145,7 @@ export class AnadirLeccionPage {
         for (let i = 0; i < notes.length; i++){
           if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
             start = Date.now();
-            playNote(notes[i]);
+            //playNote(notes[i]);
             nactual = i;
             enTeclado = true;
           }
