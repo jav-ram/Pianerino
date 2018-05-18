@@ -49,7 +49,7 @@ export class HomePage {
   }
 
   irLeccion(cd: string, id: string){
-    this.navCtrl.push('LeccionPage', {
+    this.navCtrl.push("LeccionPage", {
       nombre: id,
       contenido: cd
     });

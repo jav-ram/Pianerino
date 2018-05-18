@@ -41,7 +41,7 @@ export class LogInPage {
     this.auth.signInWithEmail(credentials)
       .then(
         () => {
-          this.navCtrl.setRoot(HomePage)
+          this.navCtrl.setRoot(HomePage);
         },
         (error) => {
           let alert = this.alert.create({

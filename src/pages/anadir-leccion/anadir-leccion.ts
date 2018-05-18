@@ -51,7 +51,7 @@ export class AnadirLeccionPage {
   ionViewWillLeave() {
     console.log("Looks like I'm about to leave :(");
     document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
-    document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
+    //document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
   }
 
   ionViewDidLoad() {

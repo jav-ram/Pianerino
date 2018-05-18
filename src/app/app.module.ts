@@ -21,14 +21,14 @@ import { UsersProvider } from '../providers/users/users';
 import { AnadirProvider } from '../providers/anadir/anadir';
 
 import { LeccionPageModule } from '../pages/leccion/leccion.module';
+import { AnadirLeccionPageModule } from '../pages/anadir-leccion/anadir-leccion.module';
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LogInPage,
-    AnadirLeccionPage
+    LogInPage
   ],
   imports: [
     BrowserModule,
@@ -36,6 +36,7 @@ import { LeccionPageModule } from '../pages/leccion/leccion.module';
     HttpModule,
     HttpClientModule,
     LeccionPageModule,
+    AnadirLeccionPageModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule.enablePersistence()
