@@ -19,19 +19,21 @@ import { LeccionPage } from '../pages/leccion/leccion'
 import { UsersProvider } from '../providers/users/users';
 import { AnadirProvider } from '../providers/anadir/anadir';
 
+import { LeccionPageModule } from '../pages/leccion/leccion.module';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LogInPage,
-    LeccionPage
+    LogInPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
     HttpClientModule,
+    LeccionPageModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFirestoreModule.enablePersistence()

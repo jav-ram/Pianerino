@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 548:
+/***/ 553:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AnadirLeccionPageModule", function() { return AnadirLeccionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__anadir_leccion__ = __webpack_require__(553);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__anadir_leccion__ = __webpack_require__(555);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -40,15 +40,15 @@ var AnadirLeccionPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 553:
+/***/ 555:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AnadirLeccionPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min__ = __webpack_require__(552);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_js_p5_min__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -249,7 +249,7 @@ var AnadirLeccionPage = /** @class */ (function () {
     };
     AnadirLeccionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n    <button ion-button round color="secondary" (click)="subir()">Subir</button>\n    <button ion-button round color="secondary" (click)="borrarNota()">Borrar</button>\n    <button ion-button round color="secondary" (click)="borrarTodoToditoTodo()">Eliminar TODO</button>\n    <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800"></div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
+            selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/javoz/Clases/HCI/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n    <button ion-button round color="secondary" (click)="subir()">Subir</button>\n    <button ion-button round color="secondary" (click)="borrarNota()">Borrar</button>\n    <button ion-button round color="secondary" (click)="borrarTodoToditoTodo()">Eliminar TODO</button>\n    <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800"></div>\n</ion-content>\n'/*ion-inline-end:"/home/javoz/Clases/HCI/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__["a" /* AnadirProvider */]])
     ], AnadirLeccionPage);

@@ -26,12 +26,16 @@ export class LeccionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.contenido = navParams.get('contenido');
-    this.nombreLeccion = navParams.get('nombre')
+    this.nombreLeccion = navParams.get('nombre');
   }
 
-  ionViewWillLeave() {
+  back(){
+    this.navParams.pop();
+  }
+
+  ionViewDidLeave() {
     console.log("Looks like I'm about to leave :(");
-    document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
+    //document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
     document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
   }
 
@@ -81,7 +85,7 @@ export class LeccionPage {
       //LOGICA DE LA LECCION
       p.setup = () =>
       {
-        var canvas = p.createCanvas(sw ,sh).parent('defaultCanvas0');
+        var canvas = p.createCanvas(sw ,sh).parent('defaultCanvas1');
         restart = p.loadImage("assets/imgs/refresh2.png");
         agregar(this.contenido)
         // A triangle oscillator
