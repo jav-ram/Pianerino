@@ -17,6 +17,20 @@
 <script src="assets/js/p5.sound.min.js"></script>
 
 <ion-content padding>
-  <button ion-button (click)="back()" name="button"></button>
-  <div id="defaultCanvas1" style="width: 100%; height: 80%;" width="2100" height="800"></div>
+
+  <div id="defaultCanvas1" style="width: 100%; height: 60%;">
+    <button class="tecla" id="c" ion-button (click)="playNote(0)" name="c"></button>
+    <button class="tecla" id="d" ion-button (click)="playNote(1)" name="d"></button>
+    <button class="tecla" id="e" ion-button (click)="playNote(2)" name="e"></button>
+    <button class="tecla" id="f" ion-button (click)="playNote(3)" name="f"></button>
+    <button class="tecla" id="g" ion-button (click)="playNote(4)" name="g"></button>
+    <button class="tecla" id="a" ion-button (click)="playNote(5)" name="a"></button>
+    <button class="tecla" id="b" ion-button (click)="playNote(6)" name="b"></button>
+    <button class="tecla" id="c2" ion-button (click)="playNote(7)" name="c2"></button>
+    <button class="sostenida" id="cS" ion-button (click)="playNote(8)" name="cS"></button>
+    <button class="sostenida" id="dS" ion-button (click)="playNote(9)" name="dS"></button>
+    <button class="sostenida" id="fS" ion-button (click)="playNote(10)" name="fS"></button>
+    <button class="sostenida" id="gS" ion-button (click)="playNote(11)" name="gS"></button>
+    <button class="sostenida" id="aS" ion-button (click)="playNote(12)" name="aS"></button>
+  </div>
 </ion-content>

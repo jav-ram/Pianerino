@@ -25696,3 +25696,73 @@ page-leccion #defaultCanvas1 {
   position: fixed;
   top: 12%;
 }
+
+.tecla {
+  position: fixed;
+  background-color: #f2f2d9;
+  height: 23%;
+  width: 8%;
+  top: 72%;
+  z-index: 2;
+}
+
+.sostenida {
+  position: fixed;
+  background-color: black;
+  height: 15%;
+  width: 3%;
+  top: 72%;
+  z-index: 3;
+}
+
+#c {
+  left: 14%;
+}
+
+#d {
+  left: 23%;
+}
+
+#e {
+  left: 32%;
+}
+
+#f {
+  left: 41%;
+}
+
+#g {
+  left: 50%;
+}
+
+#a {
+  left: 59%;
+}
+
+#b {
+  left: 68%;
+}
+
+#c2 {
+  left: 77%;
+}
+
+#cS {
+  left: 20.2%;
+}
+
+#dS {
+  left: 29.2%;
+}
+
+#fS {
+  left: 47.2%;
+}
+
+#gS {
+  left: 56.2%;
+}
+
+#aS {
+  left: 65.2%;
+}

@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 551:
+/***/ 555:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(553);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(556);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,15 +38,15 @@ var RegisterPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 553:
+/***/ 556:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_users_users__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_users_users__ = __webpack_require__(106);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -61,11 +61,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var RegisterPage = /** @class */ (function () {
-    function RegisterPage(nav, auth, alertCtrl, afs) {
+    function RegisterPage(nav, auth, alertCtrl, afs, Loading) {
         this.nav = nav;
         this.auth = auth;
         this.alertCtrl = alertCtrl;
         this.afs = afs;
+        this.Loading = Loading;
         this.createSuccess = false;
         this.registerCredentials = { email: '', password: '' };
         this.usuario = {
@@ -81,42 +82,44 @@ var RegisterPage = /** @class */ (function () {
     };
     RegisterPage.prototype.register = function () {
         var _this = this;
+        var loading = this.Loading.create({ content: "Creando su cuenta, por favor espere..." });
+        loading.present();
         this.auth.register(this.registerCredentials).then(function (success) {
-            if (success) {
-                _this.createSuccess = true;
-                _this.showPopup("Exito", "Cuenta creada");
-                //guardar en base de datos
-                _this.usuario.correo = _this.registerCredentials.email;
-                _this.usuario.contraseña = _this.registerCredentials.password;
-                _this.usuario.puntos = 0;
-                _this.usuario.tipoUsuario = 0;
-                console.log(_this.usuario);
-                _this.afs.collection('Usuarios').doc(_this.nombreUsuario)
-                    .set(_this.usuario)
-                    .then(function (docRef) {
-                    console.log(docRef);
-                });
+            if (_this.registerCredentials.password != _this.password) {
+                _this.showPopup("Error", "No es la misma contraseña");
+                loading.dismiss();
             }
             else {
-                _this.showPopup("Error", "Hubo problema creando la cuenta.");
+                if (success) {
+                    _this.createSuccess = true;
+                    //guardar en base de datos
+                    _this.usuario.correo = _this.registerCredentials.email;
+                    _this.usuario.contraseña = _this.registerCredentials.password;
+                    _this.usuario.puntos = 0;
+                    _this.usuario.tipoUsuario = 0;
+                    console.log(_this.usuario);
+                    _this.afs.collection('Usuarios').doc(_this.usuario.correo)
+                        .set(_this.usuario)
+                        .then(function () {
+                        loading.dismiss();
+                        _this.nav.pop();
+                    });
+                }
+                else {
+                    _this.showPopup("Error", "Hubo problema creando la cuenta.");
+                }
             }
         }, function (error) {
             _this.showPopup("Error", error);
         });
     };
     RegisterPage.prototype.showPopup = function (title, text) {
-        var _this = this;
         var alert = this.alertCtrl.create({
             title: title,
             subTitle: text,
             buttons: [
                 {
-                    text: 'OK',
-                    handler: function (data) {
-                        if (_this.createSuccess) {
-                            _this.nav.popToRoot();
-                        }
-                    }
+                    text: 'OK'
                 }
             ]
         });
@@ -124,9 +127,11 @@ var RegisterPage = /** @class */ (function () {
     };
     RegisterPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"/home/javoz/Clases/HCI/Pianerino/src/pages/register/register.html"*/'<ion-header>\n  <ion-navbar color="dark">\n    <ion-title>Crear Usuario</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content class="login-content" padding>\n  <div class="login-box">\n\n    <form (ngSubmit)="register()" #registerForm="ngForm">\n      <ion-row>\n        <ion-col>\n          <ion-list inset>\n\n            <ion-item>\n              <ion-input type="text" placeholder="Nombre de Usuario" name="usuario" [(ngModel)]="nombreUsuario" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-input type="text" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-input type="text" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>\n            </ion-item>\n\n            <ion-item>\n              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>\n            </ion-item>\n\n          </ion-list>\n        </ion-col>\n      </ion-row>\n\n      <ion-row>\n        <ion-col class="signup-col">\n          <button color="secondary" style="color:#fff;" ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">\n            Crear usuario\n          </button>\n        </ion-col>\n      </ion-row>\n\n    </form>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/javoz/Clases/HCI/Pianerino/src/pages/register/register.html"*/,
+            selector: 'page-register',template:/*ion-inline-start:"C:\Users\Javier\Desktop\Pianerino\src\pages\register\register.html"*/'<ion-header>\n\n  <ion-navbar color="dark">\n\n    <ion-title>Crear Usuario</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="login-content" padding>\n\n  <div class="login-box">\n\n\n\n    <form (ngSubmit)="register()" #registerForm="ngForm">\n\n      <ion-row>\n\n        <ion-col>\n\n          <ion-list inset>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Nombre de Usuario" name="usuario" [(ngModel)]="nombreUsuario" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Correo" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="password" placeholder="Vuelva a ingresar contraseña" name="password" [(ngModel)]="password" required></ion-input>\n\n            </ion-item>\n\n\n\n          </ion-list>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row>\n\n        <ion-col class="signup-col">\n\n          <button color="secondary" style="color:#fff;" ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">\n\n            Crear usuario\n\n          </button>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n    </form>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Javier\Desktop\Pianerino\src\pages\register\register.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
     ], RegisterPage);
     return RegisterPage;
 }());

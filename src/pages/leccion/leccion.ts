@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
-import { AnadirProvider } from '../../providers/anadir/anadir'
-import * as p5 from '../../assets/js/p5.min'
-import * as p5Sound from '../../assets/js/p5.sound.min'
+import { AnadirProvider } from '../../providers/anadir/anadir';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import * as p5 from '../../assets/js/p5.min';
+import * as p5Sound from '../../assets/js/p5.sound.min';
 
 declare var dcodeIO: any;
 var sw, sh, notas;
@@ -23,26 +24,69 @@ export class LeccionPage {
 
   contenido: string;
   nombreLeccion: string;
+  audioCtx: AudioContext;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public screenOrientation: ScreenOrientation, private platform: Platform) {
     this.contenido = navParams.get('contenido');
     this.nombreLeccion = navParams.get('nombre');
+    this.audioCtx = new AudioContext();
   }
 
   ionViewDidLeave() {
     console.log("Looks like I'm about to leave :(");
+    if (this.platform.is('android') || this.platform.is('ios')){
+      //device-specific code, such as detecting screen rotation
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    }
+    else {
+        //desktop browser only code
+    }
     //document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
     document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
   }
 
+  private playNote(tecla){
+    const REAL_TIME_FREQUENCY = 440;
+    const ANGULAR_FREQUENCY = REAL_TIME_FREQUENCY * 2 * Math.PI;
+    let myBuffer = this.audioCtx.createBuffer(1, 88200, 44100);
+    let myArray = myBuffer.getChannelData(0);
+    for (let sampleNumber = 0 ; sampleNumber < 88200 ; sampleNumber++) {
+      myArray[sampleNumber] = generateSample(sampleNumber);
+    }
+
+    function generateSample(sampleNumber) {
+      let sampleTime = sampleNumber / 44100;
+      let sampleAngle = sampleTime * ANGULAR_FREQUENCY;
+      return Math.sin(sampleAngle);
+    }
+
+    let src = this.audioCtx.createBufferSource();
+    src.buffer = myBuffer;
+    src.connect(this.audioCtx.destination);
+    src.start();
+    console.log (tecla);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad LeccionPage');
+    console.log(this.screenOrientation.type);
+    console.log(this.screenOrientation.ORIENTATIONS);
+    console.log(this.screenOrientation)
+    //set landscape view
+    if (this.platform.is('android') || this.platform.is('ios')){
+      //device-specific code, such as detecting screen rotation
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+    }
+    else {
+        //desktop browser only code
+    }
+
 
     let sketch = p => {
       let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
       let now = 0, puntos = 0, index = 0, trigger = 0, autoplay = false, empezo = false;
       sw = window.innerWidth;
-      sh = window.innerHeight;
+      sh = window.innerHeight * .3;
       let osc;
       let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
       let start, end, nactual, restart, separador = sw*0.01, largoTotal=0, //rSlider, //pan;
@@ -81,11 +125,12 @@ export class LeccionPage {
       //LOGICA DE LA LECCION
       p.setup = () =>
       {
-        var canvas = p.createCanvas(sw ,sh).parent('defaultCanvas1');
+        console.log("dimensiones: " + sw + "x" + sh);
+        var canvas = p.createCanvas(sw , sh).parent('defaultCanvas1');
         restart = p.loadImage("assets/imgs/refresh2.png");
         agregar(this.contenido)
         // A triangle oscillator
-        // osc = new p5.SinOsc();
+        //osc = new this.P5.SinOsc();
         //pan = p.createSlider(0, 2, 1);
         //pan.position(sw*0.45, sh * 0.1);
         //pan.style('width', '10%');
@@ -114,6 +159,7 @@ export class LeccionPage {
 
         p.fill(0);
         p.rect(sw*0.1 , sh*0.25 , sw*0.02, sh*0.3);
+        /*
         //Teclas
         p.fill(255);
         for (let i = 0; i <= 7; i++){
@@ -126,7 +172,7 @@ export class LeccionPage {
             }
             notas[i].update();
           }
-        }
+        }*/
 
         try{
           if (notas[now].pego(sw*0.1, 1)) {

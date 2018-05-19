@@ -10,6 +10,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { firebaseConfig } from '../config'
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -53,6 +54,7 @@ import { AnadirLeccionPageModule } from '../pages/anadir-leccion/anadir-leccion.
     StatusBar,
     SplashScreen,
     AngularFireAuth,
+    ScreenOrientation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UsersProvider,
     AnadirProvider,
