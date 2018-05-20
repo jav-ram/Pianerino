@@ -40,12 +40,12 @@
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\cdbd7c130ec522eb3512a16c9b05d2e0\\res\\drawable-xxhdpi-v4\\googleg_standard_color_18.png"
     },
     {
-        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_media_cancel_action.xml.flat",
-        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_media_cancel_action.xml"
-    },
-    {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notify_panel_notification_icon_bg.png.flat",
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2f28a19f300f5eda04258ce073b3d34\\res\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_media_cancel_action.xml.flat",
+        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_media_cancel_action.xml"
     },
     {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_common_full_open_on_phone.png.flat",
@@ -68,12 +68,12 @@
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\cdbd7c130ec522eb3512a16c9b05d2e0\\res\\drawable-mdpi-v4\\googleg_disabled_color_18.png"
     },
     {
-        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_media_action.xml.flat",
-        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_media_action.xml"
-    },
-    {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21_notification_action_background.xml.flat",
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2f28a19f300f5eda04258ce073b3d34\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_media_action.xml.flat",
+        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_media_action.xml"
     },
     {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-land-hdpi_screen.png.flat",
@@ -108,12 +108,12 @@
         "source": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\src\\main\\res\\drawable-port-xxhdpi\\screen.png"
     },
     {
-        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_part_chronometer.xml.flat",
-        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2f28a19f300f5eda04258ce073b3d34\\res\\layout\\notification_template_part_chronometer.xml"
-    },
-    {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_icon.png.flat",
         "source": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\src\\main\\res\\mipmap-xhdpi\\icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_part_chronometer.xml.flat",
+        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2f28a19f300f5eda04258ce073b3d34\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_lines_media.xml.flat",
@@ -128,12 +128,12 @@
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2f28a19f300f5eda04258ce073b3d34\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
     },
     {
-        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_big_media_narrow.xml.flat",
-        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_template_big_media_narrow.xml"
-    },
-    {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\color_common_google_signin_btn_text_light.xml.flat",
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\cdbd7c130ec522eb3512a16c9b05d2e0\\res\\color\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_big_media_narrow.xml.flat",
+        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_template_big_media_narrow.xml"
     },
     {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light_focused.xml.flat",
@@ -148,12 +148,12 @@
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.1.0.aar\\c2f28a19f300f5eda04258ce073b3d34\\res\\drawable-hdpi-v4\\notification_bg_low_normal.9.png"
     },
     {
-        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_media_custom.xml.flat",
-        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_template_media_custom.xml"
-    },
-    {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light.xml.flat",
         "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\cdbd7c130ec522eb3512a16c9b05d2e0\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_media_custom.xml.flat",
+        "source": "C:\\Users\\Javier\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\f25d8db785f64163cf0a4da7df022d01\\res\\layout\\notification_template_media_custom.xml"
     },
     {
         "merged": "C:\\Users\\Javier\\Desktop\\Pianerino\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",

@@ -24,12 +24,34 @@ export class LeccionPage {
 
   contenido: string;
   nombreLeccion: string;
-  audioCtx: AudioContext;
+  audioCtx=[];
+  oscillators=[];
+  notes=[];
+  gainNode=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public screenOrientation: ScreenOrientation, private platform: Platform) {
     this.contenido = navParams.get('contenido');
     this.nombreLeccion = navParams.get('nombre');
-    this.audioCtx = new AudioContext();
+
+  }
+
+  ngOnInit(){
+    //inciar osciladores
+    this.notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
+    for(let i = 0; i < this.notes.length; i++){
+      this.audioCtx[i] = new AudioContext();
+      this.oscillators[i] = this.audioCtx[i].createOscillator();
+      this.gainNode[i] = this.audioCtx[i].createGain();
+
+      this.oscillators[i].type = 'sine';
+      this.oscillators[i].frequency.setValueAtTime(this.notes[i], this.audioCtx[i].currentTime); // value in hertz
+      this.oscillators[i].connect(this.gainNode[i]);
+      this.gainNode[i].connect(this.audioCtx[i].destination)
+      this.oscillators[i].start();
+
+      this.gainNode[i].gain.value = 0;
+    }
+
   }
 
   ionViewDidLeave() {
@@ -46,32 +68,22 @@ export class LeccionPage {
   }
 
   private playNote(tecla){
-    const REAL_TIME_FREQUENCY = 440;
-    const ANGULAR_FREQUENCY = REAL_TIME_FREQUENCY * 2 * Math.PI;
-    let myBuffer = this.audioCtx.createBuffer(1, 88200, 44100);
-    let myArray = myBuffer.getChannelData(0);
-    for (let sampleNumber = 0 ; sampleNumber < 88200 ; sampleNumber++) {
-      myArray[sampleNumber] = generateSample(sampleNumber);
-    }
+    // create Oscillator node
+    this.gainNode[tecla].gain.value = 1
+  }
 
-    function generateSample(sampleNumber) {
-      let sampleTime = sampleNumber / 44100;
-      let sampleAngle = sampleTime * ANGULAR_FREQUENCY;
-      return Math.sin(sampleAngle);
-    }
+  private unplayNote(tecla){
+    // Important! Setting a scheduled parameter value
+    this.gainNode[tecla].gain.setValueAtTime(this.gainNode[tecla].gain.value, this.audioCtx[tecla].currentTime);
 
-    let src = this.audioCtx.createBufferSource();
-    src.buffer = myBuffer;
-    src.connect(this.audioCtx.destination);
-    src.start();
-    console.log (tecla);
+    this.gainNode[tecla].gain.exponentialRampToValueAtTime(0.0001, this.audioCtx[tecla].currentTime + 0.03);;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LeccionPage');
     console.log(this.screenOrientation.type);
     console.log(this.screenOrientation.ORIENTATIONS);
-    console.log(this.screenOrientation)
+    console.log(this.screenOrientation);
     //set landscape view
     if (this.platform.is('android') || this.platform.is('ios')){
       //device-specific code, such as detecting screen rotation
@@ -83,10 +95,10 @@ export class LeccionPage {
 
 
     let sketch = p => {
-      let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
+
       let now = 0, puntos = 0, index = 0, trigger = 0, autoplay = false, empezo = false;
       sw = window.innerWidth;
-      sh = window.innerHeight * .3;
+      sh = window.innerHeight;
       let osc;
       let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
       let start, end, nactual, restart, separador = sw*0.01, largoTotal=0, //rSlider, //pan;
@@ -164,7 +176,7 @@ export class LeccionPage {
         p.fill(255);
         for (let i = 0; i <= 7; i++){
           p.rect(ini + i * width, pianoY*3, width, pianoY);
-        }
+        }*/
         if (empezo) {
           for (var i = 0; i < notas.length; i++) {
             if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
@@ -172,7 +184,7 @@ export class LeccionPage {
             }
             notas[i].update();
           }
-        }*/
+        }
 
         try{
           if (notas[now].pego(sw*0.1, 1)) {
@@ -267,9 +279,9 @@ export class LeccionPage {
             empezo = true;
             puntos+=50;
           }
-          for (let i = 0; i < notes.length; i++){
+          for (let i = 0; i < this.notes.length; i++){
             if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
-              //playNote(notes[i]);
+              //playNote(this.notes[i]);
               if (i == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
                 console.log("niceee");
                 puntos += 100;
