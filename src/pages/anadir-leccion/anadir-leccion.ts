@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AnadirProvider } from '../../providers/anadir/anadir'
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import * as p5 from '../../assets/js/p5.min'
 import * as p5Sound from '../../assets/js/p5.sound.min'
 
@@ -23,7 +24,34 @@ var config, db, sw, sh, offset;
 
 export class AnadirLeccionPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public ap:AnadirProvider) {
+  audioCtx=[];
+  oscillators=[];
+  notes=[];
+  gainNode=[];
+  start: any;
+  end: any;
+  leccion: string;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public ap:AnadirProvider , public screenOrientation: ScreenOrientation, private platform: Platform) {
+  }
+
+  ngOnInit(){
+    //inciar osciladores
+    this.notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
+    for(let i = 0; i < this.notes.length; i++){
+      this.audioCtx[i] = new AudioContext();
+      this.oscillators[i] = this.audioCtx[i].createOscillator();
+      this.gainNode[i] = this.audioCtx[i].createGain();
+
+      this.oscillators[i].type = 'sine';
+      this.oscillators[i].frequency.setValueAtTime(this.notes[i], this.audioCtx[i].currentTime); // value in hertz
+      this.oscillators[i].connect(this.gainNode[i]);
+      this.gainNode[i].connect(this.audioCtx[i].destination)
+      this.oscillators[i].start();
+
+      this.gainNode[i].gain.value = 0;
+    }
+
   }
 
   subir() {
@@ -47,18 +75,50 @@ export class AnadirLeccionPage {
     console.log("sad")
   }
 
+  private playNote(tecla){
+    // create Oscillator node
+    this.gainNode[tecla].gain.value = 1;
+    this.start = Date.now();
+  }
+
+  private unplayNote(tecla){
+    // Important! Setting a scheduled parameter value
+    this.gainNode[tecla].gain.setValueAtTime(this.gainNode[tecla].gain.value, this.audioCtx[tecla].currentTime);
+    console.log("help")
+    this.gainNode[tecla].gain.exponentialRampToValueAtTime(0.0001, this.audioCtx[tecla].currentTime + 0.03);;
+    this.end = Date.now();
+    var delta = Math.round(((this.end - this.start)*10)/1000);
+    if (delta<1) {
+      delta = 1;
+    }
+    this.leccion += delta.toString() + "," + tecla.toString() + ", 1/" ;
+    console.log(this.leccion)
+  }
 
   ionViewWillLeave() {
     console.log("Looks like I'm about to leave :(");
     document.getElementById("defaultCanvas0").parentElement.removeChild(document.getElementById("defaultCanvas0"));
     //document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
+    if (this.platform.is('android') || this.platform.is('ios')){
+      //device-specific code, such as detecting screen rotation
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    }
+    else {
+        //desktop browser only code
+    }
   }
 
   ionViewDidLoad() {
+    if (this.platform.is('android') || this.platform.is('ios')){
+      //device-specific code, such as detecting screen rotation
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+    }
+    else {
+        //desktop browser only code
+    }
     // The midi notes of a scale
     //               C        D        E        F        G        A        B        C
     let sketch = p => {
-    let notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
     let now = 1, index = 0, trigger = 0, autoplay = false;
     sh = window.innerHeight*0.9;
     sw = window.innerWidth;
@@ -142,7 +202,7 @@ export class AnadirLeccionPage {
     p.mousePressed = () => {
       // Map mouse to the key index
       if (p.mouseY > pianoY * 3){
-        for (let i = 0; i < notes.length; i++){
+        for (let i = 0; i < this.notes.length; i++){
           if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
             start = Date.now();
             //playNote(notes[i]);

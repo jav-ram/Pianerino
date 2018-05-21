@@ -7,7 +7,7 @@ import * as p5 from '../../assets/js/p5.min';
 import * as p5Sound from '../../assets/js/p5.sound.min';
 
 declare var dcodeIO: any;
-var sw, sh, notas;
+var sw, sh, notas, now, largoTotal;
 /**
  * Generated class for the LeccionPage page.
  *
@@ -28,6 +28,7 @@ export class LeccionPage {
   oscillators=[];
   notes=[];
   gainNode=[];
+  puntos: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public screenOrientation: ScreenOrientation, private platform: Platform) {
     this.contenido = navParams.get('contenido');
@@ -70,6 +71,22 @@ export class LeccionPage {
   private playNote(tecla){
     // create Oscillator node
     this.gainNode[tecla].gain.value = 1
+    if (tecla == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
+      console.log("niceee");
+      this.puntos += 100;
+    }else {
+      console.log("pato Af");
+      this.puntos -= 50;
+    }
+  }
+
+  restarterino(){
+    now = 0;
+    largoTotal = 0;
+    notas.length = 0;
+    this.puntos = 0;
+    //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
+    agregar(this.contenido);
   }
 
   private unplayNote(tecla){
@@ -96,12 +113,15 @@ export class LeccionPage {
 
     let sketch = p => {
 
-      let now = 0, puntos = 0, index = 0, trigger = 0, autoplay = false, empezo = false;
+      now = 0;
+      largoTotal=0;
+      let index = 0, trigger = 0, autoplay = false, empezo = false;
+      this.puntos = 0;
       sw = window.innerWidth;
       sh = window.innerHeight;
       let osc;
       let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
-      let start, end, nactual, restart, separador = sw*0.01, largoTotal=0, //rSlider, //pan;
+      let start, end, nactual, restart, separador = sw*0.01, //rSlider, //pan;
       notas = [];
       //DEFINICION DE UNA NOTA
       function Nota(d, n, t){
@@ -196,7 +216,7 @@ export class LeccionPage {
         p.fill(0);
         p.textSize(32);
         //p.text(str,x,y,x2,y2)
-        p.text("Puntos: " + puntos , sw * 0.45 , sh * 0.2);
+        p.text("Puntos: " + this.puntos , sw * 0.45 , sh * 0.2);
         p.image(restart ,sw*0.9 ,sh*0.03, sw*0.05, sw*0.05);
 
         // try {
@@ -214,9 +234,9 @@ export class LeccionPage {
             p.fill(p.color(13, 13, 38));
             p.strokeWeight(1);
             if (this.nombreLeccion == "Primera vez") {
-              p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + puntos +" PUNTOS", sw*0.2,sh*0.3);
+              p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
             }else {
-              p.text(" TERMINO LA LECCION! \n OBTUVISTE " + puntos +" PUNTOS", sw*0.2,sh*0.3);
+              p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
             }
             p.noLoop();
           }
@@ -231,7 +251,7 @@ export class LeccionPage {
             p.textSize(sw*0.02);
             p.fill(p.color(13, 13, 38));
             p.strokeWeight(1);
-            p.text(" Bienvenido a tu primera leccion. Para jugar, toca las teclas\n justo cuando la nota llegue a la linea negra.\n Cada nota correcta te da 100 puntos, cada incorrecta resta\n 50 a tu puntaje.\n Arriba a la derecha encontraras un boton de 'reset', este te\n permite empezar la leccion desde 0. Suerte!\n\n\n             [Presiona cualquier tecla para continuar]",sw*0.2,sh*0.3);
+            p.text(" Bienvenido a tu primera leccion. Para jugar, toca las teclas\n justo cuando la nota llegue a la linea negra.\n Cada nota correcta te da 100 this.puntos, cada incorrecta resta\n 50 a tu puntaje.\n Arriba a la derecha encontraras un boton de 'reset', este te\n permite empezar la leccion desde 0. Suerte!\n\n\n             [Presiona cualquier tecla para continuar]",sw*0.2,sh*0.3);
           }else {
             p.fill(p.color(204, 217, 255));
             p.rect(sw*0.3,sh*0.4,sw*0.4,sh*0.2);
@@ -277,24 +297,25 @@ export class LeccionPage {
         if (p.mouseY > pianoY * 3){
           if (!empezo) {
             empezo = true;
-            puntos+=50;
+            this.puntos+=50;
           }
           for (let i = 0; i < this.notes.length; i++){
             if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
+              console.log(notas)
               //playNote(this.notes[i]);
-              if (i == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
-                console.log("niceee");
-                puntos += 100;
-              }else {
-                console.log("pato Af");
-                puntos -= 50;
-              }
+              // if (i == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
+              //   console.log("niceee");
+              //   this.puntos += 100;
+              // }else {
+              //   console.log("pato Af");
+              //   this.puntos -= 50;
+              // }
             }
           }
         }else if (p.mouseX > sw*0.90 && p.mouseY < sh*0.1) {
-          restarterino();
+          //restarterino();
         }else if (p.mouseX < 0.05*sw && p.mouseY < sh*0.1) {
-          window.open("localhost:8100");
+          //window.open("localhost:8100");
         }
         // try {
         //   //console.log(//rSlider.value());
@@ -332,17 +353,6 @@ export class LeccionPage {
         renderizarNotas(notas);
         console.log(notas);
       }
-
-      function restarterino(){
-        now = 0;
-        largoTotal = 0;
-        notas.length = 0;
-        puntos = 0;
-        p.loop();
-        //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
-        agregar(this.contenido);
-      }
-
 
       p.windowResized = () => {
          p.resizeCanvas(p.windowWidth, p.windowHeight);
