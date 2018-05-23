@@ -7,7 +7,7 @@ import * as p5 from '../../assets/js/p5.min';
 import * as p5Sound from '../../assets/js/p5.sound.min';
 
 declare var dcodeIO: any;
-var sw, sh, notas, now, largoTotal;
+var sw, sh, now, largoTotal;
 /**
  * Generated class for the LeccionPage page.
  *
@@ -27,6 +27,7 @@ export class LeccionPage {
   audioCtx=[];
   oscillators=[];
   notes=[];
+  notas=[];
   gainNode=[];
   puntos: number = 0;
 
@@ -69,9 +70,10 @@ export class LeccionPage {
   }
 
   private playNote(tecla){
+    console.log("faaaaa")
     // create Oscillator node
     this.gainNode[tecla].gain.value = 1
-    if (tecla == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
+    if (tecla == this.notas[now].n && this.notas[now].pego(sw*0.1 ,60)) {
       console.log("niceee");
       this.puntos += 100;
     }else {
@@ -83,10 +85,10 @@ export class LeccionPage {
   restarterino(){
     now = 0;
     largoTotal = 0;
-    notas.length = 0;
+    this.notas.length = 0;
     this.puntos = 0;
     //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
-    agregar(this.contenido);
+    //agregar(this.contenido);
   }
 
   private unplayNote(tecla){
@@ -121,8 +123,8 @@ export class LeccionPage {
       sh = window.innerHeight;
       let osc;
       let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
-      let start, end, nactual, restart, separador = sw*0.01, //rSlider, //pan;
-      notas = [];
+      let start, end, nactual, restart, separador = sw*0.01;
+      // this.notas = [];
       //DEFINICION DE UNA NOTA
       function Nota(d, n, t){
         let colores;
@@ -133,14 +135,14 @@ export class LeccionPage {
         this.x = sh*0.8;
         pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
         colores = [p.color(255, 102, 102), p.color(178, 255, 102), p.color(102, 178, 255), p.color(255, 255, 102), p.color(255, 102, 178), p.color(102, 255, 178), p.color(192, 192, 192), p.color(29,88 ,138)];
-
+        this.y = pos[n]
         this.display = function(){
           p.fill(colores[n]);
-          p.rect(this.x, pos[n], d*sw*0.02, sh*0.025);
+          p.rect(this.x, this.y, d*sw*0.02, sh*0.025);
         }
 
         this.pego = function(donde, r) {
-          var dis = p.dist(this.x, pos[n], donde, pos[n]);
+          var dis = p.dist(this.x, this.y, donde, this.y);
           if (dis< r) {
             return true;
           }else {
@@ -160,7 +162,7 @@ export class LeccionPage {
         console.log("dimensiones: " + sw + "x" + sh);
         var canvas = p.createCanvas(sw , sh).parent('defaultCanvas1');
         restart = p.loadImage("assets/imgs/refresh2.png");
-        agregar(this.contenido)
+        p.agregar(this.contenido)
         // A triangle oscillator
         //osc = new this.P5.SinOsc();
         //pan = p.createSlider(0, 2, 1);
@@ -198,16 +200,16 @@ export class LeccionPage {
           p.rect(ini + i * width, pianoY*3, width, pianoY);
         }*/
         if (empezo) {
-          for (var i = 0; i < notas.length; i++) {
-            if (notas[i].x < sw*0.9 && notas[i].x > sw*0.1 ) {
-              notas[i].display();
+          for (var i = 0; i < this.notas.length; i++) {
+            if (this.notas[i].x < sw*0.9 && this.notas[i].x > sw*0.1 ) {
+              this.notas[i].display();
             }
-            notas[i].update();
+            this.notas[i].update();
           }
         }
 
         try{
-          if (notas[now].pego(sw*0.1, 1)) {
+          if (this.notas[now].pego(sw*0.1, 1)) {
             now +=1;
           }
         }catch(error){
@@ -221,13 +223,13 @@ export class LeccionPage {
 
         // try {
         //   //let s = rSlider.value();
-        //   //rSlider.value(largoTotal - notas[notas.length-1].x + notas[notas.length-1].d*sw*0.02)
+        //   //rSlider.value(largoTotal - this.notas[this.notas.length-1].x + this.notas[this.notas.length-1].d*sw*0.02)
         // } catch (e) {
         //  console.log(e)
         // }
 
         try {
-          if (notas[notas.length - 1].x < sw*0.1) {
+          if (this.notas[this.notas.length - 1].x < sw*0.1) {
             p.fill(p.color(204, 217, 255));
             p.rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
             p.textSize(sw*0.028);
@@ -263,7 +265,7 @@ export class LeccionPage {
         }
       }
 
-      function renderizarNotas(array){
+      function renderizarnotas(array){
         for (let i = 0; i < array.length; i++) {
           if (i==0) {
             array[i].x = sw*0.3;
@@ -301,9 +303,9 @@ export class LeccionPage {
           }
           for (let i = 0; i < this.notes.length; i++){
             if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
-              console.log(notas)
+              //console.log(this.notas)
               //playNote(this.notes[i]);
-              // if (i == notas[now].n && notas[now].pego(sw*0.1 ,60)) {
+              // if (i == this.notas[now].n && this.notas[now].pego(sw*0.1 ,60)) {
               //   console.log("niceee");
               //   this.puntos += 100;
               // }else {
@@ -330,12 +332,12 @@ export class LeccionPage {
         //osc.fade(0, 0.4);
       }
 
-      function agregar(txt){
+      p.agregar = (txt) =>{
         console.log(txt);
         var lineas = txt.split("/");
         for (var i = 0; i < lineas.length - 1; i++) {
           var linea = lineas[i].split(",");
-          notas.push(new Nota(parseInt(linea[0]),parseInt(linea[1]),parseInt(linea[2])));
+          this.notas[i]=(new Nota(parseInt(linea[0]),parseInt(linea[1]),parseInt(linea[2])));
           largoTotal = largoTotal + parseInt(linea[0])*sw*0.03 + separador;
         }
 
@@ -350,19 +352,22 @@ export class LeccionPage {
         //   //rSlider.position(sw*0.2, sh * 0.6);
         //   //rSlider.style('width', '60%');
         // }
-        renderizarNotas(notas);
-        console.log(notas);
+        renderizarnotas(this.notas);
       }
 
       p.windowResized = () => {
-         p.resizeCanvas(p.windowWidth, p.windowHeight);
-         sw = p.windowWidth;
-         sh = p.windowHeight;
-         width = sw*0.06;
-         pianoY = (sh*0.23);
-         pentaY = (sh/4)/5;
-         ini = (sw - width * 8)/2;
-         separador = sw*0.01;
+        let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
+        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        sw = p.windowWidth;
+        sh = p.windowHeight;
+        width = sw*0.06;
+        pianoY = (sh*0.23);
+        pentaY = (sh/4)/5;
+        ini = (sw - width * 8)/2;
+        separador = sw*0.01;
+        for (let i = 0; i < this.notas.length; i++){
+           this.notas[i].y = pos[this.notas[i].n];
+        }
          console.log("Resize");
       }
     }
