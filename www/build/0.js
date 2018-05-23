@@ -107,6 +107,7 @@ var RegisterPage = /** @class */ (function () {
                 }
                 else {
                     _this.showPopup("Error", "Hubo problema creando la cuenta.");
+                    loading.dismiss();
                 }
             }
         }, function (error) {

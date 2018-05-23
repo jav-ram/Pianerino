@@ -7,7 +7,7 @@ import * as p5 from '../../assets/js/p5.min';
 import * as p5Sound from '../../assets/js/p5.sound.min';
 
 declare var dcodeIO: any;
-var sw, sh, now, largoTotal;
+var sw, sh, now, largoTotal, empezo = false;
 /**
  * Generated class for the LeccionPage page.
  *
@@ -73,22 +73,42 @@ export class LeccionPage {
 
   private playNote(tecla){
     console.log("faaaaa")
+    if (!empezo) {
+      empezo = true;
+      this.puntos+=50;
+    }
     // create Oscillator node
     this.gainNode[tecla].gain.value = 1
-    if (tecla == this.notas[now].n && this.notas[now].pego(sw*0.1 ,60)) {
-      console.log("niceee");
-      this.puntos += 100;
-    }else {
-      console.log("pato Af");
-      this.puntos -= 50;
+    try{
+      if (tecla == this.notas[now].n && this.notas[now].pego(sw*0.1 , sw*0.0375)) {
+        console.log("niceee");
+        this.puntos += 100;
+      }else {
+        console.log("pato Af");
+        this.puntos -= 50;
+      }
+    }catch(e){
+      console.log("se acabo la cancion we");
     }
   }
 
   restarterino(){
+    let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
     now = 0;
     largoTotal = 0;
-    this.notas.length = 0;
+    //this.notas.length = 0;
+    let separador = sw*0.01;
     this.puntos = 0;
+    console.log(this.notas);
+    for (let i = 0; i < this.notas.length; i++) {
+      if (i==0) {
+        this.notas[i].x = sw*0.3;
+      }else {
+        this.notas[i].x = this.notas[i-1].x + this.notas[i-1].d * sw * 0.02 + separador;
+      }
+      this.notas[i].y = pos[this.notas[i].n];
+    }
+    console.log(this.notas);
     //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
     //agregar(this.contenido);
   }
@@ -108,7 +128,7 @@ export class LeccionPage {
     //set landscape view
     if (this.platform.is('android') || this.platform.is('ios')){
       //device-specific code, such as detecting screen rotation
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then();
     }
     else {
         //desktop browser only code
@@ -119,7 +139,7 @@ export class LeccionPage {
 
       now = 0;
       largoTotal=0;
-      let index = 0, trigger = 0, autoplay = false, empezo = false;
+      let index = 0, trigger = 0, autoplay = false;
       this.puntos = 0;
       sw = window.innerWidth;
       sh = window.innerHeight;
@@ -174,6 +194,7 @@ export class LeccionPage {
         // Start silent
         // osc.start();
         // osc.amp(0);
+        this.restarterino();
       }
 
       p.draw = () =>
@@ -242,7 +263,7 @@ export class LeccionPage {
             }else {
               p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
             }
-            p.noLoop();
+            //p.noLoop();
           }
         } catch (e) {
 
@@ -268,12 +289,14 @@ export class LeccionPage {
       }
 
       function renderizarnotas(array){
+        let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
         for (let i = 0; i < array.length; i++) {
           if (i==0) {
             array[i].x = sw*0.3;
           }else {
             array[i].x = array[i-1].x + array[i-1].d * sw * 0.02 + separador;
           }
+          array[i].y = pos[array[i].n];
         }
       }
 
@@ -299,10 +322,10 @@ export class LeccionPage {
 
         // Map mouse to the key index
         if (p.mouseY > pianoY * 3){
-          if (!empezo) {
-            empezo = true;
-            this.puntos+=50;
-          }
+          // if (!empezo) {
+          //   empezo = true;
+          //   this.puntos+=50;
+          // }
           for (let i = 0; i < this.notes.length; i++){
             if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
               //console.log(this.notas)
@@ -358,7 +381,7 @@ export class LeccionPage {
       }
 
       p.windowResized = () => {
-        let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
+        //let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
         p.resizeCanvas(p.windowWidth, p.windowHeight);
         sw = p.windowWidth;
         sh = p.windowHeight;
@@ -367,9 +390,10 @@ export class LeccionPage {
         pentaY = (sh/4)/5;
         ini = (sw - width * 8)/2;
         separador = sw*0.01;
-        for (let i = 0; i < this.notas.length; i++){
-           this.notas[i].y = pos[this.notas[i].n];
-        }
+        // for (let i = 0; i < this.notas.length; i++){
+        //    this.notas[i].y = pos[this.notas[i].n];
+        // }
+        this.restarterino();
          console.log("Resize");
       }
     }
