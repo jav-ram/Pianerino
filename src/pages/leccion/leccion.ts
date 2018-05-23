@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AnadirProvider } from '../../providers/anadir/anadir';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -31,7 +31,9 @@ export class LeccionPage {
   gainNode=[];
   puntos: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public screenOrientation: ScreenOrientation, private platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public screenOrientation: ScreenOrientation, private platform: Platform,
+    private alertCtrl: AlertController) {
     this.contenido = navParams.get('contenido');
     this.nombreLeccion = navParams.get('nombre');
 

@@ -59,6 +59,7 @@ export class RegisterPage {
             });
         } else {
           this.showPopup("Error", "Hubo problema creando la cuenta.");
+          loading.dismiss();
         }
       }
 
