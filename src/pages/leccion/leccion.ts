@@ -31,6 +31,7 @@ export class LeccionPage {
   gainNode=[];
   puntos: number = 0;
   empezo: boolean = false;
+  alert: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public screenOrientation: ScreenOrientation, private platform: Platform,
@@ -59,19 +60,22 @@ export class LeccionPage {
 
     //Alert
     //this.showPopup('Instrucciones', 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!');
-    let alert = this.alertCtrl.create({
-      title: 'Instrucciones',
-      subTitle: 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!',
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            this.empezo = true;
+    if (this.alert == undefined){
+      this.alert = this.alertCtrl.create({
+        title: 'Instrucciones',
+        subTitle: 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              this.empezo = true;
+              this.alert = undefined;
+            }
           }
-        }
-      ]
-    });
-    alert.present();
+        ]
+      });
+      this.alert.present();
+    }
   }
 
 
@@ -123,7 +127,7 @@ export class LeccionPage {
     console.log(this.screenOrientation.type);
     console.log(this.screenOrientation.ORIENTATIONS);
     console.log(this.screenOrientation);
-    
+
 
 
     let sketch = p => {
@@ -243,15 +247,42 @@ export class LeccionPage {
 
         try {
           if (this.notas[this.notas.length - 1].x < sw*0.1) {
-            p.fill(p.color(204, 217, 255));
-            p.rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
-            p.textSize(sw*0.028);
-            p.fill(p.color(13, 13, 38));
-            p.strokeWeight(1);
             if (this.nombreLeccion == "Primera vez") {
-              p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+              //p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+              if (this.alert == undefined){
+                this.alert = this.alertCtrl.create({
+                  title: 'Felicidades',
+                  subTitle: 'Has completado tu primera leccion. ¡Sigue aprendiendo! OBTUVISTE ' + this.puntos + ' PUNTOS',
+                  buttons: [
+                    {
+                      text: 'OK',
+                      handler: () => {
+                        this.navCtrl.pop();
+                        this.alert = undefined;
+                      }
+                    }
+                  ]
+                });
+                this.alert.present();
+              }
             }else {
-              p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+              //p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+              if(this.alert == undefined){
+                this.alert = this.alertCtrl.create({
+                  title: 'TERMINO LA LECCION!',
+                  subTitle: 'OBTUVISTE ' + this.puntos + ' PUNTOS',
+                  buttons: [
+                    {
+                      text: 'OK',
+                      handler: () => {
+                        this.navCtrl.pop();
+                        this.alert = undefined;
+                      }
+                    }
+                  ]
+                });
+                this.alert.present();
+              }
             }
             p.noLoop();
           }
@@ -366,6 +397,7 @@ export class LeccionPage {
         separador = sw*0.01;
         for (let i = 0; i < this.notas.length; i++){
            this.notas[i].y = pos[this.notas[i].n];
+           this.notas[i].pos = pos;
         }
          console.log("Resize");
       }

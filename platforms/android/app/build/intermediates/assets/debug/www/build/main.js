@@ -894,16 +894,37 @@ var LeccionPage = /** @class */ (function () {
                 // }
                 try {
                     if (_this.notas[_this.notas.length - 1].x < sw * 0.1) {
-                        p.fill(p.color(204, 217, 255));
-                        p.rect(sw * 0.2, sh * 0.2, sw * 0.6, sh * 0.6);
-                        p.textSize(sw * 0.028);
-                        p.fill(p.color(13, 13, 38));
-                        p.strokeWeight(1);
                         if (_this.nombreLeccion == "Primera vez") {
-                            p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + _this.puntos + " PUNTOS", sw * 0.2, sh * 0.3);
+                            //p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+                            var alert_1 = _this.alertCtrl.create({
+                                title: 'Felicidades',
+                                subTitle: 'Has completado tu primera leccion. ¡Sigue aprendiendo! OBTUVISTE ' + _this.puntos + ' PUNTOS',
+                                buttons: [
+                                    {
+                                        text: 'OK',
+                                        handler: function () {
+                                            _this.navCtrl.pop();
+                                        }
+                                    }
+                                ]
+                            });
+                            alert_1.present();
                         }
                         else {
-                            p.text(" TERMINO LA LECCION! \n OBTUVISTE " + _this.puntos + " PUNTOS", sw * 0.2, sh * 0.3);
+                            //p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+                            var alert_2 = _this.alertCtrl.create({
+                                title: 'TERMINO LA LECCION!',
+                                subTitle: 'OBTUVISTE ' + _this.puntos + ' PUNTOS',
+                                buttons: [
+                                    {
+                                        text: 'OK',
+                                        handler: function () {
+                                            _this.navCtrl.pop();
+                                        }
+                                    }
+                                ]
+                            });
+                            alert_2.present();
                         }
                         p.noLoop();
                     }
@@ -1009,6 +1030,7 @@ var LeccionPage = /** @class */ (function () {
                 separador = sw * 0.01;
                 for (var i = 0; i < _this.notas.length; i++) {
                     _this.notas[i].y = pos[_this.notas[i].n];
+                    _this.notas[i].pos = pos;
                 }
                 console.log("Resize");
             };

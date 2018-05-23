@@ -731,19 +731,22 @@ var LeccionPage = /** @class */ (function () {
         }
         //Alert
         //this.showPopup('Instrucciones', 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!');
-        var alert = this.alertCtrl.create({
-            title: 'Instrucciones',
-            subTitle: 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!',
-            buttons: [
-                {
-                    text: 'OK',
-                    handler: function () {
-                        _this.empezo = true;
+        if (this.alert == undefined) {
+            this.alert = this.alertCtrl.create({
+                title: 'Instrucciones',
+                subTitle: 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!',
+                buttons: [
+                    {
+                        text: 'OK',
+                        handler: function () {
+                            _this.empezo = true;
+                            _this.alert = undefined;
+                        }
                     }
-                }
-            ]
-        });
-        alert.present();
+                ]
+            });
+            this.alert.present();
+        }
     };
     LeccionPage.prototype.ionViewDidLeave = function () {
         console.log("Looks like I'm about to leave :(");
@@ -894,16 +897,43 @@ var LeccionPage = /** @class */ (function () {
                 // }
                 try {
                     if (_this.notas[_this.notas.length - 1].x < sw * 0.1) {
-                        p.fill(p.color(204, 217, 255));
-                        p.rect(sw * 0.2, sh * 0.2, sw * 0.6, sh * 0.6);
-                        p.textSize(sw * 0.028);
-                        p.fill(p.color(13, 13, 38));
-                        p.strokeWeight(1);
                         if (_this.nombreLeccion == "Primera vez") {
-                            p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + _this.puntos + " PUNTOS", sw * 0.2, sh * 0.3);
+                            //p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+                            if (_this.alert == undefined) {
+                                _this.alert = _this.alertCtrl.create({
+                                    title: 'Felicidades',
+                                    subTitle: 'Has completado tu primera leccion. ¡Sigue aprendiendo! OBTUVISTE ' + _this.puntos + ' PUNTOS',
+                                    buttons: [
+                                        {
+                                            text: 'OK',
+                                            handler: function () {
+                                                _this.navCtrl.pop();
+                                                _this.alert = undefined;
+                                            }
+                                        }
+                                    ]
+                                });
+                                _this.alert.present();
+                            }
                         }
                         else {
-                            p.text(" TERMINO LA LECCION! \n OBTUVISTE " + _this.puntos + " PUNTOS", sw * 0.2, sh * 0.3);
+                            //p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
+                            if (_this.alert == undefined) {
+                                _this.alert = _this.alertCtrl.create({
+                                    title: 'TERMINO LA LECCION!',
+                                    subTitle: 'OBTUVISTE ' + _this.puntos + ' PUNTOS',
+                                    buttons: [
+                                        {
+                                            text: 'OK',
+                                            handler: function () {
+                                                _this.navCtrl.pop();
+                                                _this.alert = undefined;
+                                            }
+                                        }
+                                    ]
+                                });
+                                _this.alert.present();
+                            }
                         }
                         p.noLoop();
                     }
@@ -1009,6 +1039,7 @@ var LeccionPage = /** @class */ (function () {
                 separador = sw * 0.01;
                 for (var i = 0; i < _this.notas.length; i++) {
                     _this.notas[i].y = pos[_this.notas[i].n];
+                    _this.notas[i].pos = pos;
                 }
                 console.log("Resize");
             };
@@ -1019,11 +1050,10 @@ var LeccionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-leccion',template:/*ion-inline-start:"C:\Users\Javier\Desktop\Pianerino\src\pages\leccion\leccion.html"*/'<!--\n\n  Generated template for the LeccionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>leccion</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n<script src="assets/js/p5.min.js"></script>\n\n<script src="assets/js/p5.dom.js"></script>\n\n<script src="assets/js/print.js"></script>\n\n<script src="assets/js/p5.sound.min.js"></script>\n\n\n\n<ion-content padding>\n\n  <button ion-button round color="secondary" (click)="restarterino()">Reiniciar</button>\n\n  <div id="defaultCanvas1" style="width: 100%; height: 80%;" width="2100" height="800">\n\n    <button class="tecla" id="c" ion-button (touchstart)="playNote(0)" (touchend)="unplayNote(0)" name="c"></button>\n\n    <button class="tecla" id="d" ion-button (touchstart)="playNote(1)" (touchend)="unplayNote(1)" name="d"></button>\n\n    <button class="tecla" id="e" ion-button (touchstart)="playNote(2)" (touchend)="unplayNote(2)" name="e"></button>\n\n    <button class="tecla" id="f" ion-button (touchstart)="playNote(3)" (touchend)="unplayNote(3)" name="f"></button>\n\n    <button class="tecla" id="g" ion-button (touchstart)="playNote(4)" (touchend)="unplayNote(4)" name="g"></button>\n\n    <button class="tecla" id="a" ion-button (touchstart)="playNote(5)" (touchend)="unplayNote(5)" name="a"></button>\n\n    <button class="tecla" id="b" ion-button (touchstart)="playNote(6)" (touchend)="unplayNote(6)" name="b"></button>\n\n    <button class="tecla" id="c2" ion-button (touchstart)="playNote(7)" (touchend)="unplayNote(7)" name="c2"></button>\n\n    <button class="sostenida" id="cS" ion-button (touchstart)="playNote(8)" (touchend)="unplayNote(8)" name="cS"></button>\n\n    <button class="sostenida" id="dS" ion-button (touchstart)="playNote(9)" (touchend)="unplayNote(9)" name="dS"></button>\n\n    <button class="sostenida" id="fS" ion-button (touchstart)="playNote(10)" (touchend)="unplayNote(10)" name="fS"></button>\n\n    <button class="sostenida" id="gS" ion-button (touchstart)="playNote(11)" (touchend)="unplayNote(11)" name="gS"></button>\n\n    <button class="sostenida" id="aS" ion-button (touchstart)="playNote(12)" (touchend)="unplayNote(12)" name="aS"></button>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Javier\Desktop\Pianerino\src\pages\leccion\leccion.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_screen_orientation__["a" /* ScreenOrientation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_screen_orientation__["a" /* ScreenOrientation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_screen_orientation__["a" /* ScreenOrientation */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object])
     ], LeccionPage);
     return LeccionPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=leccion.js.map
