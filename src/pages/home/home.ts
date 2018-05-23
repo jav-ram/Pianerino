@@ -33,6 +33,10 @@ export class HomePage {
     this.navCtrl.push('AnadirLeccionPage');
   }
 
+  irUsu(){
+    this.navCtrl.push('UsuarioPage');
+  }
+
   ionViewDidEnter(){
     this.leccionCollection = this.afs.collection('Lecciones');
     this.users = this.leccionCollection.valueChanges();
