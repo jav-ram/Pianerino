@@ -36,6 +36,7 @@ export class HomePage {
   }
 
 
+
   ionViewWillLeave(){
     //set landscape view
     if (this.platform.is('android') || this.platform.is('ios')){
@@ -47,6 +48,9 @@ export class HomePage {
     }
   }
 
+  irUsu(){
+    this.navCtrl.push('UsuarioPage');
+  }
 
   ionViewDidEnter(){
     this.leccionCollection = this.afs.collection('Lecciones');
