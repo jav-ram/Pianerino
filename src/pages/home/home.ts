@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { UsersProvider } from '../../providers/users/users';
 import { AlertController } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AnadirLeccionPage } from '../anadir-leccion/anadir-leccion';
@@ -25,13 +26,27 @@ export class HomePage {
   usuario: any;
 
   constructor(public navCtrl: NavController, private afs: AngularFirestore,
-    public popOut: AlertController, private http: Http, public user: UsersProvider) {
+    public popOut: AlertController, private http: Http, public user: UsersProvider,
+    public screenOrientation: ScreenOrientation, private platform: Platform) {
 
   }
 
   irAnadir(){
     this.navCtrl.push('AnadirLeccionPage');
   }
+
+
+  ionViewWillLeave(){
+    //set landscape view
+    if (this.platform.is('android') || this.platform.is('ios')){
+      //device-specific code, such as detecting screen rotation
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+    }
+    else {
+        //desktop browser only code
+    }
+  }
+
 
   ionViewDidEnter(){
     this.leccionCollection = this.afs.collection('Lecciones');

@@ -30,6 +30,7 @@ export class LeccionPage {
   notas=[];
   gainNode=[];
   puntos: number = 0;
+  empezo: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public screenOrientation: ScreenOrientation, private platform: Platform,
@@ -56,7 +57,24 @@ export class LeccionPage {
       this.gainNode[i].gain.value = 0;
     }
 
+    //Alert
+    //this.showPopup('Instrucciones', 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!');
+    let alert = this.alertCtrl.create({
+      title: 'Instrucciones',
+      subTitle: 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            this.empezo = true;
+          }
+        }
+      ]
+    });
+    alert.present();
   }
+
+
 
   ionViewDidLeave() {
     console.log("Looks like I'm about to leave :(");
@@ -72,7 +90,7 @@ export class LeccionPage {
   }
 
   private playNote(tecla){
-    console.log("faaaaa")
+
     // create Oscillator node
     this.gainNode[tecla].gain.value = 1
     if (tecla == this.notas[now].n && this.notas[now].pego(sw*0.1 ,60)) {
@@ -105,21 +123,14 @@ export class LeccionPage {
     console.log(this.screenOrientation.type);
     console.log(this.screenOrientation.ORIENTATIONS);
     console.log(this.screenOrientation);
-    //set landscape view
-    if (this.platform.is('android') || this.platform.is('ios')){
-      //device-specific code, such as detecting screen rotation
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-    }
-    else {
-        //desktop browser only code
-    }
+    
 
 
     let sketch = p => {
 
       now = 0;
       largoTotal=0;
-      let index = 0, trigger = 0, autoplay = false, empezo = false;
+      let index = 0, trigger = 0, autoplay = false;
       this.puntos = 0;
       sw = window.innerWidth;
       sh = window.innerHeight;
@@ -201,7 +212,7 @@ export class LeccionPage {
         for (let i = 0; i <= 7; i++){
           p.rect(ini + i * width, pianoY*3, width, pianoY);
         }*/
-        if (empezo) {
+        if (this.empezo) {
           for (var i = 0; i < this.notas.length; i++) {
             if (this.notas[i].x < sw*0.9 && this.notas[i].x > sw*0.1 ) {
               this.notas[i].display();
@@ -248,23 +259,7 @@ export class LeccionPage {
 
         }
 
-        if (!empezo){
-          if (this.nombreLeccion == "Primera vez") {
-            p.fill(p.color(204, 217, 255));
-            p.rect(sw*0.2,sh*0.2,sw*0.6,sh*0.6);
-            p.textSize(sw*0.02);
-            p.fill(p.color(13, 13, 38));
-            p.strokeWeight(1);
-            p.text(" Bienvenido a tu primera leccion. Para jugar, toca las teclas\n justo cuando la nota llegue a la linea negra.\n Cada nota correcta te da 100 this.puntos, cada incorrecta resta\n 50 a tu puntaje.\n Arriba a la derecha encontraras un boton de 'reset', este te\n permite empezar la leccion desde 0. Suerte!\n\n\n             [Presiona cualquier tecla para continuar]",sw*0.2,sh*0.3);
-          }else {
-            p.fill(p.color(204, 217, 255));
-            p.rect(sw*0.3,sh*0.4,sw*0.4,sh*0.2);
-            p.textSize(sw*0.02);
-            p.fill(p.color(13, 13, 38));
-            p.strokeWeight(1);
-            p.text("    [Presiona una tecla para continuar]",sw*0.3,sh*0.5)
-          }
-        }
+
       }
 
       function renderizarnotas(array){
@@ -299,8 +294,8 @@ export class LeccionPage {
 
         // Map mouse to the key index
         if (p.mouseY > pianoY * 3){
-          if (!empezo) {
-            empezo = true;
+          if (!this.empezo) {
+            this.empezo = true;
             this.puntos+=50;
           }
           for (let i = 0; i < this.notes.length; i++){
@@ -360,8 +355,10 @@ export class LeccionPage {
       p.windowResized = () => {
         let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
         p.resizeCanvas(p.windowWidth, p.windowHeight);
+        console.log(sw, sh)
         sw = p.windowWidth;
         sh = p.windowHeight;
+        console.log(sw, sh)
         width = sw*0.06;
         pianoY = (sh*0.23);
         pentaY = (sh/4)/5;
