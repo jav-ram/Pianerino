@@ -8,6 +8,7 @@ import * as p5Sound from '../../assets/js/p5.sound.min';
 
 declare var dcodeIO: any;
 var sw, sh, now, largoTotal;
+var pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
 /**
  * Generated class for the LeccionPage page.
  *
@@ -26,12 +27,14 @@ export class LeccionPage {
   nombreLeccion: string;
   audioCtx=[];
   oscillators=[];
+  panNode=[];
   notes=[];
   notas=[];
   gainNode=[];
   puntos: number = 0;
   empezo: boolean = false;
   alert: any;
+  panning: number = 0.0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public screenOrientation: ScreenOrientation, private platform: Platform,
@@ -48,14 +51,20 @@ export class LeccionPage {
       this.audioCtx[i] = new AudioContext();
       this.oscillators[i] = this.audioCtx[i].createOscillator();
       this.gainNode[i] = this.audioCtx[i].createGain();
+      this.panNode[i] = this.audioCtx[i].createStereoPanner();
 
       this.oscillators[i].type = 'sine';
       this.oscillators[i].frequency.setValueAtTime(this.notes[i], this.audioCtx[i].currentTime); // value in hertz
       this.oscillators[i].connect(this.gainNode[i]);
-      this.gainNode[i].connect(this.audioCtx[i].destination)
+      this.panNode[i].pan.setValueAtTime(this.panning, this.audioCtx[i].currentTime);
+      this.gainNode[i].connect(this.panNode[i])
       this.oscillators[i].start();
 
       this.gainNode[i].gain.value = 0;
+
+
+      this.panNode[i].connect(this.audioCtx[i].destination);
+
     }
 
     //Alert
@@ -93,6 +102,12 @@ export class LeccionPage {
     document.getElementById("defaultCanvas1").parentElement.removeChild(document.getElementById("defaultCanvas1"));
   }
 
+  private changePanning(){
+    for(let i = 0; i < this.notes.length; i++){
+      this.panNode[i].pan.setValueAtTime(this.panning/10, this.audioCtx[i].currentTime);
+    }
+  }
+
   private playNote(tecla){
     console.log("faaaaa")
     if (!this.empezo) {
@@ -115,7 +130,7 @@ export class LeccionPage {
   }
 
   restarterino(){
-    let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
+
     now = 0;
     largoTotal = 0;
     //this.notas.length = 0;

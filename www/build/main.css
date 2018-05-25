@@ -25697,6 +25697,13 @@ page-leccion #defaultCanvas1 {
   top: 12%;
 }
 
+.panner {
+  position: fixed;
+  width: 50%;
+  left: 25%;
+  top: 10%;
+}
+
 .tecla {
   position: fixed;
   background-color: #f2f2d9;
