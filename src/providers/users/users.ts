@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Usuario } from '../../interfaces/interfaces';
+import { Usuario, tipoUsuario } from '../../interfaces/interfaces';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import AuthProvider = firebase.auth.AuthProvider;
@@ -22,7 +22,9 @@ export class UsersProvider {
   private usuarioCollection: AngularFirestoreCollection<Usuario>;
   private usuarios: Observable<Usuario[]>;
   private user: firebase.User;
+
   public userDB: any;
+  public userType: any;
 
 	constructor(public afAuth: AngularFireAuth, public afs: AngularFirestore) {
 		afAuth.authState.subscribe(user => {
@@ -43,6 +45,10 @@ export class UsersProvider {
          this.usuarioCollection.doc(credentials.email).ref.get().then((doc) => {
            if (doc.exists) {
                this.userDB = doc.data();
+               console.log(doc)
+               doc.data().tipoUsuario.get().then((doc)=>{
+                 this.userDB.tipoUsuario = doc.data();
+               })
                console.log("Document data:", this.userDB);
 
            } else {

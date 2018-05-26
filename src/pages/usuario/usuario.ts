@@ -19,7 +19,7 @@ import * as firebase from 'firebase/app';
   templateUrl: 'usuario.html',
 })
 export class UsuarioPage {
-	
+
 public users: any;
 
 
@@ -50,7 +50,8 @@ public users: any;
   }
 
   public tipo(){
-  	return this.user.getUser().tipoUsuario;
+
+  	return this.user.getUser().tipoUsuario.tipo;
   }
 
   public correo(){

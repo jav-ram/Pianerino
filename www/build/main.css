@@ -25683,6 +25683,13 @@ page-anadir-leccion #defaultCanvas1 {
   top: 12%;
 }
 
+.cuenta {
+  position: absolute;
+  right: 0%;
+  top: -45%;
+  height: 150%;
+}
+
 .icono {
   line-height: 20vh !important;
   height: 100%;

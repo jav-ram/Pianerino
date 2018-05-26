@@ -15,3 +15,7 @@ export interface Leccion {
   leccion: any;
   nombre: string;
 }
+
+export interface tipoUsuario {
+  tipo: string;
+}
