@@ -47,6 +47,7 @@ export class LeccionPage {
   ngOnInit(){
     //inciar osciladores
     this.notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
+    console.log("ventana",this.navCtrl.getActive().component.name)
     for(let i = 0; i < this.notes.length; i++){
       this.audioCtx[i] = new AudioContext();
       this.oscillators[i] = this.audioCtx[i].createOscillator();
@@ -69,7 +70,7 @@ export class LeccionPage {
 
     //Alert
     //this.showPopup('Instrucciones', 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!');
-    if (this.alert == undefined){
+    if (this.alert == undefined && this.navCtrl.getActive().component.name == 'LeccionPage'){
       this.alert = this.alertCtrl.create({
         title: 'Instrucciones',
         subTitle: 'Bienvenido a tu primera leccion. Para jugar, toca las teclas justo cuando la nota llegue a la linea negra. Cada nota correcta te da 100 this.puntos, cada incorrecta resta 50 a tu puntaje. Arriba a la derecha encontraras un boton de , este te permite empezar la leccion desde 0. Suerte!',
@@ -284,7 +285,7 @@ export class LeccionPage {
           if (this.notas[this.notas.length - 1].x < sw*0.1) {
             if (this.nombreLeccion == "Primera vez") {
               //p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
-              if (this.alert == undefined){
+              if (this.alert == undefined && this.navCtrl.getActive().component.name == 'LeccionPage'){
                 this.alert = this.alertCtrl.create({
                   title: 'Felicidades',
                   subTitle: 'Has completado tu primera leccion. ¡Sigue aprendiendo! OBTUVISTE ' + this.puntos + ' PUNTOS',
@@ -293,6 +294,7 @@ export class LeccionPage {
                       text: 'OK',
                       handler: () => {
                         this.navCtrl.pop();
+                        this.alert.dismiss();
                         this.alert = undefined;
                       }
                     }
@@ -302,7 +304,7 @@ export class LeccionPage {
               }
             }else {
               //p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
-              if(this.alert == undefined){
+              if(this.alert == undefined && this.navCtrl.getActive().component.name == 'LeccionPage'){
                 this.alert = this.alertCtrl.create({
                   title: 'TERMINO LA LECCION!',
                   subTitle: 'OBTUVISTE ' + this.puntos + ' PUNTOS',
