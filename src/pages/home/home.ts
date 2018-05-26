@@ -38,6 +38,10 @@ export class HomePage {
 
 
   ionViewWillLeave(){
+
+  }
+
+  private changeOrientation(){
     //set landscape view
     if (this.platform.is('android') || this.platform.is('ios')){
       //device-specific code, such as detecting screen rotation
@@ -68,6 +72,7 @@ export class HomePage {
   }
 
   irLeccion(cd: string, id: string){
+    this.changeOrientation();
     this.navCtrl.push("LeccionPage", {
       nombre: id,
       contenido: cd

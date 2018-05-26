@@ -80,17 +80,16 @@ var UsersProvider = /** @class */ (function () {
     };
     UsersProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */]) === "function" && _b || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */]])
     ], UsersProvider);
     return UsersProvider;
-    var _a, _b;
 }());
 
 //# sourceMappingURL=users.js.map
 
 /***/ }),
 
-/***/ 187:
+/***/ 186:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -198,15 +197,15 @@ var map = {
 		270
 	],
 	"../pages/log-in/log-in.module": [
-		556,
+		554,
 		2
 	],
 	"../pages/register/register.module": [
-		554,
+		555,
 		1
 	],
 	"../pages/usuario/usuario.module": [
-		555,
+		556,
 		0
 	]
 };
@@ -1116,7 +1115,7 @@ var LeccionPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_users_users__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_firestore__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_screen_orientation__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1152,6 +1151,8 @@ var HomePage = /** @class */ (function () {
         this.navCtrl.push('AnadirLeccionPage');
     };
     HomePage.prototype.ionViewWillLeave = function () {
+    };
+    HomePage.prototype.changeOrientation = function () {
         //set landscape view
         if (this.platform.is('android') || this.platform.is('ios')) {
             //device-specific code, such as detecting screen rotation
@@ -1177,6 +1178,7 @@ var HomePage = /** @class */ (function () {
         console.log(this.user.getUser());
     };
     HomePage.prototype.irLeccion = function (cd, id) {
+        this.changeOrientation();
         this.navCtrl.push("LeccionPage", {
             nombre: id,
             contenido: cd
@@ -1227,7 +1229,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(187);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__(245);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_splash_screen__ = __webpack_require__(317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(318);
@@ -1239,7 +1241,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_screen_orientation__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__(553);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_home_home__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_log_in_log_in__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_log_in_log_in__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_anadir_leccion_anadir_leccion__ = __webpack_require__(243);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_leccion_leccion__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_users_users__ = __webpack_require__(107);
@@ -1290,9 +1292,9 @@ var AppModule = /** @class */ (function () {
                     links: [
                         { loadChildren: '../pages/anadir-leccion/anadir-leccion.module#AnadirLeccionPageModule', name: 'AnadirLeccionPage', segment: 'anadir-leccion', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/leccion/leccion.module#LeccionPageModule', name: 'LeccionPage', segment: 'leccion', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/log-in/log-in.module#LogInPageModule', name: 'LogInPage', segment: 'log-in', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/register/register.module#RegisterPageModule', name: 'RegisterPage', segment: 'register', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/log-in/log-in.module#LogInPageModule', name: 'LogInPage', segment: 'log-in', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* HttpModule */],
@@ -1356,7 +1358,7 @@ var firebaseConfig = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(318);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(317);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_log_in_log_in__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_log_in_log_in__ = __webpack_require__(186);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

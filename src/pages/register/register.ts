@@ -31,10 +31,12 @@ export class RegisterPage {
   ) { }
 
   ionViewWillEnter(){
-
   }
 
   register() {
+
+
+
     let loading = this.Loading.create({content : "Creando su cuenta, por favor espere..."});
     loading.present();
     this.auth.register(this.registerCredentials).then(success => {
@@ -49,7 +51,7 @@ export class RegisterPage {
           this.usuario.correo = this.registerCredentials.email;
           this.usuario.contraseña = this.registerCredentials.password;
           this.usuario.puntos = 0;
-          this.usuario.tipoUsuario = 0;
+          this.usuario.tipoUsuario = this.afs.doc('TipoUsuarios/0').ref;
           console.log(this.usuario)
           this.afs.collection('Usuarios').doc(this.usuario.correo)
             .set(this.usuario)

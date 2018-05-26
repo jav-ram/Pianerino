@@ -4,7 +4,7 @@ export interface Usuario {
  correo: string;
  nombre: string;
  puntos: number;
- tipoUsuario: number;
+ tipoUsuario: any;
 }
 
 export interface Leccion {
