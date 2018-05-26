@@ -15,11 +15,31 @@
 
 <ion-content padding color='light'>
 	<ion-list>
-		<ion-item class="item"><b> {{name()}} {{apellido()}}</b></ion-item>
-		<ion-item class="item">Correo: <br> {{correo()}}</ion-item>
-		<ion-item class="item">Puntos: <br> {{puntos()}}</ion-item>
-    <ion-item class="item">Puntos: <br> {{tipo()}}</ion-item>
-    
+    <ion-item class="item">
+      <ion-label id="text">Usuario</ion-label>
+      <ion-input type="text" id="text" disabled="true" value="{{usuario()}}"></ion-input>
+    </ion-item>
+
+		<ion-item class="item">
+      <ion-label id="text">Nombre</ion-label>
+      <ion-input type="text" id="text" disabled="true" value="{{name()}}  {{apellido()}}"></ion-input>
+    </ion-item>
+
+    <ion-item class="item">
+      <ion-label id="text">Correo</ion-label>
+      <ion-input type="text" id="text" disabled="true" value="{{correo()}}"></ion-input>
+    </ion-item>
+
+    <ion-item class="item">
+      <ion-label id="text">Puntos</ion-label>
+      <ion-input type="text" id="text" disabled="true" value="{{puntos()}}"></ion-input>
+    </ion-item>
+
+    <ion-item class="item">
+      <ion-label id="text">Tipo de Usuario</ion-label>
+      <ion-input type="text" id="text" disabled="true" value="{{tipo()}}"></ion-input>
+    </ion-item>
+
 	</ion-list>
 
 </ion-content>

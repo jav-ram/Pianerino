@@ -58,4 +58,8 @@ public users: any;
   	return this.user.getUser().correo;
   }
 
+  public usuario(){
+    return this.user.getUser().usuario;
+  }
+
 }

@@ -13,27 +13,33 @@
           <ion-list inset>
 
             <ion-item>
-              <ion-input type="text" placeholder="Nombre de Usuario" name="usuario" [(ngModel)]="nombreUsuario" required></ion-input>
+              <ion-label stacked>Nombre de Usuario</ion-label>
+              <ion-input type="text" placeholder="Nombre de Usuario" name="usuario" [(ngModel)]="usuario.usuario" required></ion-input>
             </ion-item>
 
             <ion-item>
+              <ion-label stacked>Nombre</ion-label>
               <ion-input type="text" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" required></ion-input>
             </ion-item>
 
             <ion-item>
+              <ion-label stacked>Apellido</ion-label>
               <ion-input type="text" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" required></ion-input>
             </ion-item>
 
             <ion-item>
+              <ion-label stacked>Correo</ion-label>
               <ion-input type="text" placeholder="Correo" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
 
             <ion-item>
+              <ion-label stacked>Contraseña</ion-label>
               <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input type="password" placeholder="Vuelva a ingresar contraseña" name="password" [(ngModel)]="password" required></ion-input>
+              <ion-label stacked>Vuelva a ingresar su contraseña</ion-label>
+              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>
             </ion-item>
 
           </ion-list>

@@ -25685,9 +25685,14 @@ page-anadir-leccion #defaultCanvas1 {
 
 .cuenta {
   position: absolute;
-  right: 0%;
-  top: -45%;
-  height: 150%;
+  right: -0.5%;
+  top: -75%;
+  height: 220%;
+  width: 8%;
+}
+
+ion-icon {
+  font-size: 45px;
 }
 
 .icono {
@@ -25779,4 +25784,8 @@ page-leccion #defaultCanvas1 {
 
 #aS {
   left: 65.2%;
+}
+
+#text {
+  color: black;
 }

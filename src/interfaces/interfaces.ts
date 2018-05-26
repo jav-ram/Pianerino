@@ -5,6 +5,7 @@ export interface Usuario {
  nombre: string;
  puntos: number;
  tipoUsuario: any;
+ usuario: string;
 }
 
 export interface Leccion {

@@ -18,10 +18,10 @@ export class RegisterPage {
     correo: '',
     nombre: '',
     puntos: 0,
+    usuario: '',
     tipoUsuario: {}
   }
   password: string;
-  nombreUsuario: string;
   userCollection: AngularFirestoreCollection<Usuario>;
   users: Observable<Usuario[]>;
 
