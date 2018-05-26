@@ -18,7 +18,7 @@ export class RegisterPage {
     correo: '',
     nombre: '',
     puntos: 0,
-    tipoUsuario: 0
+    tipoUsuario: {}
   }
   password: string;
   nombreUsuario: string;
