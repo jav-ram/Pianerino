@@ -257,7 +257,7 @@ export class LeccionPage {
           if (this.notas[this.notas.length - 1].x < sw*0.1) {
             if (this.nombreLeccion == "Primera vez") {
               //p.text(" Felicidades, has completado tu primera\n leccion. ¡Sigue aprendiendo!\n\n\n\n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
-              if (this.alert == undefined && this.navCtrl.getActive().component.name == 'LeccionPage'){
+              if (this.alert == undefined){
                 this.alert = this.alertCtrl.create({
                   title: 'Felicidades',
                   subTitle: 'Has completado tu primera leccion. ¡Sigue aprendiendo! OBTUVISTE ' + this.puntos + ' PUNTOS',
@@ -265,14 +265,22 @@ export class LeccionPage {
                     {
                       text: 'OK',
                       handler: () => {
-                        this.navCtrl.pop();
-                        this.alert.dismiss();
+                        if (this.navCtrl.getActive().component.name == 'LeccionPage') {
+                            this.navCtrl.pop();
+                        }
+                        else {
+                          console.log("hubo un error")
+                        }
+                        //this.alert.dismiss();
                         this.alert = undefined;
                       }
                     }
                   ]
                 });
-                this.alert.present();
+                if (this.navCtrl.getActive().component.name == 'LeccionPage'){
+                  this.alert.present();
+                }
+
               }
             }else {
               //p.text(" TERMINO LA LECCION! \n OBTUVISTE " + this.puntos +" PUNTOS", sw*0.2,sh*0.3);
