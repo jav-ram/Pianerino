@@ -131,7 +131,7 @@ export class LeccionPage {
   }
 
   restarterino(){
-
+    let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
     now = 0;
     largoTotal = 0;
     //this.notas.length = 0;
@@ -175,7 +175,7 @@ export class LeccionPage {
       sh = window.innerHeight;
       let osc;
       let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2;
-      let start, end, nactual, restart, separador = sw*0.01;
+      let start, end, nactual, separador = sw*0.01;
       // this.notas = [];
       //DEFINICION DE UNA NOTA
       function Nota(d, n, t){
@@ -213,27 +213,12 @@ export class LeccionPage {
       {
         console.log("dimensiones: " + sw + "x" + sh);
         var canvas = p.createCanvas(sw , sh).parent('defaultCanvas1');
-        restart = p.loadImage("assets/imgs/refresh2.png");
         p.agregar(this.contenido)
-        // A triangle oscillator
-        //osc = new this.P5.SinOsc();
-        //pan = p.createSlider(0, 2, 1);
-        //pan.position(sw*0.45, sh * 0.1);
-        //pan.style('width', '10%');
-        //leer("assets/js/lecciones/prueba.txt", function(){console.log("Yei");});
-        // Start silent
-        // osc.start();
-        // osc.amp(0);
         this.restarterino();
       }
 
       p.draw = () =>
       {
-        // p.fill(0);
-        // p.textSize(16);
-        // p.text("L        R",sw*0.45,sh*0.5);
-
-        //var r = //rSlider.value();
         p.background(256,256,256);
         //Pentagrama
         p.stroke(p.color(0, 0, 0));
@@ -246,12 +231,7 @@ export class LeccionPage {
 
         p.fill(0);
         p.rect(sw*0.1 , sh*0.25 , sw*0.02, sh*0.3);
-        /*
-        //Teclas
-        p.fill(255);
-        for (let i = 0; i <= 7; i++){
-          p.rect(ini + i * width, pianoY*3, width, pianoY);
-        }*/
+
         if (this.empezo) {
           for (var i = 0; i < this.notas.length; i++) {
             if (this.notas[i].x < sw*0.9 && this.notas[i].x > sw*0.1 ) {
@@ -272,14 +252,6 @@ export class LeccionPage {
         p.textSize(32);
         //p.text(str,x,y,x2,y2)
         p.text("Puntos: " + this.puntos , sw * 0.45 , sh * 0.2);
-        p.image(restart ,sw*0.9 ,sh*0.03, sw*0.05, sw*0.05);
-
-        // try {
-        //   //let s = rSlider.value();
-        //   //rSlider.value(largoTotal - this.notas[this.notas.length-1].x + this.notas[this.notas.length-1].d*sw*0.02)
-        // } catch (e) {
-        //  console.log(e)
-        // }
 
         try {
           if (this.notas[this.notas.length - 1].x < sw*0.1) {
@@ -342,23 +314,6 @@ export class LeccionPage {
         }
       }
 
-      // A function to play a note
-      function playNote(note, duration) {
-        //osc.amp(0.5)
-        // osc.freq(note);
-        // osc.//pan(//pan.value()-1, 0);
-        // // Fade it in
-        // osc.fade(1, 0.4);
-
-        // If we sest a duration, fade it out
-        if (duration) {
-          console.log("asda");
-          setTimeout(function() {
-            //osc.fade(0, 0.2);
-          }, duration-50);
-        }
-      }
-
       // When we click
       p.mousePressed = () => {
 
@@ -368,31 +323,7 @@ export class LeccionPage {
             this.empezo = true;
             this.puntos+=50;
           }
-
-          for (let i = 0; i < this.notes.length; i++){
-            if (p.mouseX > (i * width)+ini && p.mouseX < (i+1) * width + ini){
-              //console.log(this.notas)
-              //playNote(this.notes[i]);
-              // if (i == this.notas[now].n && this.notas[now].pego(sw*0.1 ,60)) {
-              //   console.log("niceee");
-              //   this.puntos += 100;
-              // }else {
-              //   console.log("pato Af");
-              //   this.puntos -= 50;
-              // }
-            }
-          }
-        }else if (p.mouseX > sw*0.90 && p.mouseY < sh*0.1) {
-          //restarterino();
-        }else if (p.mouseX < 0.05*sw && p.mouseY < sh*0.1) {
-          //window.open("localhost:8100");
         }
-        // try {
-        //   //console.log(//rSlider.value());
-        // } catch (e) {
-        //   console.log("no value yet Xd");
-        // }
-
       }
 
       // Fade it out when we release
@@ -411,20 +342,10 @@ export class LeccionPage {
 
         largoTotal -= separador;
         console.log("largo Total " + largoTotal);
-        // try {
-        //   //rSlider.remove();
-        // } catch (e) {
-        //   console.log("Aun no hay un slider");
-        // } finally {
-        //   //rSlider = createSlider(0, largoTotal, 0);
-        //   //rSlider.position(sw*0.2, sh * 0.6);
-        //   //rSlider.style('width', '60%');
-        // }
         renderizarnotas(this.notas);
       }
 
       p.windowResized = () => {
-        //let pos = [sh*0.5375, sh*0.5125, sh*0.4875, sh*0.4625, sh*0.4375, sh*0.4125, sh*0.3875, sh*0.3625];
         p.resizeCanvas(p.windowWidth, p.windowHeight);
         console.log(sw, sh)
         sw = p.windowWidth;
@@ -435,10 +356,7 @@ export class LeccionPage {
         pentaY = (sh/4)/5;
         ini = (sw - width * 8)/2;
         separador = sw*0.01;
-        for (let i = 0; i < this.notas.length; i++){
-           this.notas[i].y = pos[this.notas[i].n];
-           this.notas[i].pos = pos;
-        }
+        this.restarterino();
          console.log("Resize");
       }
     }
