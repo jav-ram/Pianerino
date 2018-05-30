@@ -18,6 +18,8 @@
 
 <ion-content padding>
   <button ion-button round color="secondary" (touchstart)="restarterino()">Reiniciar</button>
+  <button ion-button round color="secondary" (touchstart)="pausa()">Pausa</button>
+  <button ion-button round color="secondary" (touchstart)="play()">Play</button>
   <div id="defaultCanvas1" style="width: 100%; height: 80%;" width="2100" height="800">
     <ion-range class="panner" min="-10" max="10" step="1" [(ngModel)]="panning" color="danger" pin="true" (ionChange)="changePanning()">
       <ion-label range-left>L</ion-label>

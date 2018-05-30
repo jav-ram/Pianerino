@@ -109,6 +109,18 @@ export class LeccionPage {
     }
   }
 
+  pausa(){
+    for(let i = 0; i < this.notas.length; i++){
+      this.notas[i].t = 0;
+    }
+  }
+
+  play(){
+    for(let i = 0; i < this.notas.length; i++){
+      this.notas[i].t = 1;
+    }
+  }
+
   private playNote(tecla){
     console.log("faaaaa")
     if (!this.empezo) {
@@ -147,8 +159,6 @@ export class LeccionPage {
       this.notas[i].y = pos[this.notas[i].n];
     }
     console.log(this.notas);
-    //leer("lecciones/prueba.txt", function(){console.log("Yeah boii");});
-    //agregar(this.contenido);
   }
 
   private unplayNote(tecla){
@@ -203,7 +213,7 @@ export class LeccionPage {
         }
 
         this.update = function(){
-          this.x = this.x - t;
+          this.x = this.x - this.t;
 
         }
       }
