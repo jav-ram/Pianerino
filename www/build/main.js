@@ -345,7 +345,7 @@ var AnadirLeccionPage = /** @class */ (function () {
     AnadirLeccionPage.prototype.playNote = function (tecla) {
         // create Oscillator node
         this.gainNode[tecla].gain.value = 1;
-        this.start = Date.now();
+        // this.start = Date.now();
     };
     AnadirLeccionPage.prototype.unplayNote = function (tecla) {
         // Important! Setting a scheduled parameter value
@@ -353,13 +353,13 @@ var AnadirLeccionPage = /** @class */ (function () {
         console.log("help");
         this.gainNode[tecla].gain.exponentialRampToValueAtTime(0.0001, this.audioCtx[tecla].currentTime + 0.03);
         ;
-        this.end = Date.now();
-        var delta = Math.round(((this.end - this.start) * 10) / 1000);
-        if (delta < 1) {
-            delta = 1;
-        }
-        this.leccion += delta.toString() + "," + tecla.toString() + ", 1/";
-        console.log(this.leccion);
+        // this.end = Date.now();
+        // var delta = Math.round(((this.end - this.start)*10)/1000);
+        // if (delta<1) {
+        //   delta = 1;
+        // }
+        // this.leccion += delta.toString() + "," + tecla.toString() + ",1/" ;
+        // console.log(this.leccion)
     };
     AnadirLeccionPage.prototype.ionViewWillLeave = function () {
         console.log("Looks like I'm about to leave :(");
@@ -389,7 +389,7 @@ var AnadirLeccionPage = /** @class */ (function () {
             sh = window.innerHeight * 0.9;
             sw = window.innerWidth;
             var del, upload; //osc
-            var width = sw * 0.06, pianoY = (sh * 0.23), pentaY = (sh / 4) / 5, ini = (sw - width * 8) / 2, separador = sw * 0.01;
+            var width = sw * 0.09, pianoY = (sh * 0.23), pentaY = (sh / 4) / 5, ini = (sw - width * 8) / 2 - sw * 0.007, separador = sw * 0.01;
             var start, end, nactual;
             _this.ap.notas = [];
             offset = sw * 0.2;
@@ -441,16 +441,17 @@ var AnadirLeccionPage = /** @class */ (function () {
                 p.fill(0);
                 p.rect(sw * 0.1, sh * 0.25, sw * 0.02, sh * 0.3);
                 //Teclas
-                p.fill(255);
-                for (var i_1 = 0; i_1 <= 7; i_1++) {
-                    p.rect(ini + i_1 * width, pianoY * 3, width, pianoY);
-                }
+                // p.fill(255);
+                // for (let i = 0; i <= 7; i++){
+                //   p.rect(ini + i * width, pianoY*3, width, pianoY);
+                // }
                 renderizarnotas(_this.ap.notas);
                 for (var i = 0; i < _this.ap.notas.length; i++) {
                     if (_this.ap.notas[i].x < sw * 0.9 && _this.ap.notas[i].x > sw * 0.1) {
                         _this.ap.notas[i].display();
                     }
                 }
+                //p.rect(sw*0.14, pianoY*3, sw*0.72, pianoY)
                 // image(img,x,y,width,height)
             };
             // When we click
@@ -518,10 +519,10 @@ var AnadirLeccionPage = /** @class */ (function () {
                 p.resizeCanvas(window.innerWidth, window.innerHeight);
                 sw = window.innerWidth;
                 sh = window.innerHeight * 0.9;
-                width = sw * 0.06;
+                width = sw * 0.09;
                 pianoY = (sh * 0.23);
                 pentaY = (sh / 4) / 5;
-                ini = (sw - width * 8) / 2;
+                ini = (sw - width * 8) / 2 - sw * 0.008;
                 separador = sw * 0.01;
             };
         };
@@ -531,9 +532,10 @@ var AnadirLeccionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-anadir-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/'<!--\n  Generated template for the AnadirLeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>AnadirLeccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n    <button ion-button round color="secondary" (click)="subir()">Subir</button>\n    <button ion-button round color="secondary" (click)="borrarNota()">Borrar</button>\n    <button ion-button round color="secondary" (click)="borrarTodoToditoTodo()">Eliminar TODO</button>\n    <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800">\n      <button class="tecla" id="c" ion-button (touchstart)="playNote(0)" (touchend)="unplayNote(0)" name="c"></button>\n      <button class="tecla" id="d" ion-button (touchstart)="playNote(1)" (touchend)="unplayNote(1)" name="d"></button>\n      <button class="tecla" id="e" ion-button (touchstart)="playNote(2)" (touchend)="unplayNote(2)" name="e"></button>\n      <button class="tecla" id="f" ion-button (touchstart)="playNote(3)" (touchend)="unplayNote(3)" name="f"></button>\n      <button class="tecla" id="g" ion-button (touchstart)="playNote(4)" (touchend)="unplayNote(4)" name="g"></button>\n      <button class="tecla" id="a" ion-button (touchstart)="playNote(5)" (touchend)="unplayNote(5)" name="a"></button>\n      <button class="tecla" id="b" ion-button (touchstart)="playNote(6)" (touchend)="unplayNote(6)" name="b"></button>\n      <button class="tecla" id="c2" ion-button (touchstart)="playNote(7)" (touchend)="unplayNote(7)" name="c2"></button>\n      <button class="sostenida" id="cS" ion-button (touchstart)="playNote(8)" (touchend)="unplayNote(8)" name="cS"></button>\n      <button class="sostenida" id="dS" ion-button (touchstart)="playNote(9)" (touchend)="unplayNote(9)" name="dS"></button>\n      <button class="sostenida" id="fS" ion-button (touchstart)="playNote(10)" (touchend)="unplayNote(10)" name="fS"></button>\n      <button class="sostenida" id="gS" ion-button (touchstart)="playNote(11)" (touchend)="unplayNote(11)" name="gS"></button>\n      <button class="sostenida" id="aS" ion-button (touchstart)="playNote(12)" (touchend)="unplayNote(12)" name="aS"></button>\n    </div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/anadir-leccion/anadir-leccion.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__["a" /* AnadirProvider */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_screen_orientation__["a" /* ScreenOrientation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__["a" /* AnadirProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_anadir_anadir__["a" /* AnadirProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_screen_orientation__["a" /* ScreenOrientation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_screen_orientation__["a" /* ScreenOrientation */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */]) === "function" && _e || Object])
     ], AnadirLeccionPage);
     return AnadirLeccionPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=anadir-leccion.js.map
@@ -917,9 +919,9 @@ var LeccionPage = /** @class */ (function () {
                     //console.error(error);
                 }
                 p.fill(0);
-                p.textSize(32);
+                p.textSize(sw * 0.05);
                 //p.text(str,x,y,x2,y2)
-                p.text("Puntos: " + _this.puntos, sw * 0.45, sh * 0.2);
+                p.text("Puntos: " + _this.puntos, sw * 0.38, sh * 0.22);
                 try {
                     if (_this.notas[_this.notas.length - 1].x < sw * 0.1) {
                         if (_this.nombreLeccion == "Primera vez") {
@@ -1033,11 +1035,10 @@ var LeccionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-leccion',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/leccion/leccion.html"*/'<!--\n  Generated template for the LeccionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>leccion</ion-title>\n  </ion-navbar>\n\n</ion-header>\n<script src="assets/js/p5.min.js"></script>\n<script src="assets/js/p5.dom.js"></script>\n<script src="assets/js/print.js"></script>\n<script src="assets/js/p5.sound.min.js"></script>\n\n<ion-content padding>\n  <button ion-button round color="secondary" (touchstart)="restarterino()">Reiniciar</button>\n  <button ion-button round color="secondary" (touchstart)="pausa()">Pausa</button>\n  <button ion-button round color="secondary" (touchstart)="play()">Play</button>\n  <div id="defaultCanvas1" style="width: 100%; height: 80%;" width="2100" height="800">\n    <ion-range class="panner" min="-10" max="10" step="1" [(ngModel)]="panning" color="danger" pin="true" (ionChange)="changePanning()">\n      <ion-label range-left>L</ion-label>\n      <ion-label range-right>R</ion-label>\n    </ion-range>\n    <button class="tecla" id="c" ion-button (touchstart)="playNote(0)" (touchend)="unplayNote(0)" name="c"></button>\n    <button class="tecla" id="d" ion-button (touchstart)="playNote(1)" (touchend)="unplayNote(1)" name="d"></button>\n    <button class="tecla" id="e" ion-button (touchstart)="playNote(2)" (touchend)="unplayNote(2)" name="e"></button>\n    <button class="tecla" id="f" ion-button (touchstart)="playNote(3)" (touchend)="unplayNote(3)" name="f"></button>\n    <button class="tecla" id="g" ion-button (touchstart)="playNote(4)" (touchend)="unplayNote(4)" name="g"></button>\n    <button class="tecla" id="a" ion-button (touchstart)="playNote(5)" (touchend)="unplayNote(5)" name="a"></button>\n    <button class="tecla" id="b" ion-button (touchstart)="playNote(6)" (touchend)="unplayNote(6)" name="b"></button>\n    <button class="tecla" id="c2" ion-button (touchstart)="playNote(7)" (touchend)="unplayNote(7)" name="c2"></button>\n    <button class="sostenida" id="cS" ion-button (touchstart)="playNote(8)" (touchend)="unplayNote(8)" name="cS"></button>\n    <button class="sostenida" id="dS" ion-button (touchstart)="playNote(9)" (touchend)="unplayNote(9)" name="dS"></button>\n    <button class="sostenida" id="fS" ion-button (touchstart)="playNote(10)" (touchend)="unplayNote(10)" name="fS"></button>\n    <button class="sostenida" id="gS" ion-button (touchstart)="playNote(11)" (touchend)="unplayNote(11)" name="gS"></button>\n    <button class="sostenida" id="aS" ion-button (touchstart)="playNote(12)" (touchend)="unplayNote(12)" name="aS"></button>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/leccion/leccion.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_screen_orientation__["a" /* ScreenOrientation */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_screen_orientation__["a" /* ScreenOrientation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_screen_orientation__["a" /* ScreenOrientation */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object])
     ], LeccionPage);
     return LeccionPage;
+    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=leccion.js.map

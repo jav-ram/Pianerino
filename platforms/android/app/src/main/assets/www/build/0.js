@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 555:
+/***/ 556:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterPageModule", function() { return RegisterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsuarioPageModule", function() { return UsuarioPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register__ = __webpack_require__(556);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__usuario__ = __webpack_require__(558);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,35 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RegisterPageModule = /** @class */ (function () {
-    function RegisterPageModule() {
+var UsuarioPageModule = /** @class */ (function () {
+    function UsuarioPageModule() {
     }
-    RegisterPageModule = __decorate([
+    UsuarioPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */],
+                __WEBPACK_IMPORTED_MODULE_2__usuario__["a" /* UsuarioPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__register__["a" /* RegisterPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__usuario__["a" /* UsuarioPage */]),
             ],
         })
-    ], RegisterPageModule);
-    return RegisterPageModule;
+    ], UsuarioPageModule);
+    return UsuarioPageModule;
 }());
 
-//# sourceMappingURL=register.module.js.map
+//# sourceMappingURL=usuario.module.js.map
 
 /***/ }),
 
-/***/ 556:
+/***/ 558:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsuarioPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_users_users__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(187);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,84 +61,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var RegisterPage = /** @class */ (function () {
-    function RegisterPage(nav, auth, alertCtrl, afs, Loading) {
-        this.nav = nav;
-        this.auth = auth;
-        this.alertCtrl = alertCtrl;
+
+/**
+ * Generated class for the UsuarioPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UsuarioPage = /** @class */ (function () {
+    function UsuarioPage(navCtrl, navParams, afs, user, http) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
         this.afs = afs;
-        this.Loading = Loading;
-        this.createSuccess = false;
-        this.registerCredentials = { email: '', password: '' };
-        this.usuario = {
-            apellido: '',
-            contraseña: '',
-            correo: '',
-            nombre: '',
-            puntos: 0,
-            tipoUsuario: 0
-        };
+        this.user = user;
+        this.http = http;
     }
-    RegisterPage.prototype.ionViewWillEnter = function () {
+    UsuarioPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad UsuarioPage');
+        console.log(this.user.getUser());
+        this.users = this.user.getUser();
+        console.log(this.users);
+        //halp();
     };
-    RegisterPage.prototype.register = function () {
-        var _this = this;
-        var loading = this.Loading.create({ content: "Creando su cuenta, por favor espere..." });
-        loading.present();
-        this.auth.register(this.registerCredentials).then(function (success) {
-            if (_this.registerCredentials.password != _this.password) {
-                _this.showPopup("Error", "No es la misma contraseña");
-                loading.dismiss();
-            }
-            else {
-                if (success) {
-                    _this.createSuccess = true;
-                    //guardar en base de datos
-                    _this.usuario.correo = _this.registerCredentials.email;
-                    _this.usuario.contraseña = _this.registerCredentials.password;
-                    _this.usuario.puntos = 0;
-                    _this.usuario.tipoUsuario = 0;
-                    console.log(_this.usuario);
-                    _this.afs.collection('Usuarios').doc(_this.usuario.correo)
-                        .set(_this.usuario)
-                        .then(function () {
-                        loading.dismiss();
-                        _this.nav.pop();
-                    });
-                }
-                else {
-                    _this.showPopup("Error", "Hubo problema creando la cuenta.");
-                    loading.dismiss();
-                }
-            }
-        }, function (error) {
-            _this.showPopup("Error", error);
-        });
+    UsuarioPage.prototype.name = function () {
+        return this.user.getUser().nombre;
     };
-    RegisterPage.prototype.showPopup = function (title, text) {
-        var alert = this.alertCtrl.create({
-            title: title,
-            subTitle: text,
-            buttons: [
-                {
-                    text: 'OK'
-                }
-            ]
-        });
-        alert.present();
+    UsuarioPage.prototype.apellido = function () {
+        return this.user.getUser().apellido;
     };
-    RegisterPage = __decorate([
+    UsuarioPage.prototype.puntos = function () {
+        return this.user.getUser().puntos;
+    };
+    UsuarioPage.prototype.tipo = function () {
+        return this.user.getUser().tipoUsuario.tipo;
+    };
+    UsuarioPage.prototype.correo = function () {
+        return this.user.getUser().correo;
+    };
+    UsuarioPage.prototype.usuario = function () {
+        return this.user.getUser().usuario;
+    };
+    UsuarioPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"C:\Users\Javier\Desktop\Pianerino\src\pages\register\register.html"*/'<ion-header>\n\n  <ion-navbar color="dark">\n\n    <ion-title>Crear Usuario</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="login-content" padding>\n\n  <div class="login-box">\n\n\n\n    <form (ngSubmit)="register()" #registerForm="ngForm">\n\n      <ion-row>\n\n        <ion-col>\n\n          <ion-list inset>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Nombre de Usuario" name="usuario" [(ngModel)]="nombreUsuario" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="text" placeholder="Correo" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item>\n\n              <ion-input type="password" placeholder="Vuelva a ingresar contraseña" name="password" [(ngModel)]="password" required></ion-input>\n\n            </ion-item>\n\n\n\n          </ion-list>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row>\n\n        <ion-col class="signup-col">\n\n          <button color="secondary" style="color:#fff;" ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">\n\n            Crear usuario\n\n          </button>\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n    </form>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Javier\Desktop\Pianerino\src\pages\register\register.html"*/,
+            selector: 'page-usuario',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/usuario/usuario.html"*/'<!--\n  Generated template for the UsuarioPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="dark">\n    <ion-title>Usuario</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding color=\'light\'>\n	<ion-list>\n    <ion-item class="item">\n      <ion-label id="text">Usuario</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{usuario()}}"></ion-input>\n    </ion-item>\n\n		<ion-item class="item">\n      <ion-label id="text">Nombre</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{name()}}  {{apellido()}}"></ion-input>\n    </ion-item>\n\n    <ion-item class="item">\n      <ion-label id="text">Correo</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{correo()}}"></ion-input>\n    </ion-item>\n\n    <ion-item class="item">\n      <ion-label id="text">Puntos</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{puntos()}}"></ion-input>\n    </ion-item>\n\n    <ion-item class="item">\n      <ion-label id="text">Tipo de Usuario</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{tipo()}}"></ion-input>\n    </ion-item>\n\n	</ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/usuario/usuario.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* LoadingController */]])
-    ], RegisterPage);
-    return RegisterPage;
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Http */]])
+    ], UsuarioPage);
+    return UsuarioPage;
 }());
 
-//# sourceMappingURL=register.js.map
+//# sourceMappingURL=usuario.js.map
 
 /***/ })
 

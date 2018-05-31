@@ -78,7 +78,7 @@ export class AnadirLeccionPage {
   private playNote(tecla){
     // create Oscillator node
     this.gainNode[tecla].gain.value = 1;
-    this.start = Date.now();
+    // this.start = Date.now();
   }
 
   private unplayNote(tecla){
@@ -86,13 +86,13 @@ export class AnadirLeccionPage {
     this.gainNode[tecla].gain.setValueAtTime(this.gainNode[tecla].gain.value, this.audioCtx[tecla].currentTime);
     console.log("help")
     this.gainNode[tecla].gain.exponentialRampToValueAtTime(0.0001, this.audioCtx[tecla].currentTime + 0.03);;
-    this.end = Date.now();
-    var delta = Math.round(((this.end - this.start)*10)/1000);
-    if (delta<1) {
-      delta = 1;
-    }
-    this.leccion += delta.toString() + "," + tecla.toString() + ", 1/" ;
-    console.log(this.leccion)
+    // this.end = Date.now();
+    // var delta = Math.round(((this.end - this.start)*10)/1000);
+    // if (delta<1) {
+    //   delta = 1;
+    // }
+    // this.leccion += delta.toString() + "," + tecla.toString() + ",1/" ;
+    // console.log(this.leccion)
   }
 
   ionViewWillLeave() {
@@ -123,7 +123,7 @@ export class AnadirLeccionPage {
     sh = window.innerHeight*0.9;
     sw = window.innerWidth;
     let del, upload ;//osc
-    let width = sw*0.06, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2, separador = sw*0.01;
+    let width = sw*0.09, pianoY = (sh*0.23), pentaY = (sh/4)/5, ini = (sw - width * 8)/2 -sw*0.007, separador = sw*0.01;
     let start, end, nactual;
     this.ap.notas = [];
     offset = sw*0.2;
@@ -183,10 +183,10 @@ export class AnadirLeccionPage {
       p.fill(0);
       p.rect(sw*0.1 , sh*0.25 , sw*0.02, sh*0.3);
       //Teclas
-      p.fill(255);
-      for (let i = 0; i <= 7; i++){
-        p.rect(ini + i * width, pianoY*3, width, pianoY);
-      }
+      // p.fill(255);
+      // for (let i = 0; i <= 7; i++){
+      //   p.rect(ini + i * width, pianoY*3, width, pianoY);
+      // }
 
       renderizarnotas(this.ap.notas);
       for (var i = 0; i < this.ap.notas.length; i++) {
@@ -194,6 +194,8 @@ export class AnadirLeccionPage {
           this.ap.notas[i].display();
         }
       }
+
+      //p.rect(sw*0.14, pianoY*3, sw*0.72, pianoY)
 
       // image(img,x,y,width,height)
     }
@@ -268,10 +270,10 @@ export class AnadirLeccionPage {
        p.resizeCanvas(window.innerWidth, window.innerHeight);
        sw =window.innerWidth;
        sh = window.innerHeight*0.9;
-       width = sw*0.06;
+       width = sw*0.09;
        pianoY = (sh*0.23);
        pentaY = (sh/4)/5;
-       ini = (sw - width * 8)/2;
+       ini = (sw - width * 8)/2 - sw*0.008;
        separador = sw*0.01;
     }}
     let myp5 = new p5(sketch);

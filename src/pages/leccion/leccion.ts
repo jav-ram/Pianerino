@@ -259,9 +259,9 @@ export class LeccionPage {
           //console.error(error);
         }
         p.fill(0);
-        p.textSize(32);
+        p.textSize(sw*0.05);
         //p.text(str,x,y,x2,y2)
-        p.text("Puntos: " + this.puntos , sw * 0.45 , sh * 0.2);
+        p.text("Puntos: " + this.puntos , sw * 0.38 , sh * 0.22);
 
         try {
           if (this.notas[this.notas.length - 1].x < sw*0.1) {
