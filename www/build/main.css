@@ -25694,15 +25694,23 @@ page-anadir-leccion #defaultCanvas1 {
 }
 
 .subir {
-  left: 7%;
+  left: 3%;
 }
 
 .borrar {
-  left: 17%;
+  right: 10%;
 }
 
 .todo {
-  left: 27%;
+  right: 3%;
+}
+
+.panner {
+  position: fixed;
+  z-index: 9999;
+  width: 50%;
+  left: 25%;
+  top: 10%;
 }
 
 .cuenta {
