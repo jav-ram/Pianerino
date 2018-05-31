@@ -7,16 +7,21 @@ page-anadir-leccion {
 .opciones{
   position: absolute;
   z-index: 9999;
+  height: 50px;
+  width: 50px;
+  top: 3%;
+  color: white !important;
+  font-size: 5px;
 }
 
 .subir{
-  left:10%;
+  left:7%;
 }
 
 .borrar{
-  left: 25%;
+  left: 17%;
 }
 
 .todo{
-  left: 42%;
+  left: 27%;
 }

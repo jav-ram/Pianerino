@@ -19,9 +19,15 @@
 <ion-content padding>
 
     <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800">
-      <button class="opciones subir" ion-button round color="secondary" (click)="subir()">Subir</button>
-      <button class="opciones borrar" ion-button round color="secondary" (click)="borrarNota()">Borrar</button>
-      <button class="opciones todo" ion-button round color="secondary" (click)="borrarTodoToditoTodo()">Eliminar TODO</button>
+      <button class="opciones subir" ion-button color="secondary" (click)="subir()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </button>
+      <button class="opciones borrar" ion-button color="secondary" (click)="borrarNota()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+      <button class="opciones todo" ion-button color="secondary" (click)="borrarTodoToditoTodo()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
       <button class="tecla" id="c" ion-button (touchstart)="playNote(0)" (touchend)="unplayNote(0)" name="c"></button>
       <button class="tecla" id="d" ion-button (touchstart)="playNote(1)" (touchend)="unplayNote(1)" name="d"></button>
       <button class="tecla" id="e" ion-button (touchstart)="playNote(2)" (touchend)="unplayNote(2)" name="e"></button>
