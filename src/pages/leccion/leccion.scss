@@ -9,6 +9,28 @@ page-leccion {
 
 }
 
+.opciones{
+  position: absolute;
+  z-index: 9999;
+  height: 45px;
+  width: 45px;
+  top: 3%;
+  color: white !important;
+  font-size: 5px;
+}
+
+.restart{
+  left: 3%;
+}
+
+.pausa {
+  right: 10%;
+}
+
+.play {
+  right: 3%;
+}
+
 .panner{
   position: fixed;
   width: 50%;

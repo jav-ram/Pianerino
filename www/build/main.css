@@ -25683,6 +25683,23 @@ page-anadir-leccion #defaultCanvas1 {
   top: 12%;
 }
 
+.opciones {
+  position: absolute;
+  z-index: 9999;
+}
+
+.subir {
+  left: 10%;
+}
+
+.borrar {
+  left: 25%;
+}
+
+.todo {
+  left: 42%;
+}
+
 .cuenta {
   position: absolute;
   right: -0.5%;
@@ -25707,6 +25724,28 @@ p {
 page-leccion #defaultCanvas1 {
   position: fixed;
   top: 12%;
+}
+
+.opciones {
+  position: absolute;
+  z-index: 9999;
+  height: 45px;
+  width: 45px;
+  top: 3%;
+  color: white !important;
+  font-size: 5px;
+}
+
+.restart {
+  left: 3%;
+}
+
+.pausa {
+  right: 10%;
+}
+
+.play {
+  right: 3%;
 }
 
 .panner {
@@ -25788,4 +25827,12 @@ page-leccion #defaultCanvas1 {
 
 #text {
   color: black;
+}
+
+.cerrar {
+  position: absolute;
+  right: -0.5%;
+  top: -9%;
+  height: 100%;
+  width: 8%;
 }

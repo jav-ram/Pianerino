@@ -17,9 +17,15 @@
 <script src="assets/js/p5.sound.min.js"></script>
 
 <ion-content padding>
-  <button ion-button round color="secondary" (touchstart)="restarterino()">Reiniciar</button>
-  <button ion-button round color="secondary" (touchstart)="pausa()">Pausa</button>
-  <button ion-button round color="secondary" (touchstart)="play()">Play</button>
+  <button ion-button class="opciones restart" color="secondary" (touchstart)="restarterino()">
+    <ion-icon name="refresh"></ion-icon>
+  </button>
+  <button ion-button class="opciones pausa" color="secondary" (touchstart)="pausa()">
+    <ion-icon name="pause"></ion-icon>
+  </button>
+  <button ion-button class="opciones play" color="secondary" (touchstart)="play()">
+    <ion-icon name="play"></ion-icon>
+  </button>
   <div id="defaultCanvas1" style="width: 100%; height: 80%;" width="2100" height="800">
     <ion-range class="panner" min="-10" max="10" step="1" [(ngModel)]="panning" color="danger" pin="true" (ionChange)="changePanning()">
       <ion-label range-left>L</ion-label>
