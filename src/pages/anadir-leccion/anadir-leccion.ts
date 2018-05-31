@@ -26,11 +26,14 @@ export class AnadirLeccionPage {
 
   audioCtx=[];
   oscillators=[];
+  panNode=[];
   notes=[];
+  notas=[];
   gainNode=[];
   start: any;
   end: any;
   leccion: string;
+  panning: number = 0.0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public ap:AnadirProvider , public screenOrientation: ScreenOrientation, private platform: Platform) {
   }
@@ -38,20 +41,33 @@ export class AnadirLeccionPage {
   ngOnInit(){
     //inciar osciladores
     this.notes = [ 261.626, 293.665, 329.628, 349.228, 391.995, 440.000, 493.883, 523.251];
+    console.log("ventana",this.navCtrl.getActive().component.name)
     for(let i = 0; i < this.notes.length; i++){
       this.audioCtx[i] = new AudioContext();
       this.oscillators[i] = this.audioCtx[i].createOscillator();
       this.gainNode[i] = this.audioCtx[i].createGain();
+      this.panNode[i] = this.audioCtx[i].createStereoPanner();
 
       this.oscillators[i].type = 'sine';
       this.oscillators[i].frequency.setValueAtTime(this.notes[i], this.audioCtx[i].currentTime); // value in hertz
       this.oscillators[i].connect(this.gainNode[i]);
-      this.gainNode[i].connect(this.audioCtx[i].destination)
+      this.panNode[i].pan.setValueAtTime(this.panning, this.audioCtx[i].currentTime);
+      this.gainNode[i].connect(this.panNode[i])
       this.oscillators[i].start();
 
       this.gainNode[i].gain.value = 0;
+
+
+      this.panNode[i].connect(this.audioCtx[i].destination);
+
     }
 
+  }
+
+  private changePanning(){
+    for(let i = 0; i < this.notes.length; i++){
+      this.panNode[i].pan.setValueAtTime(this.panning/10, this.audioCtx[i].currentTime);
+    }
   }
 
   subir() {

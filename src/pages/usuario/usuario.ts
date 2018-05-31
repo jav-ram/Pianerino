@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { UsersProvider } from '../../providers/users/users';
+import { LogInPage } from '../log-in/log-in';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
@@ -60,6 +61,10 @@ public users: any;
 
   public usuario(){
     return this.user.getUser().usuario;
+  }
+
+  private logOut(){
+    this.navCtrl.setRoot(LogInPage);
   }
 
 }

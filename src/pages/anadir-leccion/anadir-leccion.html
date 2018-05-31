@@ -17,10 +17,21 @@
 <script src="assets/js/p5.sound.min.js"></script>
 
 <ion-content padding>
-    <button ion-button round color="secondary" (click)="subir()">Subir</button>
-    <button ion-button round color="secondary" (click)="borrarNota()">Borrar</button>
-    <button ion-button round color="secondary" (click)="borrarTodoToditoTodo()">Eliminar TODO</button>
+
     <div id="defaultCanvas0" style="width: 100%; height: 80%;" width="2100" height="800">
+      <button class="opciones subir" ion-button color="secondary" (click)="subir()">
+        <ion-icon name="cloud-upload"></ion-icon>
+      </button>
+      <button class="opciones borrar" ion-button color="secondary" (click)="borrarNota()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+      <button class="opciones todo" ion-button color="secondary" (click)="borrarTodoToditoTodo()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      <ion-range class="panner" min="-10" max="10" step="1" [(ngModel)]="panning" color="danger" pin="true" (ionChange)="changePanning()">
+        <ion-label range-left>L</ion-label>
+        <ion-label range-right>R</ion-label>
+      </ion-range>
       <button class="tecla" id="c" ion-button (touchstart)="playNote(0)" (touchend)="unplayNote(0)" name="c"></button>
       <button class="tecla" id="d" ion-button (touchstart)="playNote(1)" (touchend)="unplayNote(1)" name="d"></button>
       <button class="tecla" id="e" ion-button (touchstart)="playNote(2)" (touchend)="unplayNote(2)" name="e"></button>

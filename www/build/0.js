@@ -47,7 +47,8 @@ var UsuarioPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_users_users__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__log_in_log_in__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(187);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -57,6 +58,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -101,14 +103,17 @@ var UsuarioPage = /** @class */ (function () {
     UsuarioPage.prototype.usuario = function () {
         return this.user.getUser().usuario;
     };
+    UsuarioPage.prototype.logOut = function () {
+        this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__log_in_log_in__["a" /* LogInPage */]);
+    };
     UsuarioPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-usuario',template:/*ion-inline-start:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/usuario/usuario.html"*/'<!--\n  Generated template for the UsuarioPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="dark">\n    <ion-title>Usuario</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding color=\'light\'>\n	<ion-list>\n    <ion-item class="item">\n      <ion-label id="text">Usuario</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{usuario()}}"></ion-input>\n    </ion-item>\n\n		<ion-item class="item">\n      <ion-label id="text">Nombre</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{name()}}  {{apellido()}}"></ion-input>\n    </ion-item>\n\n    <ion-item class="item">\n      <ion-label id="text">Correo</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{correo()}}"></ion-input>\n    </ion-item>\n\n    <ion-item class="item">\n      <ion-label id="text">Puntos</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{puntos()}}"></ion-input>\n    </ion-item>\n\n    <ion-item class="item">\n      <ion-label id="text">Tipo de Usuario</ion-label>\n      <ion-input type="text" id="text" disabled="true" value="{{tipo()}}"></ion-input>\n    </ion-item>\n\n	</ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/home/rodrigo/Documents/UVG/Pianerino/src/pages/usuario/usuario.html"*/,
+            selector: 'page-usuario',template:/*ion-inline-start:"C:\Users\Javier\Desktop\Pianerino\src\pages\usuario\usuario.html"*/'<!--\n\n  Generated template for the UsuarioPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar color="dark">\n\n    <ion-title>Usuario</ion-title>\n\n  </ion-navbar>\n\n  <button class="cerrar" ion-button color="white" (click)="logOut()">\n\n    <ion-icon name="power"></ion-icon>\n\n  </button>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding color=\'light\'>\n\n	<ion-list>\n\n    <ion-item class="item">\n\n      <ion-label id="text">Usuario</ion-label>\n\n      <ion-input type="text" id="text" disabled="true" value="{{usuario()}}"></ion-input>\n\n    </ion-item>\n\n\n\n		<ion-item class="item">\n\n      <ion-label id="text">Nombre</ion-label>\n\n      <ion-input type="text" id="text" disabled="true" value="{{name()}}  {{apellido()}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item class="item">\n\n      <ion-label id="text">Correo</ion-label>\n\n      <ion-input type="text" id="text" disabled="true" value="{{correo()}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item class="item">\n\n      <ion-label id="text">Puntos</ion-label>\n\n      <ion-input type="text" id="text" disabled="true" value="{{puntos()}}"></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item class="item">\n\n      <ion-label id="text">Tipo de Usuario</ion-label>\n\n      <ion-input type="text" id="text" disabled="true" value="{{tipo()}}"></ion-input>\n\n    </ion-item>\n\n\n\n	</ion-list>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Javier\Desktop\Pianerino\src\pages\usuario\usuario.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["a" /* AngularFirestore */],
             __WEBPACK_IMPORTED_MODULE_3__providers_users_users__["a" /* UsersProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Http */]])
+            __WEBPACK_IMPORTED_MODULE_5__angular_http__["a" /* Http */]])
     ], UsuarioPage);
     return UsuarioPage;
 }());
